@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>BRENNO//OS — Portfólio (spike)</title>
+<style>
+  :root{
+    --pink:#ff6ad5;
+    --cyan:#00e5ff;
+    --purple:#9d4edd;
+    --deep:#1a0b2e;
+    --deep2:#2d1b4e;
+    --orange:#ff9e7d;
+    --yellow:#ffe66d;
+    --win:#c3c7cb;
+    --win-dark:#868a8e;
+    --win-light:#ffffff;
+    --title1:#4b1fa0;
+    --title2:#c02fb0;
+    --scan: rgba(0,0,0,.12);
+    --mono: 'Lucida Console','Courier New',ui-monospace,monospace;
+    --pixel: 'Lucida Console','Courier New',monospace;
+    --display: 'Arial Black','Impact',system-ui,sans-serif;
+  }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; height:100%; overflow:hidden; }
+  body{
+    font-family:var(--mono);
+    background:#000; color:#111;
+    cursor: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBkPSJNMiAxIEwyIDE4IEw2IDE0IEw5IDIxIEwxMiAyMCBMOSAxMyBMMTQgMTMgWiIgZmlsbD0iI2ZmZiIgc3Ryb2tlPSIjMDAwIiBzdHJva2Utd2lkdGg9IjEuNSIvPjwvc3ZnPg=="), auto;
+    user-select:none; -webkit-user-select:none;
+  }
+
+  /* ===== BACKGROUND ===== */
+  #bg{ position:fixed; inset:0; z-index:0; overflow:hidden;
+    background:radial-gradient(120% 90% at 50% 18%, #ff8fd9 0%, #b14fd8 28%, #5b2a9e 52%, var(--deep) 82%); }
+  #sun{ position:absolute; left:50%; top:14%; translate:-50% 0; width:320px; height:320px; border-radius:50%;
+    background:linear-gradient(#fff3b0, #ffcc70 38%, #ff7bbf 70%, #ff4fa3); box-shadow:0 0 90px 20px rgba(255,120,190,.55); overflow:hidden; }
+  #sun::after{ content:""; position:absolute; left:0; right:0; bottom:0; height:62%;
+    background:repeating-linear-gradient(to bottom, transparent 0 10px, var(--deep) 10px 20px); opacity:.9; }
+  #grid{ position:absolute; left:-20%; right:-20%; bottom:-5%; height:52%;
+    background-image:linear-gradient(var(--cyan) 1px, transparent 1px), linear-gradient(90deg, var(--cyan) 1px, transparent 1px);
+    background-size:60px 60px; transform:perspective(380px) rotateX(70deg); transform-origin:bottom center; opacity:.5;
+    animation:flow 2.4s linear infinite; }
+  @keyframes flow{ from{ background-position:0 0; } to{ background-position:0 60px; } }
+  #mtns{ position:absolute; left:0; right:0; bottom:46%; height:12%; opacity:.5;
+    background:linear-gradient(135deg, transparent 49.6%, rgba(0,229,255,.35) 49.6% 50.4%, transparent 50.4%) 0 0/70px 70px,
+               linear-gradient(45deg, transparent 49.6%, rgba(255,106,213,.35) 49.6% 50.4%, transparent 50.4%) 0 0/70px 70px; }
+  .cloud{ position:absolute; color:#fff; opacity:.7; animation:drift linear infinite; text-shadow:2px 2px 0 rgba(0,0,0,.1); }
+  @keyframes drift{ from{ transform:translateX(-12vw);} to{ transform:translateX(112vw);} }
+
+  /* ===== CRT ===== */
+  #crt{ position:fixed; inset:0; z-index:9999; pointer-events:none;
+    background:repeating-linear-gradient(to bottom, transparent 0 2px, var(--scan) 2px 4px); mix-blend-mode:multiply; opacity:.5; }
+  #crt::after{ content:""; position:absolute; inset:0; background:radial-gradient(130% 120% at 50% 50%, transparent 60%, rgba(0,0,0,.45) 100%); }
+
+  /* ===== BOOT ===== */
+  #boot{ position:fixed; inset:0; z-index:10000; background:#000; color:#2cff6a; font-family:var(--mono);
+    font-size:17px; padding:38px; line-height:1.55; transition:opacity .5s; }
+  #boot b{ color:#aaffcc; }
+  .blink{ animation:blink 1s steps(1) infinite; }
+  @keyframes blink{ 50%{opacity:0;} }
+  #barwrap{ margin-top:22px; width:320px; border:2px solid #2cff6a; height:20px; padding:3px; }
+  #bootbar{ height:100%; width:0; background:#2cff6a; transition:width .2s; }
+
+  /* ===== DESKTOP ===== */
+  #desktop{ position:fixed; inset:0; z-index:1; }
+  .icons{ position:absolute; top:16px; left:16px; display:flex; flex-direction:column; gap:20px; }
+  .icon{ width:94px; text-align:center; }
+  .icon .glyph{ font-size:44px; line-height:1; filter:drop-shadow(2px 2px 0 rgba(0,0,0,.35)); }
+  .icon .label{ margin-top:3px; color:#fff; font-size:15px; letter-spacing:.4px;
+    text-shadow:1px 1px 0 #000, 0 0 6px rgba(0,229,255,.6); padding:1px 4px; display:inline-block; }
+  .icon.sel .label{ background:#0a1fa0; outline:1px dotted #fff; }
+
+  /* ===== WINDOWS ===== */
+  .window{ position:absolute; min-width:240px; background:var(--win); border:2px solid #000;
+    box-shadow: inset 1px 1px 0 var(--win-light), inset -1px -1px 0 var(--win-dark), 6px 6px 0 rgba(0,0,0,.4);
+    display:flex; flex-direction:column; }
+  .titlebar{ height:28px; display:flex; align-items:center; gap:6px; padding:0 4px;
+    background:linear-gradient(90deg, var(--title1), var(--title2)); color:#fff; cursor:move; flex:0 0 auto; }
+  .window.inactive .titlebar{ background:linear-gradient(90deg,#6b6f73,#9aa0a6); }
+  .titlebar .tt{ font-family:var(--pixel); font-weight:bold; font-size:13px; letter-spacing:.3px; flex:1;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis; text-shadow:1px 1px 0 rgba(0,0,0,.5); }
+  .titlebar .tico{ font-size:15px; }
+  .tbtn{ width:20px; height:17px; border:2px solid #000; background:var(--win);
+    box-shadow: inset 1px 1px 0 var(--win-light), inset -1px -1px 0 var(--win-dark);
+    font-family:var(--pixel); font-weight:bold; font-size:11px; display:flex; align-items:center; justify-content:center; color:#000; line-height:1; }
+  .tbtn:active{ box-shadow: inset -1px -1px 0 var(--win-light), inset 1px 1px 0 var(--win-dark); }
+  .menubar{ display:flex; gap:14px; padding:3px 8px; font-size:14px; border-bottom:1px solid var(--win-dark); background:var(--win); color:#000; }
+  .menubar u{ text-decoration:underline; }
+  .wbody{ padding:14px; overflow:auto; background:var(--win); color:#101010; font-size:15px; line-height:1.4; max-height:62vh; }
+
+  .folder-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(92px,1fr)); gap:14px; }
+  .fitem{ text-align:center; padding:6px 2px; }
+  .fitem:hover{ background:#b7d3ff; outline:1px dotted #0a1fa0; }
+  .fitem .fg{ font-size:38px; filter:drop-shadow(1px 1px 0 rgba(0,0,0,.3)); }
+  .fitem .fl{ font-size:13px; margin-top:2px; word-break:break-word; }
+
+  .h-neon{ font-family:var(--display); font-style:italic; font-size:26px; line-height:1.05;
+    background:linear-gradient(90deg,var(--pink),var(--cyan)); -webkit-background-clip:text; background-clip:text; color:transparent; letter-spacing:.5px; }
+  .chip{ display:inline-block; background:var(--deep2); color:var(--cyan); border:1px solid var(--cyan); padding:1px 8px; margin:2px; font-size:13px; }
+  .btn95{ display:inline-block; padding:5px 14px; background:var(--win); border:2px solid #000; color:#000; font-size:14px; text-decoration:none;
+    box-shadow: inset 1px 1px 0 var(--win-light), inset -1px -1px 0 var(--win-dark); }
+  .btn95:active{ box-shadow: inset -1px -1px 0 var(--win-light), inset 1px 1px 0 var(--win-dark); }
+  .inset{ border:2px solid var(--win-dark); box-shadow: inset 1px 1px 0 #6a6e72, inset -1px -1px 0 #fff; background:#fff; padding:10px; }
+  .avatar{ width:116px; height:116px; border:2px solid #000; image-rendering:pixelated;
+    background:repeating-conic-gradient(var(--pink) 0 25%, var(--cyan) 0 50%) 0 0/22px 22px; }
+  .marq{ overflow:hidden; white-space:nowrap; border:2px solid #000; background:#000; color:var(--yellow); font-size:14px; padding:3px 0; }
+  .marq span{ display:inline-block; padding-left:100%; animation:mq 16s linear infinite; }
+  @keyframes mq{ to{ transform:translateX(-100%);} }
+  .counter{ display:inline-flex; gap:2px; }
+  .counter b{ background:#000; color:#2cff6a; font-family:var(--mono); padding:2px 5px; border:1px solid #2cff6a; font-size:15px; }
+  .ta{ width:100%; height:58px; font-family:var(--mono); font-size:14px; resize:none; }
+
+  /* ===== TASKBAR ===== */
+  #taskbar{ position:fixed; left:0; right:0; bottom:0; height:38px; z-index:5000; background:var(--win); border-top:2px solid #fff;
+    display:flex; align-items:center; gap:6px; padding:4px; }
+  #start{ display:flex; align-items:center; gap:7px; padding:3px 12px 3px 8px; font-family:var(--pixel); font-weight:bold; font-size:14px;
+    border:2px solid #000; background:var(--win); color:#000; box-shadow: inset 1px 1px 0 var(--win-light), inset -1px -1px 0 var(--win-dark); }
+  #start.open, #start:active{ box-shadow: inset -1px -1px 0 var(--win-light), inset 1px 1px 0 var(--win-dark); }
+  .taskitem{ max-width:170px; min-width:118px; height:28px; display:flex; align-items:center; gap:6px; padding:0 8px; font-size:13px;
+    border:2px solid #000; background:var(--win); color:#000; overflow:hidden; white-space:nowrap;
+    box-shadow: inset 1px 1px 0 var(--win-light), inset -1px -1px 0 var(--win-dark); }
+  .taskitem.active{ box-shadow: inset -1px -1px 0 var(--win-light), inset 1px 1px 0 var(--win-dark); background:#d9dcdf; }
+  .taskitem .tl{ overflow:hidden; text-overflow:ellipsis; }
+  #clock{ margin-left:auto; border:2px solid var(--win-dark); box-shadow: inset 1px 1px 0 #6a6e72, inset -1px -1px 0 #fff; padding:5px 12px; font-size:14px; color:#000; }
+
+  #startmenu{ position:fixed; left:4px; bottom:40px; width:226px; z-index:6000; background:var(--win); border:2px solid #000;
+    box-shadow: inset 1px 1px 0 var(--win-light), inset -1px -1px 0 var(--win-dark), 5px 5px 0 rgba(0,0,0,.4); display:none; }
+  #startmenu.open{ display:flex; }
+  #startmenu .side{ width:28px; background:linear-gradient(var(--title1),var(--title2)); writing-mode:vertical-rl; transform:rotate(180deg);
+    color:#fff; font-family:var(--display); font-style:italic; font-size:14px; text-align:center; padding:10px 0; letter-spacing:1px; }
+  #startmenu .items{ flex:1; padding:4px; }
+  .mi{ padding:8px 10px; font-size:15px; color:#000; display:flex; gap:10px; align-items:center; }
+  .mi:hover{ background:#0a1fa0; color:#fff; }
+  .sep{ height:2px; background:var(--win-dark); margin:3px 0; box-shadow:0 1px 0 #fff; }
+
+  .hint{ position:fixed; z-index:4000; bottom:46px; right:12px; color:#fff; font-size:13px; text-shadow:1px 1px 0 #000; opacity:.85; }
+  a{ color:#0a1fa0; }
+</style>
+</head>
+<body>
+  <div id="bg">
+    <div id="sun"></div>
+    <div id="mtns"></div>
+    <div id="grid"></div>
+    <div class="cloud" style="top:7%; font-size:30px; animation-duration:48s">☁</div>
+    <div class="cloud" style="top:18%; font-size:22px; animation-duration:64s; animation-delay:-20s">☁</div>
+    <div class="cloud" style="top:4%; font-size:40px; animation-duration:76s; animation-delay:-45s">☁</div>
+  </div>
+
+  <div id="desktop"></div>
+
+  <div id="crt"></div>
+
+  <div id="boot">
+    <div>BRENNO//OS — v0.1 <b>(spike build)</b></div>
+    <div>Copyright (C) 199X Vaporwave Systems Inc.</div>
+    <br>
+    <div id="bootlog"></div>
+    <div id="barwrap"><div id="bootbar"></div></div>
+    <br>
+    <div>Iniciando o sistema<span class="blink">_</span></div>
+  </div>
+
+<script>
+/* =================== DADOS (genéricos — troque depois) =================== */
+const PROFILE = {
+  name: "SEU NOME",
+  role: "Desenvolvedor Full-Stack",
+  tagline: "Eu construo coisas pra internet. Às vezes elas até funcionam.",
+  bio: "Dev apaixonado por interfaces com personalidade e backends que não caem às 3h da manhã. Transformo café em software desde 20XX. Curto design retrô, sistemas bem pensados e aquele detalhe que faz a pessoa sorrir.",
+  location: "Niterói, BR",
+};
+const PROJECTS = [
+  { id:"p1", name:"projeto_alpha", title:"Projeto Alpha", tech:["React","Node","Postgres"], year:"2024",
+    desc:"Uma plataforma genérica que faz coisas genéricas muito bem. Dashboard em tempo real, auth e uma API limpinha." },
+  { id:"p2", name:"loja_retro", title:"Loja Retrô", tech:["Next.js","Stripe","Tailwind"], year:"2023",
+    desc:"E-commerce com tema anos 90. Carrinho, checkout e um hit counter honesto no rodapé." },
+  { id:"p3", name:"api_do_caos", title:"API do Caos", tech:["Go","Redis","Docker"], year:"2023",
+    desc:"Microserviço que aguenta tranco. Fila, cache e observabilidade de verdade." },
+  { id:"p4", name:"app_mobile", title:"App Mobile X", tech:["React Native","Expo"], year:"2022",
+    desc:"Aplicativo multiplataforma com offline-first e aquelas animações gostosas." },
+];
+const SKILLS = {
+  "Front": ["React","TypeScript","CSS/Sass","Next.js","Vite"],
+  "Back": ["Node.js","Go","Python","PostgreSQL","Redis"],
+  "DevOps": ["Docker","CI/CD","AWS","Linux"],
+  "Ferramentas": ["Git","Figma","VS Code","Vim (às vezes)"],
+};
+
+/* =================== HELPERS DOM =================== */
+function el(tag, props, ...kids){
+  const n = document.createElement(tag);
+  if(props) for(const k in props){
+    if(k==="class") n.className = props[k];
+    else if(k==="html") n.innerHTML = props[k];
+    else if(k==="style") n.setAttribute("style", props[k]);
+    else if(k.startsWith("on")) n.addEventListener(k.slice(2).toLowerCase(), props[k]);
+    else n.setAttribute(k, props[k]);
+  }
+  for(const c of kids){ if(c==null) continue; n.append(c.nodeType?c:document.createTextNode(c)); }
+  return n;
+}
+
+/* =================== CONTEÚDO DAS JANELAS =================== */
+function aboutBody(){
+  const root = el("div");
+  root.append(
+    el("div",{style:"display:flex;gap:16px;flex-wrap:wrap"},
+      el("div",{class:"avatar",title:"sua foto aqui"}),
+      el("div",{style:"flex:1 1 180px;min-width:180px"},
+        el("div",{class:"h-neon"}, PROFILE.name),
+        el("div",{style:"font-size:16px;color:#5b2a9e;font-weight:bold"}, PROFILE.role),
+        el("div",{style:"margin-top:6px;font-style:italic"}, "“"+PROFILE.tagline+"”"),
+        el("div",{style:"margin-top:6px"}, "📍 "+PROFILE.location),
+      )
+    ),
+    el("div",{class:"inset",style:"margin-top:12px"}, PROFILE.bio),
+    el("div",{class:"marq",style:"margin-top:12px"},
+      el("span",null,"★ BEM-VINDO AO MEU CANTINHO DA INTERNET ★ OBRIGADO POR VISITAR ★ ASSINE O GUESTBOOK ★ BEST VIEWED IN NETSCAPE 4.0 ★"))
+  );
+  return root;
+}
+function projectsBody(api){
+  const grid = el("div",{class:"folder-grid"});
+  PROJECTS.forEach(p=>{
+    grid.append(el("div",{class:"fitem", ondblclick:()=>openWindow(projectSpec(p))},
+      el("div",{class:"fg"},"📁"), el("div",{class:"fl"}, p.name+"/")));
+  });
+  return el("div",null,
+    el("div",{style:"margin-bottom:8px;font-size:13px;color:#333"}, "C:\\PORTFOLIO\\PROJETOS — "+PROJECTS.length+" objeto(s)"),
+    grid,
+    el("div",{style:"margin-top:12px;font-size:12px;color:#555"}, "dica: dê 2 cliques numa pasta"));
+}
+function projectBody(p){
+  const techs = el("div",{style:"margin-top:6px"});
+  p.tech.forEach(t=>techs.append(el("span",{class:"chip"},t)));
+  return el("div",null,
+    el("div",{class:"h-neon",style:"font-size:22px"}, p.title),
+    el("div",{style:"color:#5b2a9e;font-weight:bold"}, p.year),
+    el("div",{class:"inset",style:"margin-top:8px;height:110px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#ff6ad5,#00e5ff);color:#fff;font-family:var(--pixel);font-weight:bold;font-size:14px"}, "[ screenshot.png ]"),
+    el("p",{style:"margin-top:10px"}, p.desc),
+    techs,
+    el("div",{style:"margin-top:12px;display:flex;gap:8px"},
+      el("a",{class:"btn95",href:"#",onclick:e=>e.preventDefault()},"▶ Ver demo"),
+      el("a",{class:"btn95",href:"#",onclick:e=>e.preventDefault()},"⌥ Código")));
+}
+function skillsBody(){
+  const root = el("div");
+  for(const cat in SKILLS){
+    const row = el("div",{style:"margin-top:4px"});
+    SKILLS[cat].forEach(s=>row.append(el("span",{class:"chip"},s)));
+    root.append(el("div",{style:"margin-bottom:10px"},
+      el("div",{style:"font-family:var(--pixel);font-weight:bold;font-size:13px;color:#5b2a9e"}, cat), row));
+  }
+  return root;
+}
+function contactBody(){
+  const digits = "000420".split("").map(d=>el("b",null,d));
+  return el("div",null,
+    el("div",{class:"h-neon",style:"font-size:20px"}, "Fale comigo ☎"),
+    el("div",{class:"inset",style:"margin-top:8px"},
+      el("div",null,"📧 ", el("a",{href:"#",onclick:e=>e.preventDefault()},"voce@email.com")),
+      el("div",null,"🐙 github.com/seu-usuario"),
+      el("div",null,"💼 linkedin.com/in/seu-perfil")),
+    el("div",{style:"margin-top:12px"},
+      el("div",{style:"font-size:13px;margin-bottom:4px"}, "📖 Guestbook (assine aí):"),
+      el("textarea",{class:"inset ta",placeholder:"deixe um recado..."}),
+      el("div",{style:"margin-top:6px"}, el("a",{class:"btn95",href:"#",onclick:e=>e.preventDefault()},"Enviar ✉"))),
+    el("div",{style:"margin-top:14px;display:flex;align-items:center;gap:8px"},
+      el("span",{style:"font-size:13px"},"Visitantes:"), el("span",{class:"counter"}, ...digits)));
+}
+function cvBody(){
+  return el("div",{style:"text-align:center"},
+    el("div",{style:"font-size:40px"},"📄"),
+    el("p",null,"Aqui vai o seu PDF de currículo."),
+    el("a",{class:"btn95",href:"#",onclick:e=>e.preventDefault()},"⬇ Baixar CV"));
+}
+function welcomeBody(){
+  const btns = el("div",{style:"margin-top:12px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap"});
+  ICONS.forEach(ic=> btns.append(el("a",{class:"btn95",href:"#",onclick:e=>{e.preventDefault(); openWindow(ic.spec());}}, ic.glyph+" "+ic.label.replace("_"," "))));
+  return el("div",{style:"text-align:center"},
+    el("div",{class:"h-neon",style:"font-size:28px"}, "BRENNO//OS"),
+    el("div",{style:"margin-top:4px"}, "Sistema iniciado com sucesso ✓"),
+    el("div",{class:"inset",style:"margin-top:12px;text-align:left",html:
+      "Olá! Isto é um <b>spike</b> — um protótipo pra sentir a ideia.<br>Dê <b>dois cliques</b> nos ícones da esquerda (ou use o <b>Iniciar</b>) pra abrir as janelas. Arraste pelas barras de título. Minimize na barra de tarefas."}),
+    btns);
+}
+
+/* =================== ESPECIFICAÇÕES DE JANELA =================== */
+const projectSpec = (p)=>({ key:"proj_"+p.id, icon:"📁", title:p.name, width:380, render:()=>projectBody(p) });
+const ICONS = [
+  { key:"about",   glyph:"👤", label:"Sobre_mim", spec:()=>({ key:"about",  icon:"👤", title:"Sobre mim",    width:430, render:aboutBody }) },
+  { key:"proj",    glyph:"📁", label:"Projetos",  spec:()=>({ key:"proj",   icon:"📁", title:"Projetos",     width:380, render:projectsBody }) },
+  { key:"skills",  glyph:"💾", label:"Skills",    spec:()=>({ key:"skills", icon:"💾", title:"Skills.exe",   width:360, render:skillsBody }) },
+  { key:"contact", glyph:"✉",  label:"Contato",   spec:()=>({ key:"contact",icon:"✉",  title:"Contato",      width:370, render:contactBody }) },
+  { key:"cv",      glyph:"📄", label:"Curriculo", spec:()=>({ key:"cv",     icon:"📄", title:"curriculo.pdf",width:340, render:cvBody }) },
+];
+
+/* =================== WINDOW MANAGER =================== */
+const desktop = document.getElementById("desktop");
+const state = { wins:[], z:10, active:null };
+let taskbarEl, startMenuEl;
+
+function focusWin(w){
+  state.active = w.id;
+  w.min = false; w.el.style.display = "flex";
+  w.el.style.zIndex = (++state.z);
+  state.wins.forEach(x=> x.el.classList.toggle("inactive", x!==w));
+  renderTaskbar();
+}
+function openWindow(spec){
+  const existing = state.wins.find(x=> x.key===spec.key);
+  if(existing){ focusWin(existing); return existing; }
+  const id = "win"+Math.random().toString(36).slice(2,7);
+  const offset = state.wins.length*26;
+  const w = { id, key:spec.key, icon:spec.icon, title:spec.title, min:false };
+
+  const titlebar = el("div",{class:"titlebar"},
+    el("span",{class:"tico"}, spec.icon),
+    el("span",{class:"tt"}, spec.title),
+    el("button",{class:"tbtn", onclick:(e)=>{e.stopPropagation(); minimize(w);} }, "_"),
+    el("button",{class:"tbtn", onclick:(e)=>{e.stopPropagation(); closeWin(w);} }, "✕"));
+  const body = el("div",{class:"wbody",style:"width:"+(spec.width||320)+"px"});
+  body.append(spec.render());
+  const node = el("div",{class:"window", style:"left:"+(110+offset)+"px;top:"+(64+offset)+"px;width:"+(spec.width||320)+"px"},
+    titlebar,
+    el("div",{class:"menubar"}, el("span",null, el("u",null,"A"),"rquivo"), el("span",null, el("u",null,"E"),"ditar"),
+       el("span",null, el("u",null,"V"),"er"), el("span",null,"Aj",el("u",null,"u"),"da")),
+    body);
+  node.addEventListener("mousedown", ()=>focusWin(w));
+  makeDraggable(node, titlebar, w);
+  titlebar.addEventListener("dblclick", ()=>minimize(w));
+  w.el = node;
+  desktop.append(node);
+  state.wins.push(w);
+  focusWin(w);
+  renderTaskbar();
+  return w;
+}
+function closeWin(w){ w.el.remove(); state.wins = state.wins.filter(x=>x!==w); if(state.active===w.id) state.active=null; renderTaskbar(); }
+function minimize(w){ w.min=true; w.el.style.display="none"; if(state.active===w.id) state.active=null;
+  state.wins.forEach(x=>x.el.classList.add("inactive")); renderTaskbar(); }
+function toggleTask(w){ if(state.active===w.id && !w.min){ minimize(w); } else { focusWin(w); } }
+
+function makeDraggable(node, handle, w){
+  handle.addEventListener("mousedown", (e)=>{
+    if(e.target.classList.contains("tbtn")) return;
+    e.preventDefault(); focusWin(w);
+    const r = node.getBoundingClientRect();
+    const sx=e.clientX, sy=e.clientY, ox=r.left, oy=r.top;
+    const move=(ev)=>{ node.style.left = Math.max(0, ox+(ev.clientX-sx))+"px";
+                       node.style.top  = Math.max(0, oy+(ev.clientY-sy))+"px"; };
+    const up=()=>{ document.removeEventListener("mousemove",move); document.removeEventListener("mouseup",up); };
+    document.addEventListener("mousemove",move); document.addEventListener("mouseup",up);
+  });
+}
+
+/* =================== TASKBAR / START =================== */
+function buildChrome(){
+  startMenuEl = el("div",{id:"startmenu"},
+    el("div",{class:"side"},"BRENNO//OS"),
+    (function(){ const items = el("div",{class:"items"});
+      ICONS.forEach(ic=> items.append(el("div",{class:"mi", onclick:()=>{ openWindow(ic.spec()); toggleStart(false); }}, el("span",null,ic.glyph), ic.label.replace("_"," "))));
+      items.append(el("div",{class:"sep"}));
+      items.append(el("div",{class:"mi", onclick:()=>location.reload()}, el("span",null,"🔌"), "Reiniciar"));
+      return items; })());
+  document.body.append(startMenuEl);
+
+  const startBtn = el("button",{id:"start", onclick:(e)=>{ e.stopPropagation(); toggleStart(); }}, el("span",{style:"font-size:15px"},"🪟"), "Iniciar");
+  const tasks = el("div",{id:"tasks",style:"display:flex;gap:6px;overflow:hidden"});
+  const clock = el("div",{id:"clock"},"🕐 --:--");
+  taskbarEl = el("div",{id:"taskbar", onmousedown:e=>e.stopPropagation()}, startBtn, tasks, clock);
+  document.body.append(taskbarEl);
+
+  setInterval(()=>{ clock.textContent = "🕐 "+new Date().toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"}); }, 1000);
+  clock.textContent = "🕐 "+new Date().toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"});
+}
+function renderTaskbar(){
+  const tasks = document.getElementById("tasks"); if(!tasks) return;
+  tasks.innerHTML="";
+  state.wins.forEach(w=>{
+    tasks.append(el("button",{class:"taskitem"+((state.active===w.id&&!w.min)?" active":""), onclick:()=>toggleTask(w)},
+      el("span",null,w.icon), el("span",{class:"tl"}, w.title)));
+  });
+}
+function toggleStart(force){
+  const open = force===undefined ? !startMenuEl.classList.contains("open") : force;
+  startMenuEl.classList.toggle("open", open);
+  document.getElementById("start").classList.toggle("open", open);
+}
+
+/* =================== DESKTOP ICONS =================== */
+function buildIcons(){
+  const wrap = el("div",{class:"icons", onmousedown:e=>e.stopPropagation()});
+  ICONS.forEach(ic=>{
+    const node = el("div",{class:"icon"},
+      el("div",{class:"glyph"}, ic.glyph), el("div",{class:"label"}, ic.label));
+    node.addEventListener("click", ()=>{ document.querySelectorAll(".icon").forEach(n=>n.classList.remove("sel")); node.classList.add("sel"); });
+    node.addEventListener("dblclick", ()=> openWindow(ic.spec()));
+    wrap.append(node);
+  });
+  desktop.append(wrap);
+  desktop.append(el("div",{class:"hint"},"spike • arraste as janelas • dois cliques nas pastas"));
+}
+
+/* fecha menu / deseleciona ao clicar no vazio */
+document.addEventListener("mousedown", ()=>{ toggleStart(false); document.querySelectorAll(".icon").forEach(n=>n.classList.remove("sel")); });
+
+/* =================== BOOT =================== */
+const bootLines = [
+  "Detectando CPU............ 486DX2 OK",
+  "Memoria RAM.............. 8 MB OK",
+  "Placa de video........... VaporVGA OK",
+  "Mouse PS/2............... detectado",
+  "Carregando vibes......... [####] 100%",
+  "Montando C:\\PORTFOLIO.... pronto",
+];
+function startOS(){
+  buildIcons(); buildChrome();
+  openWindow({ key:"welcome", icon:"🖥", title:"Bem-vindo.txt", width:440, render:welcomeBody });
+}
+function runBoot(){
+  const log=document.getElementById("bootlog"), bar=document.getElementById("bootbar"), boot=document.getElementById("boot");
+  let i=0;
+  (function step(){
+    if(i<bootLines.length){
+      log.innerHTML += bootLines[i] + "<br>";
+      bar.style.width = Math.round(((i+1)/bootLines.length)*100)+"%";
+      i++; setTimeout(step, 300);
+    } else {
+      setTimeout(()=>{ startOS(); boot.style.opacity=0; setTimeout(()=>boot.style.display="none", 500); }, 450);
+    }
+  })();
+}
+window.addEventListener("DOMContentLoaded", runBoot);
+</script>
+</body>
+</html>
