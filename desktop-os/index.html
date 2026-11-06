@@ -130,10 +130,13 @@
 
   /* ===== DESKTOP ===== */
   #desktop{ position:fixed; inset:0; z-index:1; }
-  /* cada ícone é posicionado livremente (left/top em px) e pode ser arrastado */
+  /* ícones moram numa grade invisível: arrasta livre, e ao soltar encaixa na célula (igual "alinhar à grade" do Windows) */
   .icons{ position:absolute; inset:0; pointer-events:none; }
-  .icon{ position:absolute; width:108px; text-align:center; pointer-events:auto; touch-action:none; }
-  .icon.moving{ opacity:.75; z-index:2; }
+  .icon{ position:absolute; width:108px; text-align:center; pointer-events:auto; touch-action:none; transition:left .12s ease-out, top .12s ease-out; }
+  .icon.moving{ opacity:.75; z-index:2; transition:none; }
+  /* contorno da célula onde o ícone vai cair */
+  .icon-slot{ position:absolute; width:108px; height:84px; border:1px dotted rgba(255,255,255,.85); background:rgba(0,229,255,.12); display:none; }
+  .icon-slot.on{ display:block; }
   .icon .glyph{ font-size:44px; line-height:1; filter:drop-shadow(2px 2px 0 rgba(0,0,0,.35)); }
   .icon .label{ margin-top:3px; color:#fff; font-size:15px; letter-spacing:.4px;
     text-shadow:1px 1px 0 #000, 0 0 6px rgba(0,229,255,.6); padding:1px 4px; display:inline-block; }
@@ -560,36 +563,100 @@ function toggleStart(force){
 }
 
 /* =================== DESKTOP ICONS =================== */
-/* posições ficam salvas no navegador, então a arrumação do visitante continua na próxima visita */
-const ICON_POS_KEY = "brennoos.iconPos";
+/* Os ícones moram numa grade invisível, como no Windows com "alinhar ícones à grade":
+   durante o arraste o ícone segue o mouse; ao soltar, encaixa na célula mais próxima
+   (ou na livre mais perto, se ela estiver ocupada). A célula de cada ícone fica salva
+   no navegador, então a arrumação do visitante continua na próxima visita. */
+const ICON_CELLS_KEY = "brennoos.iconCells";
+const OLD_ICON_POS_KEY = "brennoos.iconPos";          // versão antiga: posições livres em px
 const ICON_W = 108, ICON_H = 84, TASKBAR_H = 38;
-function loadIconPos(){ try{ return JSON.parse(localStorage.getItem(ICON_POS_KEY)) || {}; }catch(e){ return {}; } }
-function saveIconPos(pos){ try{ localStorage.setItem(ICON_POS_KEY, JSON.stringify(pos)); }catch(e){} }
-/* mantém o ícone inteiro dentro da tela (acima da barra de tarefas) */
-function clampIcon(x, y){
-  return [ Math.max(0, Math.min(x, innerWidth - ICON_W)),
-           Math.max(0, Math.min(y, innerHeight - TASKBAR_H - ICON_H)) ];
+const GRID = { x0:4, y0:10, w:112, h:90 };            // origem e tamanho de cada célula
+const icons = [];                                      // { key, node, cell:[coluna, linha] }
+let iconSlot;
+
+const cellKey = c => c[0] + "," + c[1];
+function gridSize(){
+  return { cols: Math.max(1, Math.floor((innerWidth - GRID.x0) / GRID.w)),
+           rows: Math.max(1, Math.floor((innerHeight - TASKBAR_H - GRID.y0) / GRID.h)) };
 }
-function placeIcon(node, x, y){ [x, y] = clampIcon(x, y); node.style.left = x+"px"; node.style.top = y+"px"; return [x, y]; }
+function clampCell([c, r]){
+  const { cols, rows } = gridSize();
+  return [Math.max(0, Math.min(c, cols - 1)), Math.max(0, Math.min(r, rows - 1))];
+}
+const cellToPx = ([c, r]) => [GRID.x0 + c * GRID.w + (GRID.w - ICON_W) / 2, GRID.y0 + r * GRID.h];
+const pxToCell = (x, y) => clampCell([Math.round((x - GRID.x0 - (GRID.w - ICON_W) / 2) / GRID.w), Math.round((y - GRID.y0) / GRID.h)]);
+/* célula livre mais perto de `alvo`; no empate, a que vem antes de cima pra baixo, coluna por coluna (como o Windows enche a área de trabalho) */
+function freeCellNear(alvo, ocupadas){
+  const { cols, rows } = gridSize();
+  let melhor = null, menor = Infinity;
+  for(let c = 0; c < cols; c++) for(let r = 0; r < rows; r++){
+    if(ocupadas.has(cellKey([c, r]))) continue;
+    const d = (c - alvo[0]) ** 2 + (r - alvo[1]) ** 2;
+    if(d < menor){ menor = d; melhor = [c, r]; }
+  }
+  return melhor || alvo;                               // tela lotada: empilha (não deve acontecer com poucos ícones)
+}
+function setIconCell(ic, cell){
+  ic.cell = cell;
+  const [x, y] = cellToPx(cell);
+  ic.node.style.left = x + "px"; ic.node.style.top = y + "px";
+}
+
+function loadIconCells(){
+  try{
+    const salvo = JSON.parse(localStorage.getItem(ICON_CELLS_KEY));
+    if(salvo) return salvo;
+    // quem já arrumou os ícones na versão antiga (px livres) não perde a arrumação: vira a célula mais próxima
+    const antigo = JSON.parse(localStorage.getItem(OLD_ICON_POS_KEY));
+    if(antigo){
+      const cells = {};
+      for(const k in antigo) cells[k] = pxToCell(antigo[k][0], antigo[k][1]);
+      return cells;
+    }
+  }catch(e){}
+  return {};
+}
+function saveIconCells(){
+  const cells = {};
+  icons.forEach(ic => cells[ic.key] = ic.cell);
+  try{ localStorage.setItem(ICON_CELLS_KEY, JSON.stringify(cells)); localStorage.removeItem(OLD_ICON_POS_KEY); }catch(e){}
+}
+/* põe cada ícone na sua célula; se a tela encolheu e duas caíram no mesmo lugar, a segunda vai pra livre mais perto */
+function layoutIcons(preferidas){
+  const ocupadas = new Set();
+  icons.forEach((ic, i) => {
+    const quer = clampCell(preferidas[ic.key] || [0, i]);   // padrão: uma coluna à esquerda
+    const cell = ocupadas.has(cellKey(quer)) ? freeCellNear(quer, ocupadas) : quer;
+    ocupadas.add(cellKey(cell));
+    setIconCell(ic, cell);
+  });
+}
 
 function buildIcons(){
   const wrap = el("div",{class:"icons"});
-  const pos = loadIconPos();
-  ICONS.forEach((ic, i)=>{
+  iconSlot = el("div",{class:"icon-slot"});
+  wrap.append(iconSlot);
+  ICONS.forEach(def=>{
     const node = el("div",{class:"icon"},
-      el("div",{class:"glyph"}, ic.glyph), el("div",{class:"label"}, ic.label));
-    const saved = pos[ic.key];
-    placeIcon(node, saved ? saved[0] : 8, saved ? saved[1] : 12 + i*ICON_H);   // padrão: coluna à esquerda
-    node.addEventListener("dblclick", ()=> openWindow(ic.spec()));
-    makeIconDraggable(node, ic.key, pos);
+      el("div",{class:"glyph"}, def.glyph), el("div",{class:"label"}, def.label));
+    const ic = { key:def.key, node, cell:null };
+    icons.push(ic);
+    node.addEventListener("dblclick", ()=> openWindow(def.spec()));
+    makeIconDraggable(ic);
     wrap.append(node);
   });
+  let preferidas = loadIconCells();
+  layoutIcons(preferidas);
   desktop.append(wrap);
   desktop.append(el("div",{class:"hint"},"spike • arraste as janelas e os ícones • dois cliques nos ícones"));
 
-  addEventListener("resize", ()=> wrap.querySelectorAll(".icon").forEach(n=> placeIcon(n, n.offsetLeft, n.offsetTop)));
+  // ao redimensionar, reacomoda a partir das células salvas (se a tela voltar a crescer, os ícones voltam pro lugar)
+  addEventListener("resize", ()=> layoutIcons(preferidas));
+  // depois de cada arraste, o que está na tela vira a nova preferência
+  wrap.addEventListener("iconsmoved", ()=>{ preferidas = Object.fromEntries(icons.map(ic => [ic.key, ic.cell])); });
 }
-function makeIconDraggable(node, key, pos){
+function makeIconDraggable(ic){
+  const node = ic.node;
   node.addEventListener("pointerdown", e=>{
     if(e.button!==0) return;
     e.stopPropagation(); e.preventDefault();
@@ -598,19 +665,30 @@ function makeIconDraggable(node, key, pos){
     node.classList.add("sel");
 
     const sx=e.clientX, sy=e.clientY, ox=node.offsetLeft, oy=node.offsetTop;
-    let moved = false;
+    const ocupadas = new Set(icons.filter(o => o !== ic).map(o => cellKey(o.cell)));
+    let moved = false, destino = ic.cell;
     try{ node.setPointerCapture(e.pointerId); }catch(err){}
     const move = ev=>{
       const dx=ev.clientX-sx, dy=ev.clientY-sy;
       if(!moved && Math.hypot(dx,dy) < 4) return;        // só vira arraste depois de mexer uns pixels (não atrapalha o duplo clique)
-      if(!moved){ moved = true; node.classList.add("moving"); document.body.classList.add("dragging"); }
-      placeIcon(node, ox+dx, oy+dy);
+      if(!moved){ moved = true; node.classList.add("moving"); document.body.classList.add("dragging"); iconSlot.classList.add("on"); }
+      // segue o mouse sem sair da tela
+      const x = Math.max(0, Math.min(ox+dx, innerWidth - ICON_W));
+      const y = Math.max(0, Math.min(oy+dy, innerHeight - TASKBAR_H - ICON_H));
+      node.style.left = x+"px"; node.style.top = y+"px";
+      // mostra onde ele vai cair
+      const alvo = pxToCell(x, y);
+      destino = ocupadas.has(cellKey(alvo)) ? freeCellNear(alvo, ocupadas) : alvo;
+      const [cx, cy] = cellToPx(destino);
+      iconSlot.style.left = cx+"px"; iconSlot.style.top = cy+"px";
     };
     const up = ()=>{
       node.removeEventListener("pointermove", move); node.removeEventListener("pointerup", up); node.removeEventListener("pointercancel", up);
       if(!moved) return;
-      node.classList.remove("moving"); document.body.classList.remove("dragging");
-      pos[key] = [node.offsetLeft, node.offsetTop]; saveIconPos(pos);
+      node.classList.remove("moving"); document.body.classList.remove("dragging"); iconSlot.classList.remove("on");
+      setIconCell(ic, destino);                            // encaixa (a transição do CSS faz o "clique" visual)
+      saveIconCells();
+      node.parentNode.dispatchEvent(new Event("iconsmoved"));
     };
     node.addEventListener("pointermove", move); node.addEventListener("pointerup", up); node.addEventListener("pointercancel", up);
   });
