@@ -4,35 +4,89 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Projetos</title>
+<link rel="stylesheet" href="../cursor.css" />
 <!--
-  PÁGINA PROVISÓRIA.
-  É esta página que o "Projetos.exe" (o navegador do BRENNO//OS) abre.
-  Substitua este arquivo pela sua página de projetos — o navegador carrega
-  desktop-os/projetos/index.html (dá pra mudar em PROJECTS_PAGE, no index.html do desktop).
+  Página inicial do "Projetos.exe" (o navegador do BRENNO//OS): a lista de projetos.
+  Cada projeto mora numa pasta própria aqui dentro (ex.: mensageria/index.html).
+  O navegador carrega este arquivo (dá pra mudar em PROJECTS_PAGE, no index.html do desktop).
 -->
 <style>
-  body{ margin:0; padding:28px 20px; font-family:'Times New Roman',serif; color:#000;
-    background:#fff repeating-linear-gradient(45deg, #fff 0 12px, #f4ecff 12px 24px); text-align:center; }
-  h1{ font-family:'Arial Black',Impact,sans-serif; font-style:italic; font-size:34px; margin:0 0 6px;
-    color:#ff2e97; text-shadow:2px 2px 0 #00e5ff; }
-  .tape{ display:inline-block; margin:14px 0; padding:6px 16px; font:bold 15px 'Courier New',monospace; color:#000;
-    background:repeating-linear-gradient(135deg, #ffe600 0 14px, #111 14px 28px); }
-  .tape span{ background:#ffe600; padding:2px 8px; }
-  hr{ border:0; height:3px; background:linear-gradient(90deg,#ff6ad5,#9d4edd,#00e5ff); margin:18px auto; max-width:520px; }
-  p{ font-size:17px; }
+  :root{ --pink:#ff6ad5; --cyan:#00e5ff; --purple:#9d4edd; --deep:#1a0b2e; --deep2:#2d1b4e; --yellow:#ffe66d; --hot:#ff2e97; --win:#c3c7cb; --win-dark:#868a8e;
+    --mono:'Lucida Console','Courier New',monospace; --display:'Arial Black',Impact,sans-serif; }
+  *{ box-sizing:border-box; }
+  body{ margin:0; padding:24px 20px 30px; font-family:'Times New Roman',serif; color:#000;
+    background:#fff repeating-linear-gradient(45deg,#fff 0 12px,#f4ecff 12px 24px); }
+  .page{ max-width:720px; margin:0 auto; }
+  h1{ margin:0 0 6px; text-align:center; font-family:var(--display); font-style:italic; font-size:34px; color:var(--hot); text-shadow:2px 2px 0 var(--cyan); }
+  .sub{ margin:0; text-align:center; font-size:17px; }
+  hr{ border:0; height:3px; max-width:520px; margin:18px auto; background:linear-gradient(90deg,#ff6ad5,#9d4edd,#00e5ff); }
   a{ color:#0000ee; }
+  /* mesmo cursor pixelado do desktop (vem de ../cursor.css), inclusive em cima dos links */
+  a, button{ cursor:inherit; }
+
+  .proj{ display:flex; gap:16px; margin-bottom:18px; padding:14px; color:inherit; text-decoration:none; background:#fff; border:2px solid #000;
+    box-shadow:5px 5px 0 var(--pink); transition:transform .15s, box-shadow .15s; }
+  a.proj:hover{ transform:translate(-2px,-2px); box-shadow:7px 7px 0 var(--cyan); }
+  a.proj:hover .go{ background:var(--yellow); }
+  .thumb{ position:relative; flex:none; width:170px; height:118px; overflow:hidden; border:2px solid #000;
+    background:radial-gradient(120% 100% at 50% 80%, #ff8fd9 0%, #b14fd8 35%, #5b2a9e 60%, var(--deep) 90%); }
+  .thumb .sun{ position:absolute; left:50%; top:46%; translate:-50% -50%; width:70px; aspect-ratio:1; border-radius:50%; overflow:hidden;
+    background:linear-gradient(#fff3b0,#ffcc70 38%,#ff7bbf 70%,#ff4fa3); box-shadow:0 0 24px 4px rgba(255,120,190,.5); }
+  .thumb .sun::after{ content:""; position:absolute; left:0; right:0; bottom:0; height:58%; background:repeating-linear-gradient(to bottom,transparent 0 4px,var(--deep) 4px 8px); }
+  .thumb .grid{ position:absolute; left:-30%; right:-30%; bottom:-14%; height:46%; opacity:.6;
+    background-image:linear-gradient(var(--cyan) 1px,transparent 1px), linear-gradient(90deg,var(--cyan) 1px,transparent 1px);
+    background-size:18px 18px; transform:perspective(120px) rotateX(68deg); transform-origin:bottom; }
+  .thumb .mail{ position:absolute; left:50%; top:42%; translate:-50% -50%; font-size:34px; filter:drop-shadow(2px 2px 0 #000); animation:bob 2.4s ease-in-out infinite; }
+  @keyframes bob{ 50%{ transform:translateY(-5px) rotate(-4deg); } }
+  .info{ flex:1; min-width:0; }
+  .kick{ font:12px var(--mono); color:#5b2a9e; text-transform:uppercase; letter-spacing:.5px; }
+  .info h2{ margin:2px 0 4px; font:italic 24px var(--display); color:var(--deep2); }
+  .info p{ margin:0 0 8px; font-size:16px; }
+  .tags{ display:flex; flex-wrap:wrap; gap:4px; margin-bottom:10px; }
+  .tags span{ padding:1px 7px; font:12px var(--mono); color:var(--cyan); background:var(--deep2); border:1px solid var(--cyan); }
+  .go{ display:inline-block; padding:4px 12px; font:14px var(--mono); color:#000; background:var(--win); border:2px solid #000;
+    box-shadow:inset 1px 1px 0 #fff, inset -1px -1px 0 var(--win-dark); }
+  .new{ margin-left:8px; font:bold 13px var(--mono); color:#fff; background:var(--hot); padding:1px 6px; animation:blink 1s steps(1) infinite; }
+  .soon{ box-shadow:5px 5px 0 #bbb; border-style:dashed; }
+  .soon .thumb{ display:grid; place-items:center; font-size:40px; background:repeating-linear-gradient(135deg,#ffe600 0 14px,#111 14px 28px); }
+  .tape{ display:inline-block; padding:4px 12px; font:bold 13px var(--mono); background:repeating-linear-gradient(135deg,#ffe600 0 12px,#111 12px 24px); }
+  .tape span{ background:#ffe600; padding:1px 6px; }
   .blink{ animation:blink 1s steps(1) infinite; }
   @keyframes blink{ 50%{ opacity:0; } }
+  .foot{ text-align:center; font-size:13px; }
+  @media (max-width:560px){ .proj{ flex-direction:column; } .thumb{ width:100%; } }
+  @media (prefers-reduced-motion:reduce){ *{ animation:none !important; } }
 </style>
 </head>
 <body>
+<div class="page">
   <h1>Meus Projetos</h1>
-  <div class="tape"><span>PÁGINA EM CONSTRUÇÃO</span></div>
+  <p class="sub">Clique num projeto pra ver como ele funciona — e testar.</p>
   <hr>
-  <p>Em breve, aqui vai ficar tudo sobre os meus projetos.</p>
-  <p class="blink">Volte logo!</p>
+
+  <a class="proj" href="mensageria/index.html">
+    <div class="thumb" aria-hidden="true"><div class="sun"></div><div class="grid"></div><div class="mail">✉</div></div>
+    <div class="info">
+      <div class="kick">Sistema corporativo · Setor público</div>
+      <h2>Mensageria</h2>
+      <p>Contatos institucionais e e-mail em massa para a rede Mercocidades. Tem versão emulada pra testar.</p>
+      <div class="tags"><span>Spring Boot</span><span>Next.js</span><span>PostgreSQL</span><span>RabbitMQ</span><span>Entra ID</span></div>
+      <span class="go">Abrir projeto ▶</span><span class="new">NOVO!</span>
+    </div>
+  </a>
+
+  <div class="proj soon">
+    <div class="thumb" aria-hidden="true">🚧</div>
+    <div class="info">
+      <h2>Próximo projeto</h2>
+      <p>Ainda no forno.</p>
+      <div class="tape"><span>EM CONSTRUÇÃO</span></div>
+    </div>
+  </div>
+
   <hr>
-  <p style="font-size:13px">Melhor visualizado em 800x600 &middot; <a href="#topo" onclick="return false">voltar ao topo</a></p>
-  <script src="../click-sound.js"></script>
+  <p class="foot">Melhor visualizado em 800x600 &middot; <span class="blink">Volte sempre!</span></p>
+</div>
+<script src="../click-sound.js"></script>
 </body>
 </html>

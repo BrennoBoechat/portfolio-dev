@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Mensageria — Projetos</title>
+<!--
+  Página do projeto Mensageria, aberta pelo Projetos.exe (navegador do BRENNO//OS).
+  Em cima: explicação em etapas, com "prints". Embaixo: o sistema emulado.
+  TUDO é simulado: contatos, e-mails, envios e auditoria são inventados, vivem só
+  na memória desta página e nada sai do navegador. O código do sistema real é privado.
+    style.css  visual da página e do mini-app
+    app.js     dados fictícios, mini-app (login, hub, contatos, envio, auditoria) e animações
+-->
+<link rel="stylesheet" href="../../cursor.css" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="page">
+  <a class="crumb" href="../index.html">◀ Voltar aos projetos</a>
+
+  <!-- ===== HERO ===== -->
+  <header class="hero">
+    <div class="scene" aria-hidden="true">
+      <div class="sun"></div>
+      <div class="grid"></div>
+      <span class="env" style="top:14%; animation-duration:11s">✉</span>
+      <span class="env" style="top:34%; animation-duration:15s; animation-delay:-6s; font-size:16px">✉</span>
+      <span class="env" style="top:6%;  animation-duration:19s; animation-delay:-12s; font-size:28px">✉</span>
+    </div>
+    <div class="hero-in">
+      <div class="kicker">Projeto · Sistema corporativo · Setor público</div>
+      <h1 class="title">MENSAGERIA</h1>
+      <p class="lede">Contatos institucionais e e-mail em massa para a rede <b>Mercocidades</b>.</p>
+      <p class="typing" aria-hidden="true">&gt; <span id="typed">conecta cidades da América Latina</span><i class="caret"></i></p>
+      <div class="chips">
+        <span class="chip">Java 21</span><span class="chip">Spring Boot 3</span><span class="chip">Next.js 15</span><span class="chip">React 19</span>
+        <span class="chip">PostgreSQL</span><span class="chip">RabbitMQ</span><span class="chip">Entra ID</span><span class="chip">Microsoft Graph</span>
+      </div>
+      <div class="cta">
+        <a class="btn95 hot" href="#demo" data-jump="demo">▶ Testar o sistema</a>
+        <a class="btn95" href="#etapas" data-jump="etapas">Como funciona ↓</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="tape"><span>SISTEMA EMULADO · DADOS 100% FICTÍCIOS</span></div>
+
+  <section class="stats reveal" aria-label="Números do sistema">
+    <div class="stat"><span class="counter" data-count="5"></span><div class="lbl">telas</div></div>
+    <div class="stat"><span class="counter" data-count="6"></span><div class="lbl">envios em paralelo</div></div>
+    <div class="stat"><span class="counter" data-count="2"></span><div class="lbl">formas de login</div></div>
+    <div class="stat"><span class="counter" data-count="0"></span><div class="lbl">dados reais nesta página</div></div>
+  </section>
+
+  <!-- ===== ETAPAS ===== -->
+  <section id="etapas">
+    <h2 class="sec">Como funciona</h2>
+    <p class="sub">Seis etapas, do login ao registro de auditoria. Cada print é o sistema emulado lá embaixo — clique em <b>ver ao vivo</b>.</p>
+
+    <div class="steps">
+      <article class="step reveal">
+        <div class="txt">
+          <h3><span class="num">1</span>Login seguro</h3>
+          <p>Entra com e-mail e senha ou com a conta Microsoft.</p>
+          <p>Errou a senha várias vezes? A conta trava por um tempo.</p>
+          <ul class="facts"><li>BCrypt</li><li>JWT + refresh token</li><li>SSO Entra ID</li><li>bloqueio por tentativas</li></ul>
+        </div>
+        <figure class="print" data-print="login" data-file="login.png"><figcaption>fig. 1 — tela de login</figcaption></figure>
+      </article>
+
+      <article class="step reveal">
+        <div class="txt">
+          <h3><span class="num">2</span>Hub central</h3>
+          <p>Depois do login, dois caminhos: enviar mensagens ou cuidar dos contatos.</p>
+          <ul class="facts"><li>Next.js App Router</li><li>tema claro/escuro</li></ul>
+        </div>
+        <figure class="print" data-print="hub" data-file="hub.png"><figcaption>fig. 2 — hub</figcaption></figure>
+      </article>
+
+      <article class="step reveal">
+        <div class="txt">
+          <h3><span class="num">3</span>Base de contatos</h3>
+          <p>Cada cidade da rede, com autoridade, e-mail e instância.</p>
+          <p>Busca e filtra por país, instância e unidade temática.</p>
+          <ul class="facts"><li>criar · editar · excluir</li><li>adimplência</li><li>paginação</li></ul>
+        </div>
+        <figure class="print" data-print="contatos" data-file="contatos.png"><figcaption>fig. 3 — base de contatos</figcaption></figure>
+      </article>
+
+      <article class="step reveal">
+        <div class="txt">
+          <h3><span class="num">4</span>Compor e-mail</h3>
+          <p>Escolhe os destinatários e escreve uma vez só.</p>
+          <p>Variáveis personalizam cada cópia com o nome e a cidade.</p>
+          <ul class="facts"><li>{{nome}} {{cidade}} {{email}}</li><li>anexos até 10 MB</li><li>rascunho</li><li>pré-visualização</li></ul>
+        </div>
+        <figure class="print" data-print="enviar" data-file="compor.png"><figcaption>fig. 4 — compor e-mail</figcaption></figure>
+      </article>
+
+      <article class="step reveal">
+        <div class="txt">
+          <h3><span class="num">5</span>Disparo em massa</h3>
+          <p>Um envio por destinatário, seis de cada vez.</p>
+          <p>Se o Office 365 limita a taxa, espera e tenta de novo. O que falha vai para a DLQ.</p>
+          <ul class="facts"><li>RabbitMQ</li><li>retry em 429</li><li>Dead Letter Queue</li><li>Microsoft Graph</li></ul>
+        </div>
+        <figure class="print" data-print="envio" data-file="disparo.png"><figcaption>fig. 5 — fila de envio</figcaption></figure>
+      </article>
+
+      <article class="step reveal">
+        <div class="txt">
+          <h3><span class="num">6</span>Auditoria</h3>
+          <p>Login, edição, envio: toda ação fica registrada com hora e autor.</p>
+          <ul class="facts"><li>registros imutáveis</li><li>retenção configurável</li></ul>
+        </div>
+        <figure class="print" data-print="auditoria" data-file="auditoria.png"><figcaption>fig. 6 — log de auditoria</figcaption></figure>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===== ARQUITETURA ===== -->
+  <section id="arquitetura" class="reveal">
+    <h2 class="sec">Por baixo do capô</h2>
+    <p class="sub">O caminho de um e-mail, do clique até a caixa de entrada.</p>
+    <div class="arch">
+      <div class="pipe">
+        <span class="pkt"></span><span class="pkt p2"></span><span class="pkt p3"></span>
+        <div class="layer">
+          <div class="ln">🖥 Frontend</div>
+          <div class="tech">Next.js 15 · React 19 · TypeScript · Tailwind v4</div>
+          <div class="note">Telas, filtros e disparo dos envios em pool.</div>
+        </div>
+        <div class="layer">
+          <div class="ln">🔐 Autenticação</div>
+          <div class="tech">NextAuth · Microsoft Entra ID · JWT</div>
+          <div class="note">Login por senha ou SSO, sessão sem estado.</div>
+        </div>
+        <div class="layer">
+          <div class="ln">☕ API REST</div>
+          <div class="tech">Java 21 · Spring Boot 3.4 · Spring Security</div>
+          <div class="note">Regras de negócio, contatos, rascunhos e cota de envio.</div>
+        </div>
+        <div class="layer">
+          <div class="ln">🐇 Fila</div>
+          <div class="tech">RabbitMQ · Dead Letter Queue</div>
+          <div class="note">Entrega assíncrona: nada se perde se algo cair.</div>
+        </div>
+        <div class="layer">
+          <div class="ln">✉ Entrega</div>
+          <div class="tech">Microsoft Graph API · Office 365</div>
+          <div class="note">O e-mail sai pela conta institucional.</div>
+        </div>
+      </div>
+      <div class="side">
+        <div class="st">Apoio</div>
+        <div class="layer">
+          <div class="ln">🐘 Banco</div>
+          <div class="tech">PostgreSQL 16 · Liquibase</div>
+          <div class="note">Contatos, usuários e auditoria.</div>
+        </div>
+        <div class="layer">
+          <div class="ln">📈 Observabilidade</div>
+          <div class="tech">Actuator · Prometheus</div>
+          <div class="note">Saúde e métricas.</div>
+        </div>
+        <div class="layer">
+          <div class="ln">🐳 Infra</div>
+          <div class="tech">Docker Compose · Traefik</div>
+          <div class="note">Sobe tudo com um comando.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SISTEMA EMULADO ===== -->
+  <section id="demo">
+    <h2 class="sec">Teste você mesmo</h2>
+    <p class="sub">O sistema emulado: entre, filtre contatos, escreva um e-mail e dispare. Nada é enviado de verdade.</p>
+    <div class="win" id="demoWin">
+      <div class="wtitle"><span>✉ MENSAGERIA.exe</span><span class="wbtns" aria-hidden="true"><b>_</b><b>□</b><b>×</b></span></div>
+      <div id="app"></div>
+    </div>
+    <div class="demo-foot">
+      <span>💡 Senha: <code>demo123</code> · erre 3 vezes pra ver o bloqueio</span>
+      <button class="btn95 sm" id="resetDemo" type="button">↺ Reiniciar</button>
+    </div>
+  </section>
+
+  <footer>
+    <hr>
+    <p>Código-fonte privado, de uso institucional. Esta página é uma emulação:<br>nenhum contato, e-mail ou credencial real aparece aqui.</p>
+    <p><a href="../index.html">◀ Voltar aos projetos</a> · Melhor visualizado em 800x600</p>
+  </footer>
+</div>
+
+<script src="../../click-sound.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
