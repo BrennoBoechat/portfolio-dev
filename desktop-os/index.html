@@ -155,11 +155,50 @@
   .menubar u{ text-decoration:underline; }
   .wbody{ padding:14px; overflow:auto; background:var(--win); color:#101010; font-size:15px; line-height:1.4; max-height:62vh; }
 
-  .folder-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(92px,1fr)); gap:14px; }
-  .fitem{ text-align:center; padding:6px 2px; }
-  .fitem:hover{ background:#b7d3ff; outline:1px dotted #0a1fa0; }
-  .fitem .fg{ font-size:38px; filter:drop-shadow(1px 1px 0 rgba(0,0,0,.3)); }
-  .fitem .fl{ font-size:13px; margin-top:2px; word-break:break-word; }
+  .wbody.flush{ padding:0; max-height:none; overflow:visible; }
+  /* enquanto arrasta, o iframe não pode "engolir" o movimento do mouse */
+  body.dragging iframe{ pointer-events:none; }
+
+  /* ===== NAVEGADOR (Projetos.exe) ===== */
+  .browser{ display:flex; flex-direction:column; }
+
+  /* janela maximizada: cobre o desktop (menos a barra de tarefas) e o conteúdo estica junto.
+     left/top/width inline continuam guardados, por isso restaurar volta pro lugar de antes. */
+  .window.max{ left:0 !important; top:0 !important; width:100% !important; height:calc(100% - 38px); box-shadow:inset 1px 1px 0 var(--win-light), inset -1px -1px 0 var(--win-dark); }
+  .window.max .titlebar{ cursor:default; }
+  .window.max .wbody{ width:auto !important; max-height:none; flex:1; min-height:0; display:flex; flex-direction:column; }
+  .window.max .wbody > *{ flex:1; min-height:0; }
+  .window.max .bview{ flex:1; min-height:0; display:flex; }
+  .window.max .bview iframe{ flex:1; height:auto !important; }
+  .btools{ display:flex; align-items:stretch; gap:2px; padding:3px 4px; border-bottom:1px solid var(--win-dark); box-shadow:0 1px 0 #fff; }
+  .bbtn{ min-width:58px; padding:3px 6px 2px; border:1px solid transparent; background:none; color:#000; font-family:var(--mono); font-size:12px;
+    display:flex; flex-direction:column; align-items:center; gap:1px; }
+  .bbtn .bi{ font-size:18px; line-height:1; }
+  .bbtn:not(:disabled):hover{ border-color:#fff var(--win-dark) var(--win-dark) #fff; }
+  .bbtn:not(:disabled):active{ border-color:var(--win-dark) #fff #fff var(--win-dark); }
+  .bbtn:disabled{ color:var(--win-dark); text-shadow:1px 1px 0 #fff; }
+  .bsep{ width:2px; margin:2px 3px; border-left:1px solid var(--win-dark); border-right:1px solid #fff; }
+  .throbber{ margin-left:auto; width:40px; height:40px; flex:0 0 auto; border:2px solid var(--win-dark); box-shadow:inset -1px -1px 0 #fff;
+    background:#000; display:flex; align-items:center; justify-content:center; overflow:hidden; position:relative; }
+  .throbber::before{ content:""; position:absolute; left:50%; top:62%; width:24px; height:24px; translate:-50% -50%; border-radius:50%;
+    background:repeating-linear-gradient(180deg, var(--yellow) 0 3px, var(--pink) 3px 4px); }
+  .throbber::after{ content:"V"; position:relative; font-family:var(--display); font-style:italic; font-size:15px; color:var(--cyan); text-shadow:1px 1px 0 #000; top:-8px; }
+  .browser.loading .throbber::before{ animation:throb .9s steps(6) infinite; }
+  @keyframes throb{ from{ top:120%; } to{ top:30%; } }
+  .baddr{ display:flex; align-items:center; gap:6px; padding:4px 6px; font-size:13px; color:#000; border-bottom:1px solid var(--win-dark); box-shadow:0 1px 0 #fff; }
+  .baddr .field{ flex:1; display:flex; align-items:center; gap:5px; background:#fff; border:2px solid var(--win-dark);
+    box-shadow:inset 1px 1px 0 #000, inset -1px -1px 0 #dfdfdf; padding:2px 5px; font-family:var(--mono); font-size:13px; overflow:hidden; white-space:nowrap; }
+  .bview{ margin:3px; border:2px solid var(--win-dark); box-shadow:inset 1px 1px 0 #000, inset -1px -1px 0 #fff; padding:2px; background:#fff; }
+  .bview iframe{ display:block; width:100%; border:0; background:#fff; }
+  .bstatus{ display:flex; gap:3px; padding:0 3px 3px; font-size:12px; color:#000; }
+  .bstatus > span{ border:1px solid; border-color:var(--win-dark) #fff #fff var(--win-dark); padding:2px 6px; white-space:nowrap; }
+  .bstatus .msg{ flex:1; overflow:hidden; text-overflow:ellipsis; }
+  .bstatus .prog{ width:120px; padding:2px; }
+  .bstatus .prog i{ display:block; height:100%; min-height:10px; width:0;
+    background:repeating-linear-gradient(90deg, var(--navy, #0a1fa0) 0 8px, transparent 8px 10px); }
+  .browser.loading .prog i{ animation:prog 2.5s steps(12) forwards; }
+  .browser.done .prog i{ width:100%; transition:width .15s; }
+  @keyframes prog{ from{ width:0; } to{ width:90%; } }
 
   .h-neon{ font-family:var(--display); font-style:italic; font-size:26px; line-height:1.05;
     background:linear-gradient(90deg,var(--pink),var(--cyan)); -webkit-background-clip:text; background-clip:text; color:transparent; letter-spacing:.5px; }
@@ -254,16 +293,10 @@ const PROFILE = {
   bio: "Dev apaixonado por interfaces com personalidade e backends que não caem às 3h da manhã. Transformo café em software desde 20XX. Curto design retrô, sistemas bem pensados e aquele detalhe que faz a pessoa sorrir.",
   location: "Niterói, BR",
 };
-const PROJECTS = [
-  { id:"p1", name:"projeto_alpha", title:"Projeto Alpha", tech:["React","Node","Postgres"], year:"2024",
-    desc:"Uma plataforma genérica que faz coisas genéricas muito bem. Dashboard em tempo real, auth e uma API limpinha." },
-  { id:"p2", name:"loja_retro", title:"Loja Retrô", tech:["Next.js","Stripe","Tailwind"], year:"2023",
-    desc:"E-commerce com tema anos 90. Carrinho, checkout e um hit counter honesto no rodapé." },
-  { id:"p3", name:"api_do_caos", title:"API do Caos", tech:["Go","Redis","Docker"], year:"2023",
-    desc:"Microserviço que aguenta tranco. Fila, cache e observabilidade de verdade." },
-  { id:"p4", name:"app_mobile", title:"App Mobile X", tech:["React Native","Expo"], year:"2022",
-    desc:"Aplicativo multiplataforma com offline-first e aquelas animações gostosas." },
-];
+/* Página que o "navegador" (Projetos.exe) abre. Caminho relativo a este index.html. */
+const PROJECTS_PAGE = "projetos/index.html";
+/* Endereço "de mentira" mostrado na barra do navegador, só pela ambientação. */
+const FAKE_HOST = "http://www.brenno.os/projetos/";
 const SKILLS = {
   "Front": ["React","TypeScript","CSS/Sass","Next.js","Vite"],
   "Back": ["Node.js","Go","Python","PostgreSQL","Redis"],
@@ -304,29 +337,53 @@ function aboutBody(){
   );
   return root;
 }
-function projectsBody(api){
-  const grid = el("div",{class:"folder-grid"});
-  PROJECTS.forEach(p=>{
-    grid.append(el("div",{class:"fitem", ondblclick:()=>openWindow(projectSpec(p))},
-      el("div",{class:"fg"},"📁"), el("div",{class:"fl"}, p.name+"/")));
+/* Navegador anos 90: barra de ferramentas, endereço, iframe com a página de projetos e barra de status.
+   O histórico (Voltar/Avançar) é próprio, pra nunca mexer no histórico da página principal. */
+function browserBody(){
+  const HOME = new URL(PROJECTS_PAGE, location.href).href;
+  const BASE = new URL(".", HOME).href;
+  const hist = [HOME]; let idx = 0, navigating = false;
+
+  const frame = el("iframe",{title:"Projetos", src:HOME});
+  frame.style.height = Math.max(240, Math.min(520, innerHeight - 270)) + "px";
+  const addr = el("span",null, FAKE_HOST);
+  const msg = el("span",{class:"msg"}, "Abrindo página...");
+  const btn = (icon, label, fn)=> el("button",{class:"bbtn", onclick:fn}, el("span",{class:"bi"}, icon), label);
+  const bBack = btn("◀","Voltar", ()=>go(idx-1));
+  const bFwd  = btn("▶","Avançar",()=>go(idx+1));
+  const bStop = btn("✖","Parar",  ()=>{ try{ frame.contentWindow.stop(); }catch(e){} setDone("Interrompido."); });
+  const bReload = btn("↻","Atualizar",()=>{ setLoading(); try{ frame.contentWindow.location.reload(); }catch(e){ frame.src = hist[idx]; } });
+  const bHome = btn("⌂","Início", ()=>{ hist.splice(idx+1); if(hist[idx]!==HOME){ hist.push(HOME); idx++; } go(idx); });
+
+  const root = el("div",{class:"browser loading"},
+    el("div",{class:"btools"}, bBack, bFwd, bStop, bReload, el("div",{class:"bsep"}), bHome, el("div",{class:"throbber",title:"VaporWeb"})),
+    el("div",{class:"baddr"}, "Endereço", el("div",{class:"field"}, el("span",null,"🌐"), addr)),
+    el("div",{class:"bview"}, frame),
+    el("div",{class:"bstatus"}, msg, el("span",{class:"prog"}, el("i")), el("span",null,"🌐 Internet")));
+
+  function fake(url){
+    const clean = url.split("#")[0].split("?")[0];
+    return clean.startsWith(BASE) ? FAKE_HOST + clean.slice(BASE.length).replace(/index\.html$/,"") : url;
+  }
+  function syncButtons(){ bBack.disabled = idx<=0; bFwd.disabled = idx>=hist.length-1; }
+  function setLoading(){ root.classList.remove("done"); root.classList.add("loading"); msg.textContent = "Abrindo página "+fake(hist[idx])+"..."; }
+  function setDone(text){ root.classList.remove("loading"); root.classList.add("done"); msg.textContent = text; }
+  function go(i){
+    if(i<0 || i>=hist.length) return;
+    idx = i; navigating = true; setLoading(); syncButtons();
+    try{ frame.contentWindow.location.replace(hist[idx]); }catch(e){ frame.src = hist[idx]; }
+  }
+
+  frame.addEventListener("load", ()=>{
+    // em http(s) dá pra ler a URL do iframe; abrindo via file:// o navegador bloqueia, aí mantemos a última conhecida
+    let url = null; try{ url = frame.contentWindow.location.href; }catch(e){}
+    if(url && url!=="about:blank" && !navigating && url!==hist[idx]){ hist.splice(idx+1); hist.push(url); idx = hist.length-1; }
+    navigating = false;
+    addr.textContent = fake(url || hist[idx]);
+    syncButtons(); setDone("Concluído");
   });
-  return el("div",null,
-    el("div",{style:"margin-bottom:8px;font-size:13px;color:#333"}, "C:\\PORTFOLIO\\PROJETOS — "+PROJECTS.length+" objeto(s)"),
-    grid,
-    el("div",{style:"margin-top:12px;font-size:12px;color:#555"}, "dica: dê 2 cliques numa pasta"));
-}
-function projectBody(p){
-  const techs = el("div",{style:"margin-top:6px"});
-  p.tech.forEach(t=>techs.append(el("span",{class:"chip"},t)));
-  return el("div",null,
-    el("div",{class:"h-neon",style:"font-size:22px"}, p.title),
-    el("div",{style:"color:#5b2a9e;font-weight:bold"}, p.year),
-    el("div",{class:"inset",style:"margin-top:8px;height:110px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#ff6ad5,#00e5ff);color:#fff;font-family:var(--pixel);font-weight:bold;font-size:14px"}, "[ screenshot.png ]"),
-    el("p",{style:"margin-top:10px"}, p.desc),
-    techs,
-    el("div",{style:"margin-top:12px;display:flex;gap:8px"},
-      el("a",{class:"btn95",href:"#",onclick:e=>e.preventDefault()},"▶ Ver demo"),
-      el("a",{class:"btn95",href:"#",onclick:e=>e.preventDefault()},"⌥ Código")));
+  syncButtons();
+  return root;
 }
 function skillsBody(){
   const root = el("div");
@@ -371,10 +428,10 @@ function welcomeBody(){
 }
 
 /* =================== ESPECIFICAÇÕES DE JANELA =================== */
-const projectSpec = (p)=>({ key:"proj_"+p.id, icon:"📁", title:p.name, width:380, render:()=>projectBody(p) });
 const ICONS = [
   { key:"about",   glyph:"👤", label:"Sobre_mim", spec:()=>({ key:"about",  icon:"👤", title:"Sobre mim",    width:430, render:aboutBody }) },
-  { key:"proj",    glyph:"📁", label:"Projetos",  spec:()=>({ key:"proj",   icon:"📁", title:"Projetos",     width:380, render:projectsBody }) },
+  { key:"proj",    glyph:"🌐", label:"Projetos.exe", spec:()=>({ key:"proj", icon:"🌐", title:"Projetos - VaporWeb Navegador", width:820, center:true, maximizable:true,
+      flush:true, menu:["Arquivo","Editar","Ver","Favoritos","Ajuda"], render:browserBody }) },
   { key:"skills",  glyph:"💾", label:"Skills",    spec:()=>({ key:"skills", icon:"💾", title:"Skills.exe",   width:360, render:skillsBody }) },
   { key:"contact", glyph:"✉",  label:"Contato",   spec:()=>({ key:"contact",icon:"✉",  title:"Contato",      width:370, render:contactBody }) },
   { key:"cv",      glyph:"📄", label:"Curriculo", spec:()=>({ key:"cv",     icon:"📄", title:"curriculo.pdf",width:340, render:cvBody }) },
@@ -397,25 +454,35 @@ function openWindow(spec){
   if(existing){ focusWin(existing); return existing; }
   const id = "win"+Math.random().toString(36).slice(2,7);
   const offset = state.wins.length*26;
-  const w = { id, key:spec.key, icon:spec.icon, title:spec.title, min:false };
+  const w = { id, key:spec.key, icon:spec.icon, title:spec.title, min:false, max:false };
 
   const titlebar = el("div",{class:"titlebar"},
     el("span",{class:"tico"}, spec.icon),
     el("span",{class:"tt"}, spec.title),
-    el("button",{class:"tbtn", onclick:(e)=>{e.stopPropagation(); minimize(w);} }, "_"),
-    el("button",{class:"tbtn", onclick:(e)=>{e.stopPropagation(); closeWin(w);} }, "✕"));
-  const body = el("div",{class:"wbody",style:"width:"+(spec.width||320)+"px"});
+    el("button",{class:"tbtn", title:"Minimizar", onclick:(e)=>{e.stopPropagation(); minimize(w);} }, "_"),
+    spec.maximizable ? (w.maxBtn = el("button",{class:"tbtn", title:"Maximizar", onclick:(e)=>{e.stopPropagation(); toggleMax(w);} }, "□")) : null,
+    el("button",{class:"tbtn", title:"Fechar", onclick:(e)=>{e.stopPropagation(); closeWin(w);} }, "✕"));
+  // janelas grandes (ex.: navegador) encolhem pra caber na tela
+  const width = Math.min(spec.width||320, innerWidth-16);
+  const left = Math.max(0, Math.min(130+offset, innerWidth-width-8));
+  const top = (spec.top ?? 64) + offset;
+  const body = el("div",{class:"wbody"+(spec.flush?" flush":""),style:"width:"+width+"px"});
   body.append(spec.render());
-  const node = el("div",{class:"window", style:"left:"+(110+offset)+"px;top:"+(64+offset)+"px;width:"+(spec.width||320)+"px"},
-    titlebar,
-    el("div",{class:"menubar"}, el("span",null, el("u",null,"A"),"rquivo"), el("span",null, el("u",null,"E"),"ditar"),
-       el("span",null, el("u",null,"V"),"er"), el("span",null,"Aj",el("u",null,"u"),"da")),
-    body);
+  // menu com a primeira letra sublinhada (Arquivo, Editar...)
+  const menu = el("div",{class:"menubar"});
+  (spec.menu || ["Arquivo","Editar","Ver","Ajuda"]).forEach(m=> menu.append(el("span",null, el("u",null,m[0]), m.slice(1))));
+  const node = el("div",{class:"window", style:"left:"+left+"px;top:"+top+"px;width:"+width+"px"},
+    titlebar, menu, body);
   node.addEventListener("mousedown", ()=>focusWin(w));
   makeDraggable(node, titlebar, w);
-  titlebar.addEventListener("dblclick", ()=>minimize(w));
+  // duplo clique na barra de título: maximiza (se puder) ou minimiza
+  titlebar.addEventListener("dblclick", (e)=>{ if(e.target.closest(".tbtn")) return; spec.maximizable ? toggleMax(w) : minimize(w); });
   w.el = node;
   desktop.append(node);
+  if(spec.center){  // centraliza na área livre (acima da barra de tarefas), já com a altura real da janela
+    node.style.left = Math.max(0, Math.round((innerWidth - node.offsetWidth)/2)) + "px";
+    node.style.top  = Math.max(0, Math.round((innerHeight - 38 - node.offsetHeight)/2)) + "px";
+  }
   state.wins.push(w);
   focusWin(w);
   renderTaskbar();
@@ -425,19 +492,35 @@ function closeWin(w){ w.el.remove(); state.wins = state.wins.filter(x=>x!==w); i
 function minimize(w){ w.min=true; w.el.style.display="none"; if(state.active===w.id) state.active=null;
   state.wins.forEach(x=>x.el.classList.add("inactive")); renderTaskbar(); }
 function toggleTask(w){ if(state.active===w.id && !w.min){ minimize(w); } else { focusWin(w); } }
+/* tela cheia: a janela ocupa todo o desktop acima da barra de tarefas; a posição antiga volta ao restaurar */
+function toggleMax(w){
+  w.max = !w.max;
+  w.el.classList.toggle("max", w.max);
+  w.maxBtn.textContent = w.max ? "❐" : "□";
+  w.maxBtn.title = w.max ? "Restaurar" : "Maximizar";
+  focusWin(w);
+}
 
 function makeDraggable(node, handle, w){
   handle.addEventListener("mousedown", (e)=>{
     if(e.target.classList.contains("tbtn")) return;
     e.preventDefault(); focusWin(w);
+    if(w.max) return;   // maximizada não arrasta
     const r = node.getBoundingClientRect();
     const sx=e.clientX, sy=e.clientY, ox=r.left, oy=r.top;
+    document.body.classList.add("dragging");
     const move=(ev)=>{ node.style.left = Math.max(0, ox+(ev.clientX-sx))+"px";
                        node.style.top  = Math.max(0, oy+(ev.clientY-sy))+"px"; };
-    const up=()=>{ document.removeEventListener("mousemove",move); document.removeEventListener("mouseup",up); };
+    const up=()=>{ document.body.classList.remove("dragging");
+                   document.removeEventListener("mousemove",move); document.removeEventListener("mouseup",up); };
     document.addEventListener("mousemove",move); document.addEventListener("mouseup",up);
   });
 }
+/* clique dentro de um iframe não dispara mousedown aqui fora: detecta pelo foco e traz a janela pra frente */
+addEventListener("blur", ()=> setTimeout(()=>{
+  const f = document.activeElement;
+  if(f && f.tagName==="IFRAME"){ const w = state.wins.find(x=> x.el.contains(f)); if(w && state.active!==w.id) focusWin(w); }
+}));
 
 /* =================== TASKBAR / START =================== */
 function buildChrome(){
