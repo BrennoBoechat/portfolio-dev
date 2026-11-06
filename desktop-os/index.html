@@ -130,8 +130,10 @@
 
   /* ===== DESKTOP ===== */
   #desktop{ position:fixed; inset:0; z-index:1; }
-  .icons{ position:absolute; top:16px; left:16px; display:flex; flex-direction:column; gap:20px; }
-  .icon{ width:94px; text-align:center; }
+  /* cada ícone é posicionado livremente (left/top em px) e pode ser arrastado */
+  .icons{ position:absolute; inset:0; pointer-events:none; }
+  .icon{ position:absolute; width:108px; text-align:center; pointer-events:auto; touch-action:none; }
+  .icon.moving{ opacity:.75; z-index:2; }
   .icon .glyph{ font-size:44px; line-height:1; filter:drop-shadow(2px 2px 0 rgba(0,0,0,.35)); }
   .icon .label{ margin-top:3px; color:#fff; font-size:15px; letter-spacing:.4px;
     text-shadow:1px 1px 0 #000, 0 0 6px rgba(0,229,255,.6); padding:1px 4px; display:inline-block; }
@@ -239,7 +241,7 @@
   .mi:hover{ background:#0a1fa0; color:#fff; }
   .sep{ height:2px; background:var(--win-dark); margin:3px 0; box-shadow:0 1px 0 #fff; }
 
-  .hint{ position:fixed; z-index:4000; bottom:46px; right:12px; color:#fff; font-size:13px; text-shadow:1px 1px 0 #000; opacity:.85; }
+  .hint{ position:fixed; z-index:5; bottom:46px; right:12px; color:#fff; font-size:13px; text-shadow:1px 1px 0 #000; opacity:.85; }
   a{ color:#0a1fa0; }
 </style>
 </head>
@@ -557,17 +559,60 @@ function toggleStart(force){
 }
 
 /* =================== DESKTOP ICONS =================== */
+/* posições ficam salvas no navegador, então a arrumação do visitante continua na próxima visita */
+const ICON_POS_KEY = "brennoos.iconPos";
+const ICON_W = 108, ICON_H = 84, TASKBAR_H = 38;
+function loadIconPos(){ try{ return JSON.parse(localStorage.getItem(ICON_POS_KEY)) || {}; }catch(e){ return {}; } }
+function saveIconPos(pos){ try{ localStorage.setItem(ICON_POS_KEY, JSON.stringify(pos)); }catch(e){} }
+/* mantém o ícone inteiro dentro da tela (acima da barra de tarefas) */
+function clampIcon(x, y){
+  return [ Math.max(0, Math.min(x, innerWidth - ICON_W)),
+           Math.max(0, Math.min(y, innerHeight - TASKBAR_H - ICON_H)) ];
+}
+function placeIcon(node, x, y){ [x, y] = clampIcon(x, y); node.style.left = x+"px"; node.style.top = y+"px"; return [x, y]; }
+
 function buildIcons(){
-  const wrap = el("div",{class:"icons", onmousedown:e=>e.stopPropagation()});
-  ICONS.forEach(ic=>{
+  const wrap = el("div",{class:"icons"});
+  const pos = loadIconPos();
+  ICONS.forEach((ic, i)=>{
     const node = el("div",{class:"icon"},
       el("div",{class:"glyph"}, ic.glyph), el("div",{class:"label"}, ic.label));
-    node.addEventListener("click", ()=>{ document.querySelectorAll(".icon").forEach(n=>n.classList.remove("sel")); node.classList.add("sel"); });
+    const saved = pos[ic.key];
+    placeIcon(node, saved ? saved[0] : 8, saved ? saved[1] : 12 + i*ICON_H);   // padrão: coluna à esquerda
     node.addEventListener("dblclick", ()=> openWindow(ic.spec()));
+    makeIconDraggable(node, ic.key, pos);
     wrap.append(node);
   });
   desktop.append(wrap);
-  desktop.append(el("div",{class:"hint"},"spike • arraste as janelas • dois cliques nas pastas"));
+  desktop.append(el("div",{class:"hint"},"spike • arraste as janelas e os ícones • dois cliques nos ícones"));
+
+  addEventListener("resize", ()=> wrap.querySelectorAll(".icon").forEach(n=> placeIcon(n, n.offsetLeft, n.offsetTop)));
+}
+function makeIconDraggable(node, key, pos){
+  node.addEventListener("pointerdown", e=>{
+    if(e.button!==0) return;
+    e.stopPropagation(); e.preventDefault();
+    toggleStart(false);
+    document.querySelectorAll(".icon").forEach(n=>n.classList.remove("sel"));
+    node.classList.add("sel");
+
+    const sx=e.clientX, sy=e.clientY, ox=node.offsetLeft, oy=node.offsetTop;
+    let moved = false;
+    try{ node.setPointerCapture(e.pointerId); }catch(err){}
+    const move = ev=>{
+      const dx=ev.clientX-sx, dy=ev.clientY-sy;
+      if(!moved && Math.hypot(dx,dy) < 4) return;        // só vira arraste depois de mexer uns pixels (não atrapalha o duplo clique)
+      if(!moved){ moved = true; node.classList.add("moving"); document.body.classList.add("dragging"); }
+      placeIcon(node, ox+dx, oy+dy);
+    };
+    const up = ()=>{
+      node.removeEventListener("pointermove", move); node.removeEventListener("pointerup", up); node.removeEventListener("pointercancel", up);
+      if(!moved) return;
+      node.classList.remove("moving"); document.body.classList.remove("dragging");
+      pos[key] = [node.offsetLeft, node.offsetTop]; saveIconPos(pos);
+    };
+    node.addEventListener("pointermove", move); node.addEventListener("pointerup", up); node.addEventListener("pointercancel", up);
+  });
 }
 
 /* fecha menu / deseleciona ao clicar no vazio */
