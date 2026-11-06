@@ -56,14 +56,77 @@
     background:repeating-linear-gradient(to bottom, transparent 0 2px, var(--scan) 2px 4px); mix-blend-mode:multiply; opacity:.5; }
   #crt::after{ content:""; position:absolute; inset:0; background:radial-gradient(130% 120% at 50% 50%, transparent 60%, rgba(0,0,0,.45) 100%); }
 
-  /* ===== BOOT ===== */
-  #boot{ position:fixed; inset:0; z-index:10000; background:#000; color:#2cff6a; font-family:var(--mono);
-    font-size:17px; padding:38px; line-height:1.55; transition:opacity .5s; }
-  #boot b{ color:#aaffcc; }
-  .blink{ animation:blink 1s steps(1) infinite; }
-  @keyframes blink{ 50%{opacity:0;} }
-  #barwrap{ margin-top:22px; width:320px; border:2px solid #2cff6a; height:20px; padding:3px; }
-  #bootbar{ height:100%; width:0; background:#2cff6a; transition:width .2s; }
+  /* ===== BOOT (tela de inicialização estilo fim dos anos 90) ===== */
+  #boot{ position:fixed; inset:0; z-index:10000; overflow:hidden; background:#000; color:#fff;
+    font-family:Arial,Helvetica,sans-serif; transition:opacity .6s; }
+  #boot.off{ opacity:0; pointer-events:none; }
+
+  /* 1) monitor ligando: linha branca que abre e vira um flash */
+  #boot .flash{ position:absolute; inset:0; background:#fff; opacity:0; transform:scale(0,.004); }
+  #boot.power .flash{ animation:crtOn .75s ease-out forwards; }
+  @keyframes crtOn{
+    0%  { opacity:1; transform:scale(0,.004); }
+    35% { opacity:1; transform:scale(1,.004); }
+    65% { opacity:.85; transform:scale(1,1); }
+    100%{ opacity:0; transform:scale(1,1); }
+  }
+
+  /* 2) splash: céu, nuvens, logo e barra animada */
+  #boot .splash{ position:absolute; inset:0; opacity:0; transition:opacity .6s;
+    background:linear-gradient(180deg,#123c8f 0%,#2f6dd0 40%,#78aaea 75%,#b9d6f6 100%); }
+  #boot.on .splash{ opacity:1; }
+  #boot .bcloud{ position:absolute; border-radius:50%; filter:blur(10px);
+    background:radial-gradient(closest-side, rgba(255,255,255,.95), rgba(255,255,255,.55) 55%, transparent);
+    animation:bdrift 30s linear infinite; }
+  @keyframes bdrift{ from{ transform:translateX(-6vw); } to{ transform:translateX(6vw); } }
+
+  #boot .logo{ position:absolute; left:50%; top:44%; transform:translate(-50%,-50%) scale(.92);
+    display:flex; align-items:center; gap:clamp(14px,3vw,30px); opacity:0;
+    transition:opacity .8s .25s, transform 1.4s .25s cubic-bezier(.2,.8,.2,1); }
+  #boot.on .logo{ opacity:1; transform:translate(-50%,-50%) scale(1); }
+
+  /* ícone de monitor com pôr do sol vaporwave */
+  #boot .mon{ flex:0 0 auto; width:clamp(74px,11vw,112px); }
+  #boot .mon .bezel{ background:var(--win); padding:9%; border:3px solid; border-color:#fff #555 #555 #fff;
+    box-shadow:4px 6px 0 rgba(0,0,0,.25); }
+  #boot .mon .scr{ position:relative; aspect-ratio:4/3; overflow:hidden; border:2px solid; border-color:#555 #fff #fff #555;
+    background:linear-gradient(180deg,#2d1b4e 0%,#9d4edd 45%,#ff6ad5 75%,#ff9e7d 100%); }
+  #boot .mon .sun{ position:absolute; left:50%; bottom:-28%; width:70%; aspect-ratio:1; transform:translateX(-50%); border-radius:50%;
+    background:repeating-linear-gradient(180deg,#ffe66d 0 9%,#ff9e7d 9% 11%), #ffe66d; }
+  #boot .mon .neck{ width:34%; height:8px; margin:0 auto; background:#868a8e; }
+  #boot .mon .foot{ width:70%; height:9px; margin:0 auto; background:var(--win); border:2px solid; border-color:#fff #555 #555 #fff; }
+
+  #boot .word{ text-shadow:3px 3px 0 rgba(0,0,0,.28); line-height:1; }
+  #boot .word .maker{ font-size:clamp(12px,1.6vw,17px); letter-spacing:.12em; opacity:.92; margin:0 0 6px 4px; }
+  #boot .word .name{ font-family:'Arial Black',Arial,sans-serif; font-weight:900; font-size:clamp(34px,6.4vw,74px); letter-spacing:-.01em; white-space:nowrap; }
+  #boot .word .name i{ font-style:italic; font-weight:700; color:#dfeaff; }
+  #boot .word .name sup{ font-size:.5em; font-style:italic; vertical-align:.72em; margin-left:.08em; padding-right:.15em;
+    background:linear-gradient(180deg,#ffe66d,#ff9e7d 55%,#ff6ad5); -webkit-background-clip:text; background-clip:text; color:transparent;
+    text-shadow:none; filter:drop-shadow(2px 2px 0 rgba(0,0,0,.28)); }
+  #boot .word .ed{ font-size:clamp(12px,1.5vw,16px); margin:8px 0 0 4px; opacity:.9; }
+
+  #boot .foot-l, #boot .foot-r{ position:absolute; bottom:24px; font-size:13px; opacity:.85; text-shadow:1px 1px 0 rgba(0,0,0,.35); }
+  #boot .foot-l{ left:18px; } #boot .foot-r{ right:18px; }
+  #boot .foot-r::after{ content:""; display:inline-block; width:1.5em; text-align:left; animation:bdots 1.6s steps(1) infinite; }
+  @keyframes bdots{ 0%{content:"";} 25%{content:".";} 50%{content:"..";} 75%{content:"...";} }
+
+  /* barra "correndo" no rodapé, como nos splashes antigos */
+  #boot .band{ position:absolute; left:0; right:0; bottom:0; height:12px;
+    background:linear-gradient(90deg,#0b1a5e,#2f6dd0,#9fe3ff,#ff6ad5,#9d4edd,#2f6dd0,#0b1a5e);
+    background-size:640px 100%; animation:bband 1.6s linear infinite; }
+  @keyframes bband{ from{ background-position:0 0; } to{ background-position:640px 0; } }
+
+  @media (max-width:600px){
+    #boot .logo{ flex-direction:column; text-align:center; gap:16px; }
+    #boot .word .maker, #boot .word .ed{ margin-left:0; }
+    #boot .word .name{ font-size:clamp(28px,10vw,44px); }
+    #boot .foot-l, #boot .foot-r{ left:0; right:0; text-align:center; font-size:12px; }
+    #boot .foot-l{ bottom:20px; } #boot .foot-r{ bottom:40px; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    #boot .bcloud, #boot .band, #boot .foot-r::after{ animation:none; }
+    #boot.power .flash{ animation:none; }
+  }
 
   /* ===== DESKTOP ===== */
   #desktop{ position:fixed; inset:0; z-index:1; }
@@ -155,14 +218,31 @@
 
   <div id="crt"></div>
 
-  <div id="boot">
-    <div>BRENNO//OS — v0.1 <b>(spike build)</b></div>
-    <div>Copyright (C) 199X Vaporwave Systems Inc.</div>
-    <br>
-    <div id="bootlog"></div>
-    <div id="barwrap"><div id="bootbar"></div></div>
-    <br>
-    <div>Iniciando o sistema<span class="blink">_</span></div>
+  <div id="boot" title="Clique para pular">
+    <div class="splash">
+      <div class="bcloud" style="left:-8%; top:6%;  width:46vw; height:20vh;"></div>
+      <div class="bcloud" style="left:48%; top:2%;  width:52vw; height:24vh; animation-duration:38s; animation-direction:reverse;"></div>
+      <div class="bcloud" style="left:12%; top:58%; width:40vw; height:18vh; animation-duration:34s;"></div>
+      <div class="bcloud" style="left:62%; top:52%; width:44vw; height:22vh; animation-duration:42s; animation-direction:reverse;"></div>
+      <div class="bcloud" style="left:30%; top:76%; width:50vw; height:16vh; animation-duration:46s;"></div>
+
+      <div class="logo">
+        <div class="mon">
+          <div class="bezel"><div class="scr"><div class="sun"></div></div></div>
+          <div class="neck"></div><div class="foot"></div>
+        </div>
+        <div class="word">
+          <div class="maker">Vaporwave Systems</div>
+          <div class="name">BRENNO<i>//OS</i><sup>98</sup></div>
+          <div class="ed">Edição Portfólio</div>
+        </div>
+      </div>
+
+      <div class="foot-l">Copyright © 199X Vaporwave Systems Inc.</div>
+      <div class="foot-r">Iniciando o BRENNO//OS</div>
+      <div class="band"></div>
+    </div>
+    <div class="flash"></div>
   </div>
 
 <script>
@@ -411,30 +491,33 @@ function buildIcons(){
 document.addEventListener("mousedown", ()=>{ toggleStart(false); document.querySelectorAll(".icon").forEach(n=>n.classList.remove("sel")); });
 
 /* =================== BOOT =================== */
-const bootLines = [
-  "Detectando CPU............ 486DX2 OK",
-  "Memoria RAM.............. 8 MB OK",
-  "Placa de video........... VaporVGA OK",
-  "Mouse PS/2............... detectado",
-  "Carregando vibes......... [####] 100%",
-  "Montando C:\\PORTFOLIO.... pronto",
-];
 function startOS(){
   buildIcons(); buildChrome();
   openWindow({ key:"welcome", icon:"🖥", title:"Bem-vindo.txt", width:440, render:welcomeBody });
 }
+/* sequência: monitor liga (flash) → splash com céu e logo → some e mostra o desktop.
+   Clique ou qualquer tecla pula a animação. */
 function runBoot(){
-  const log=document.getElementById("bootlog"), bar=document.getElementById("bootbar"), boot=document.getElementById("boot");
-  let i=0;
-  (function step(){
-    if(i<bootLines.length){
-      log.innerHTML += bootLines[i] + "<br>";
-      bar.style.width = Math.round(((i+1)/bootLines.length)*100)+"%";
-      i++; setTimeout(step, 300);
-    } else {
-      setTimeout(()=>{ startOS(); boot.style.opacity=0; setTimeout(()=>boot.style.display="none", 500); }, 450);
-    }
-  })();
+  const boot = document.getElementById("boot");
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const SPLASH_MS = reduced ? 1200 : 4200;
+  const timers = [];
+  let done = false;
+
+  function finish(){
+    if(done) return; done = true;
+    timers.forEach(clearTimeout);
+    removeEventListener("keydown", finish);
+    startOS();
+    boot.classList.add("off");
+    setTimeout(()=> boot.style.display="none", 650);
+  }
+
+  boot.classList.add("power");
+  timers.push(setTimeout(()=> boot.classList.add("on"), reduced ? 0 : 420));
+  timers.push(setTimeout(finish, SPLASH_MS));
+  boot.addEventListener("mousedown", e=>{ e.stopPropagation(); finish(); });
+  addEventListener("keydown", finish);
 }
 window.addEventListener("DOMContentLoaded", runBoot);
 </script>
