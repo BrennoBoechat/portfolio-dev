@@ -34,8 +34,9 @@
 
   /* ===== BACKGROUND ===== */
   #bg{ position:fixed; inset:0; z-index:0; overflow:hidden;
-    background:radial-gradient(120% 90% at 50% 18%, #ff8fd9 0%, #b14fd8 28%, #5b2a9e 52%, var(--deep) 82%); }
-  #sun{ position:absolute; left:50%; top:14%; translate:-50% 0; width:320px; height:320px; border-radius:50%;
+    background:radial-gradient(120% 90% at 50% 42%, #ff8fd9 0%, #b14fd8 28%, #5b2a9e 52%, var(--deep) 82%); }
+  /* sol no centro da área visível (desconta a barra de tarefas) e com tamanho proporcional à tela */
+  #sun{ position:absolute; left:50%; top:calc(50% - 19px); translate:-50% -50%; width:clamp(240px,38vmin,460px); aspect-ratio:1; border-radius:50%;
     background:linear-gradient(#fff3b0, #ffcc70 38%, #ff7bbf 70%, #ff4fa3); box-shadow:0 0 90px 20px rgba(255,120,190,.55); overflow:hidden; }
   #sun::after{ content:""; position:absolute; left:0; right:0; bottom:0; height:62%;
     background:repeating-linear-gradient(to bottom, transparent 0 10px, var(--deep) 10px 20px); opacity:.9; }
