@@ -209,7 +209,7 @@
     box-shadow: inset 1px 1px 0 var(--win-light), inset -1px -1px 0 var(--win-dark); }
   .btn95:active{ box-shadow: inset -1px -1px 0 var(--win-light), inset 1px 1px 0 var(--win-dark); }
   .inset{ border:2px solid var(--win-dark); box-shadow: inset 1px 1px 0 #6a6e72, inset -1px -1px 0 #fff; background:#fff; padding:10px; }
-  .avatar{ width:116px; height:116px; border:2px solid #000; image-rendering:pixelated;
+  .avatar{ display:block; flex:none; width:116px; height:143px; border:2px solid #000; object-fit:cover; object-position:center top;
     background:repeating-conic-gradient(var(--pink) 0 25%, var(--cyan) 0 50%) 0 0/22px 22px; }
   .marq{ overflow:hidden; white-space:nowrap; border:2px solid #000; background:#000; color:var(--yellow); font-size:14px; padding:3px 0; }
   .marq span{ display:inline-block; padding-left:100%; animation:mq 16s linear infinite; }
@@ -290,7 +290,7 @@
 <script>
 /* =================== DADOS (genéricos — troque depois) =================== */
 const PROFILE = {
-  name: "SEU NOME",
+  name: "Brenno Boechat",
   role: "Desenvolvedor Full-Stack",
   tagline: "Eu construo coisas pra internet. Às vezes elas até funcionam.",
   bio: "Dev apaixonado por interfaces com personalidade e backends que não caem às 3h da manhã. Transformo café em software desde 20XX. Curto design retrô, sistemas bem pensados e aquele detalhe que faz a pessoa sorrir.",
@@ -326,7 +326,7 @@ function aboutBody(){
   const root = el("div");
   root.append(
     el("div",{style:"display:flex;gap:16px;flex-wrap:wrap"},
-      el("div",{class:"avatar",title:"sua foto aqui"}),
+      el("img",{class:"avatar",src:"img/avatar.jpg",alt:"Foto de perfil",draggable:"false"}),
       el("div",{style:"flex:1 1 180px;min-width:180px"},
         el("div",{class:"h-neon"}, PROFILE.name),
         el("div",{style:"font-size:16px;color:#5b2a9e;font-weight:bold"}, PROFILE.role),
