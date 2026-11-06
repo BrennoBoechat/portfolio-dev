@@ -205,6 +205,26 @@
   .browser.done .prog i{ width:100%; transition:width .15s; }
   @keyframes prog{ from{ width:0; } to{ width:90%; } }
 
+  /* navegador compacto: mesmo visual, barras mais baixas pra sobrar espaço pro conteúdo */
+  .window.compact .titlebar{ height:22px; gap:5px; }
+  .window.compact .titlebar .tt{ font-size:12px; }
+  .window.compact .titlebar .tico{ font-size:13px; }
+  .window.compact .tbtn{ width:17px; height:14px; font-size:9px; }
+  .window.compact .menubar{ padding:1px 8px; font-size:12px; gap:12px; }
+  .window.compact .btools{ padding:2px 3px; }
+  .window.compact .bbtn{ min-width:48px; padding:1px 5px 0; font-size:10px; gap:0; }
+  .window.compact .bbtn .bi{ font-size:13px; }
+  .window.compact .throbber{ width:28px; height:28px; }
+  .window.compact .throbber::before{ width:17px; height:17px; }
+  .window.compact .throbber::after{ font-size:11px; top:-6px; }
+  .window.compact .baddr{ padding:2px 5px; font-size:11px; gap:5px; }
+  .window.compact .baddr .field{ padding:0 5px; font-size:11px; }
+  .window.compact .bview{ margin:2px 3px; }
+  .window.compact .bstatus{ padding:0 3px 2px; font-size:10px; }
+  .window.compact .bstatus > span{ padding:0 6px; }
+  .window.compact .bstatus .prog{ width:100px; padding:2px; }
+  .window.compact .bstatus .prog i{ min-height:8px; }
+
   .h-neon{ font-family:var(--display); font-style:italic; font-size:26px; line-height:1.05;
     background:linear-gradient(90deg,var(--pink),var(--cyan)); -webkit-background-clip:text; background-clip:text; color:transparent; letter-spacing:.5px; }
   .chip{ display:inline-block; background:var(--deep2); color:var(--cyan); border:1px solid var(--cyan); padding:1px 8px; margin:2px; font-size:13px; }
@@ -351,7 +371,8 @@ function browserBody(){
   const hist = [HOME]; let idx = 0, navigating = false;
 
   const frame = el("iframe",{title:"Projetos", src:HOME});
-  frame.style.height = Math.max(240, Math.min(520, innerHeight - 270)) + "px";
+  // as barras do navegador são compactas (classe .compact), então sobra mais altura pro conteúdo
+  frame.style.height = Math.max(240, Math.min(560, innerHeight - 232)) + "px";
   const addr = el("span",null, FAKE_HOST);
   const msg = el("span",{class:"msg"}, "Abrindo página...");
   const btn = (icon, label, fn)=> el("button",{class:"bbtn", onclick:fn}, el("span",{class:"bi"}, icon), label);
@@ -437,7 +458,7 @@ function welcomeBody(){
 const ICONS = [
   { key:"about",   glyph:"👤", label:"Sobre_mim", spec:()=>({ key:"about",  icon:"👤", title:"Sobre mim",    width:430, render:aboutBody }) },
   { key:"proj",    glyph:"🌐", label:"Projetos.exe", spec:()=>({ key:"proj", icon:"🌐", title:"Projetos - VaporWeb Navegador", width:820, center:true, maximizable:true,
-      flush:true, menu:["Arquivo","Editar","Ver","Favoritos","Ajuda"], render:browserBody }) },
+      flush:true, cls:"compact", menu:["Arquivo","Editar","Ver","Favoritos","Ajuda"], render:browserBody }) },
   { key:"skills",  glyph:"💾", label:"Skills",    spec:()=>({ key:"skills", icon:"💾", title:"Skills.exe",   width:360, render:skillsBody }) },
   { key:"contact", glyph:"✉",  label:"Contato",   spec:()=>({ key:"contact",icon:"✉",  title:"Contato",      width:370, render:contactBody }) },
   { key:"cv",      glyph:"📄", label:"Curriculo", spec:()=>({ key:"cv",     icon:"📄", title:"curriculo.pdf",width:340, render:cvBody }) },
@@ -477,7 +498,7 @@ function openWindow(spec){
   // menu com a primeira letra sublinhada (Arquivo, Editar...)
   const menu = el("div",{class:"menubar"});
   (spec.menu || ["Arquivo","Editar","Ver","Ajuda"]).forEach(m=> menu.append(el("span",null, el("u",null,m[0]), m.slice(1))));
-  const node = el("div",{class:"window", style:"left:"+left+"px;top:"+top+"px;width:"+width+"px"},
+  const node = el("div",{class:"window"+(spec.cls?" "+spec.cls:""), style:"left:"+left+"px;top:"+top+"px;width:"+width+"px"},
     titlebar, menu, body);
   node.addEventListener("mousedown", ()=>focusWin(w));
   makeDraggable(node, titlebar, w);
