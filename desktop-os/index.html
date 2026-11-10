@@ -59,12 +59,12 @@
 
   /* ===== BOOT (tela de inicialização estilo fim dos anos 90) ===== */
   #boot{ position:fixed; inset:0; z-index:10000; overflow:hidden; background:#000; color:#fff;
-    font-family:Arial,Helvetica,sans-serif; transition:opacity .6s; }
+    font-family:Arial,Helvetica,sans-serif; transition:opacity .4s; }
   #boot.off{ opacity:0; pointer-events:none; }
 
   /* 1) monitor ligando: linha branca que abre e vira um flash */
   #boot .flash{ position:absolute; inset:0; background:#fff; opacity:0; transform:scale(0,.004); }
-  #boot.power .flash{ animation:crtOn .75s ease-out forwards; }
+  #boot.power .flash{ animation:crtOn .5s ease-out forwards; }
   @keyframes crtOn{
     0%  { opacity:1; transform:scale(0,.004); }
     35% { opacity:1; transform:scale(1,.004); }
@@ -73,7 +73,7 @@
   }
 
   /* 2) splash: céu, nuvens, logo e barra animada */
-  #boot .splash{ position:absolute; inset:0; opacity:0; transition:opacity .6s;
+  #boot .splash{ position:absolute; inset:0; opacity:0; transition:opacity .4s;
     background:linear-gradient(180deg,#123c8f 0%,#2f6dd0 40%,#78aaea 75%,#b9d6f6 100%); }
   #boot.on .splash{ opacity:1; }
   #boot .bcloud{ position:absolute; border-radius:50%; filter:blur(10px);
@@ -83,7 +83,7 @@
 
   #boot .logo{ position:absolute; left:50%; top:44%; transform:translate(-50%,-50%) scale(.92);
     display:flex; align-items:center; gap:clamp(14px,3vw,30px); opacity:0;
-    transition:opacity .8s .25s, transform 1.4s .25s cubic-bezier(.2,.8,.2,1); }
+    transition:opacity .5s .1s, transform .9s .1s cubic-bezier(.2,.8,.2,1); }
   #boot.on .logo{ opacity:1; transform:translate(-50%,-50%) scale(1); }
 
   /* computador anos 90 (SVG inline) ao lado do logo */
@@ -851,7 +851,7 @@ function startOS(){
 function runBoot(){
   const boot = document.getElementById("boot");
   const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const SPLASH_MS = reduced ? 1200 : 4200;
+  const SPLASH_MS = reduced ? 900 : 2400;
   const timers = [];
   let done = false;
 
@@ -861,11 +861,11 @@ function runBoot(){
     removeEventListener("keydown", finish);
     startOS();
     boot.classList.add("off");
-    setTimeout(()=> boot.style.display="none", 650);
+    setTimeout(()=> boot.style.display="none", 450);
   }
 
   boot.classList.add("power");
-  timers.push(setTimeout(()=> boot.classList.add("on"), reduced ? 0 : 420));
+  timers.push(setTimeout(()=> boot.classList.add("on"), reduced ? 0 : 280));
   timers.push(setTimeout(finish, SPLASH_MS));
   boot.addEventListener("mousedown", e=>{ e.stopPropagation(); finish(); });
   addEventListener("keydown", finish);
