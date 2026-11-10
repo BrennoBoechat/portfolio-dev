@@ -1,0 +1,46 @@
+/* Site SEXEC — só o que é novo nesta página.
+   A base (paleta, hero, etapas, arquitetura, botões) vem de ../mensageria/style.css. */
+
+/* ===== HERO: "monitor" com o print real do site ===== */
+.scene .tela{ position:absolute; right:5%; top:50%; translate:0 -50%; width:230px; rotate:4deg; padding:6px 6px 0; background:var(--win);
+  border:3px solid #000; box-shadow:8px 8px 0 rgba(0,0,0,.3), 0 0 50px 8px rgba(255,120,190,.35); animation:boia 4s ease-in-out infinite; }
+.scene .tela img{ display:block; width:100%; border:2px solid #000; }
+.scene .tela::after{ content:"● executiva.niteroi.rj.gov.br"; display:block; padding:3px 2px; font:9px var(--mono); color:#000; }
+@keyframes boia{ 50%{ transform:translateY(-8px); } }
+.hero .btn95.hot::after{ content:" ↗"; }
+
+/* ===== PRINTS REAIS ===== */
+.foto{ flex:none; display:flex; flex-direction:column; align-items:center; gap:6px; margin:0; }
+.foto .shot{ display:block; padding:2px; cursor:inherit; }
+.foto .shot img{ display:block; width:310px; height:auto; background:#fff; }
+.foto .par{ display:flex; gap:6px; background:#fff; }
+.foto .par img{ width:150px; }
+.foto figcaption{ font:italic 13px var(--serif); text-align:center; }
+.foto .zoom{ font:12px var(--mono); }
+
+/* ===== AO VIVO ===== */
+.aovivo{ display:grid; grid-template-columns:1fr 1fr; gap:16px; align-items:center; margin-top:14px; padding:16px; background:#fff; border:2px solid #000;
+  box-shadow:6px 6px 0 var(--purple); }
+.aovivo .shot{ display:block; text-decoration:none; transition:transform .2s; }
+.aovivo .shot:hover{ transform:rotate(-1deg) translateY(-3px); }
+.aovivo .shot img{ display:block; width:100%; }
+.aovivo p{ margin:0 0 10px; }
+.aovivo .url{ display:inline-block; margin-bottom:10px; padding:3px 8px; font:13px var(--mono); background:#f1e6ff; border:1px dashed var(--purple); }
+
+/* ===== LIGHTBOX ===== */
+.lb{ position:fixed; inset:0; z-index:50; display:none; place-items:center; padding:16px; background:rgba(26,11,46,.82); }
+.lb.on{ display:grid; }
+.lb .lbw{ max-width:min(1100px,100%); max-height:100%; display:flex; flex-direction:column; padding:3px; background:var(--win); border:2px solid #000;
+  box-shadow:inset 1px 1px 0 #fff, inset -1px -1px 0 var(--win-dark), 8px 8px 0 rgba(0,0,0,.4); }
+.lb .lbt{ display:flex; align-items:center; justify-content:space-between; gap:8px; padding:3px 4px 3px 6px; font:bold 12px var(--mono); color:#fff;
+  background:linear-gradient(90deg,var(--title1),var(--title2)); }
+.lb .lbt button{ padding:0 6px; font:bold 13px var(--mono); color:#000; background:var(--win); border:1px solid #000; cursor:inherit;
+  box-shadow:inset 1px 1px 0 #fff, inset -1px -1px 0 var(--win-dark); }
+.lb .lbi{ min-height:0; overflow:auto; background:#fff; }
+.lb img{ display:block; max-width:100%; height:auto; margin:0 auto; }
+
+@media (max-width:660px){
+  .scene .tela{ opacity:.35; }
+  .foto .shot img{ width:100%; }
+  .aovivo{ grid-template-columns:1fr; }
+}

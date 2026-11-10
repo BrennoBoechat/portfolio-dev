@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Site SEXEC — Projetos</title>
+<!--
+  Página do projeto Site SEXEC, aberta pelo Projetos.exe (navegador do BRENNO//OS).
+  Diferente da Mensageria e do SINAN, este site é público: em vez de um sistema emulado,
+  a página mostra prints reais (tirados do site no ar) e um link para visitá-lo.
+  Nenhum código do projeto foi usado aqui.
+    ../mensageria/style.css  base visual compartilhada (hero, etapas, arquitetura)
+    style.css                peças novas desta página (prints reais, lightbox)
+    img/                     prints do site no ar, em WebP
+-->
+<link rel="stylesheet" href="../../cursor.css" />
+<link rel="stylesheet" href="../mensageria/style.css" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="page">
+  <a class="crumb" href="../index.html">◀ Voltar aos projetos</a>
+
+  <!-- ===== HERO ===== -->
+  <header class="hero">
+    <div class="scene" aria-hidden="true">
+      <div class="grid"></div>
+      <div class="tela"><img src="img/thumb.webp" alt=""></div>
+      <span class="env" style="top:12%; animation-duration:14s">📰</span>
+      <span class="env" style="top:34%; animation-duration:18s; animation-delay:-8s; font-size:16px">✎</span>
+    </div>
+    <div class="hero-in">
+      <div class="kicker">Projeto · Site institucional · Setor público</div>
+      <h1 class="title">SITE SEXEC</h1>
+      <p class="lede">O site da Secretaria Executiva de Niterói, <b>no ar</b>. A equipe edita textos e publica notícias sem mexer em código.</p>
+      <p class="typing" aria-hidden="true">&gt; <span id="typed">site público, rápido e acessível</span><i class="caret"></i></p>
+      <div class="chips">
+        <span class="chip">Node.js</span><span class="chip">Express</span><span class="chip">SQLite</span><span class="chip">Nginx</span>
+        <span class="chip">Docker</span><span class="chip">Traefik</span><span class="chip">Entra ID</span><span class="chip">VLibras</span>
+      </div>
+      <div class="cta">
+        <a class="btn95 hot" href="https://executiva.niteroi.rj.gov.br/" target="_blank" rel="noopener">🌐 Visitar o site</a>
+        <a class="btn95" href="#tour" data-jump="tour">Ver por dentro ↓</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="tape"><span>SITE PÚBLICO · NO AR · PRINTS REAIS</span></div>
+
+  <section class="stats reveal" aria-label="Números do site">
+    <div class="stat"><span class="counter" data-count="12"></span><div class="lbl">órgãos vinculados no menu</div></div>
+    <div class="stat"><span class="counter" data-count="6"></span><div class="lbl">seções editáveis pelo painel</div></div>
+    <div class="stat"><span class="counter" data-count="4"></span><div class="lbl">sistemas a um clique</div></div>
+    <div class="stat"><span class="counter" data-count="0"></span><div class="lbl">deploys pra trocar um texto</div></div>
+  </section>
+
+  <!-- ===== TOUR ===== -->
+  <section id="tour">
+    <h2 class="sec">Por dentro do site</h2>
+    <p class="sub">Prints do site no ar. Clique em qualquer um para ampliar.</p>
+
+    <div class="steps">
+      <article class="step reveal">
+        <div class="txt">
+          <h3><span class="num">1</span>Página inicial</h3>
+          <p>Quem é a Secretaria, em uma frase, e o caminho para tudo o que ela faz.</p>
+          <p>Os textos vêm do painel: a equipe troca sem precisar de programador.</p>
+          <ul class="facts"><li>conteúdo editável</li><li>animações leves</li><li>imagens WebP</li></ul>
+        </div>
+        <figure class="foto"><button class="shot" type="button" data-src="img/home.webp" data-file="inicio.png"></button><figcaption>fig. 1 — página inicial</figcaption></figure>
+      </article>
+
+      <article class="step reveal">
+        <div class="txt">
+          <h3><span class="num">2</span>Notícias</h3>
+          <p>As últimas notícias na home e uma página com todas elas.</p>
+          <p>Cada notícia tem capa, órgão de origem e texto formatado.</p>
+          <ul class="facts"><li>editor de texto rico</li><li>HTML sanitizado</li><li>"mais notícias"</li></ul>
+        </div>
+        <figure class="foto"><button class="shot" type="button" data-src="img/noticias.webp" data-file="noticias.png"></button><figcaption>fig. 2 — últimas notícias</figcaption></figure>
+      </article>
+
+      <article class="step reveal">
+        <div class="txt">
+          <h3><span class="num">3</span>Vinculadas</h3>
+          <p>Um menu lateral reúne os doze órgãos ligados à Secretaria.</p>
+          <p>Abre e fecha com um clique e não atrapalha a leitura.</p>
+          <ul class="facts"><li>menu lateral</li><li>cores por órgão</li><li>acessível por teclado</li></ul>
+        </div>
+        <figure class="foto"><button class="shot" type="button" data-src="img/vinculadas.webp" data-file="vinculadas.png"></button><figcaption>fig. 3 — menu de vinculadas</figcaption></figure>
+      </article>
+
+      <article class="step reveal">
+        <div class="txt">
+          <h3><span class="num">4</span>Atuações e dúvidas</h3>
+          <p>Atalhos para os sistemas da Secretaria: SEI, Transformação Digital, Smart City e Escritório de Dados.</p>
+          <p>Perguntas frequentes em sanfona, direto ao ponto.</p>
+          <ul class="facts"><li>cards de atuação</li><li>FAQ</li></ul>
+        </div>
+        <figure class="foto"><button class="shot" type="button" data-src="img/atuacoes.webp" data-file="atuacoes.png"></button><figcaption>fig. 4 — nossas atuações</figcaption></figure>
+      </article>
+
+      <article class="step reveal">
+        <div class="txt">
+          <h3><span class="num">5</span>Área restrita</h3>
+          <p>A equipe entra com a conta Microsoft da Prefeitura.</p>
+          <p>No painel, edita as seções do site, publica notícias e sobe imagens. Tudo fica registrado.</p>
+          <ul class="facts"><li>Entra ID</li><li>CMS headless</li><li>upload validado</li><li>log de auditoria</li><li>backup automático</li></ul>
+        </div>
+        <figure class="foto"><button class="shot" type="button" data-src="img/login.webp" data-file="area-restrita.png"></button><figcaption>fig. 5 — entrada da área restrita</figcaption></figure>
+      </article>
+
+      <article class="step reveal">
+        <div class="txt">
+          <h3><span class="num">6</span>No celular</h3>
+          <p>O mesmo site se ajusta à tela pequena.</p>
+          <p>Tem tradução para Libras (VLibras) e aviso de cookies com opção de recusar.</p>
+          <ul class="facts"><li>responsivo</li><li>VLibras</li><li>LGPD: cookies</li></ul>
+        </div>
+        <figure class="foto">
+          <button class="shot" type="button" data-src="img/mobile-home.webp" data-file="celular.png" data-par="img/mobile-noticias.webp"></button>
+          <figcaption>fig. 6 — no celular</figcaption>
+        </figure>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===== ARQUITETURA ===== -->
+  <section id="arquitetura" class="reveal">
+    <h2 class="sec">Por baixo do capô</h2>
+    <p class="sub">Do clique do visitante ao texto que a equipe publicou.</p>
+    <div class="arch">
+      <div class="pipe">
+        <span class="pkt"></span><span class="pkt p2"></span><span class="pkt p3"></span>
+        <div class="layer">
+          <div class="ln">🌐 Site público</div>
+          <div class="tech">HTML · CSS · JavaScript</div>
+          <div class="note">Páginas leves; o conteúdo é carregado do CMS.</div>
+        </div>
+        <div class="layer">
+          <div class="ln">🛡 Proxy</div>
+          <div class="tech">Traefik · Nginx · HTTPS</div>
+          <div class="note">Serve o site e protege a área restrita.</div>
+        </div>
+        <div class="layer">
+          <div class="ln">🟩 API</div>
+          <div class="tech">Node.js · Express</div>
+          <div class="note">Conteúdo, notícias, uploads e auditoria.</div>
+        </div>
+        <div class="layer">
+          <div class="ln">🗄 Dados</div>
+          <div class="tech">SQLite · conteúdo em JSON</div>
+          <div class="note">Notícias no banco; textos das seções em JSON, com backup a cada edição.</div>
+        </div>
+      </div>
+      <div class="side">
+        <div class="st">Apoio</div>
+        <div class="layer">
+          <div class="ln">🔐 Login</div>
+          <div class="tech">Microsoft Entra ID</div>
+          <div class="note">Só a equipe entra no painel.</div>
+        </div>
+        <div class="layer">
+          <div class="ln">♿ Acesso</div>
+          <div class="tech">VLibras</div>
+          <div class="note">Tradução para Libras.</div>
+        </div>
+        <div class="layer">
+          <div class="ln">🐳 Infra</div>
+          <div class="tech">Docker · Prometheus · Loki</div>
+          <div class="note">Deploy, métricas e logs.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== AO VIVO ===== -->
+  <section id="aovivo" class="reveal">
+    <h2 class="sec">Veja ao vivo</h2>
+    <div class="aovivo">
+      <a class="shot" href="https://executiva.niteroi.rj.gov.br/" target="_blank" rel="noopener" title="Abrir o site em outra aba">
+        <div class="bar"><span>executiva.niteroi.rj.gov.br</span><span aria-hidden="true">_ □ ×</span></div>
+        <img src="img/todas-noticias.webp" alt="Página de notícias do site da SEXEC" loading="lazy">
+      </a>
+      <div>
+        <p>O site está no ar e aberto a todos. Dá uma volta por ele:</p>
+        <div class="url">executiva.niteroi.rj.gov.br</div><br>
+        <a class="btn95 hot" href="https://executiva.niteroi.rj.gov.br/" target="_blank" rel="noopener">🌐 Abrir o site</a>
+        <p style="margin-top:10px;font-size:14px">Abre em outra aba. O código-fonte é privado, de uso institucional.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <hr>
+    <p>Prints reais do site público da Secretaria Executiva de Niterói.<br>Nenhum código do projeto aparece nesta página.</p>
+    <p><a href="../index.html">◀ Voltar aos projetos</a> · Melhor visualizado em 800x600</p>
+  </footer>
+</div>
+
+<!-- visualizador de print ampliado -->
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Print ampliado">
+  <div class="lbw">
+    <div class="lbt"><span id="lbTitulo">print.png</span><button type="button" id="lbFechar" aria-label="Fechar">×</button></div>
+    <div class="lbi"><img id="lbImg" alt=""></div>
+  </div>
+</div>
+
+<script src="../../click-sound.js"></script>
+<script>
+"use strict";
+document.documentElement.classList.add("js");
+const reduzMovimento = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* prints: monta a moldura de janela e abre ampliado ao clicar */
+const lb = document.getElementById("lb"), lbImg = document.getElementById("lbImg"), lbTitulo = document.getElementById("lbTitulo");
+let voltarFoco = null;
+function ampliar(src, nome, origem){
+  lbImg.src = src; lbImg.alt = nome; lbTitulo.textContent = nome;
+  voltarFoco = origem; lb.classList.add("on");
+  document.getElementById("lbFechar").focus();
+}
+function fechar(){ lb.classList.remove("on"); lbImg.removeAttribute("src"); if(voltarFoco) voltarFoco.focus(); }
+document.getElementById("lbFechar").addEventListener("click", fechar);
+lb.addEventListener("click", e => { if(e.target === lb) fechar(); });
+addEventListener("keydown", e => { if(e.key === "Escape" && lb.classList.contains("on")) fechar(); });
+
+document.querySelectorAll(".foto .shot").forEach(b => {
+  const nome = b.dataset.file, legenda = b.closest("figure").querySelector("figcaption").textContent;
+  const img = src => { const i = document.createElement("img"); i.src = src; i.alt = legenda; i.loading = "lazy"; return i; };
+  const bar = document.createElement("div"); bar.className = "bar";
+  bar.innerHTML = "<span></span><span aria-hidden='true'>_ □ ×</span>"; bar.firstChild.textContent = nome;
+  b.append(bar);
+  if(b.dataset.par){
+    const par = document.createElement("div"); par.className = "par";
+    const a = img(b.dataset.src), c = img(b.dataset.par);
+    a.addEventListener("click", e => { e.stopPropagation(); ampliar(b.dataset.src, nome, b); });
+    c.addEventListener("click", e => { e.stopPropagation(); ampliar(b.dataset.par, nome.replace(".png", "-2.png"), b); });
+    par.append(a, c); b.append(par);
+  } else b.append(img(b.dataset.src));
+  b.setAttribute("aria-label", "Ampliar: " + legenda);
+  b.addEventListener("click", () => ampliar(b.dataset.src, nome, b));
+});
+
+/* rola só esta página (o iframe do navegador), nunca a janela do desktop */
+document.querySelectorAll("[data-jump]").forEach(a => a.addEventListener("click", e => {
+  e.preventDefault();
+  const alvo = document.getElementById(a.dataset.jump);
+  scrollTo({ top: alvo.getBoundingClientRect().top + scrollY - 8, behavior: reduzMovimento ? "auto" : "smooth" });
+}));
+
+/* terminal do hero digitando frases */
+(function digitar(){
+  const alvo = document.getElementById("typed");
+  const frases = ["site público, rápido e acessível", "a equipe edita sem programador", "notícias com editor de texto rico",
+                  "login da equipe com conta Microsoft", "funciona no celular e tem Libras"];
+  if(reduzMovimento) return;
+  let f = 0, i = frases[0].length, apagando = true;
+  setTimeout(function passo(){
+    const frase = frases[f];
+    if(apagando){ i--; if(i <= 0){ apagando = false; f = (f + 1) % frases.length; } }
+    else { i++; if(i >= frase.length){ alvo.textContent = frase; apagando = true; return setTimeout(passo, 1800); } }
+    alvo.textContent = frases[f].slice(0, Math.max(0, i));
+    setTimeout(passo, apagando ? 28 : 55);
+  }, 1800);
+})();
+
+/* contadores que sobem e blocos que entram ao rolar */
+function desenharContador(el, n){
+  const largura = Math.max(2, String(el.dataset.count).length);
+  el.replaceChildren(...String(n).padStart(largura, "0").split("").map(d => { const b = document.createElement("b"); b.textContent = d; return b; }));
+}
+function animarContador(el){
+  const alvo = +el.dataset.count, t0 = performance.now(), dur = 900;
+  if(reduzMovimento || alvo === 0) return desenharContador(el, alvo);
+  (function quadro(t){
+    const p = Math.min(1, (t - t0) / dur);
+    desenharContador(el, Math.round(alvo * (1 - Math.pow(1 - p, 3))));
+    if(p < 1) requestAnimationFrame(quadro);
+  })(t0);
+}
+const contadores = document.querySelectorAll("[data-count]");
+contadores.forEach(el => desenharContador(el, 0));
+const revelaveis = document.querySelectorAll(".reveal");
+if("IntersectionObserver" in window){
+  const io = new IntersectionObserver(entradas => entradas.forEach(e => {
+    if(!e.isIntersecting) return;
+    e.target.classList.add("in");
+    e.target.querySelectorAll("[data-count]").forEach(animarContador);
+    io.unobserve(e.target);
+  }), { threshold: 0.15 });
+  revelaveis.forEach(el => io.observe(el));
+} else {
+  revelaveis.forEach(el => el.classList.add("in"));
+  contadores.forEach(el => desenharContador(el, +el.dataset.count));
+}
+</script>
+</body>
+</html>
