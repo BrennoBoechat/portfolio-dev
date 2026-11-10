@@ -228,9 +228,6 @@
   .inset{ border:2px solid var(--win-dark); box-shadow: inset 1px 1px 0 #6a6e72, inset -1px -1px 0 #fff; background:#fff; padding:10px; }
   .avatar{ display:block; flex:none; width:116px; height:143px; border:2px solid #000; object-fit:cover; object-position:center top;
     background:repeating-conic-gradient(var(--pink) 0 25%, var(--cyan) 0 50%) 0 0/22px 22px; }
-  .marq{ overflow:hidden; white-space:nowrap; border:2px solid #000; background:#000; color:var(--yellow); font-size:14px; padding:3px 0; }
-  .marq span{ display:inline-block; padding-left:100%; animation:mq 16s linear infinite; }
-  @keyframes mq{ to{ transform:translateX(-100%);} }
   .counter{ display:inline-flex; gap:2px; }
   .counter b{ background:#000; color:#2cff6a; font-family:var(--mono); padding:2px 5px; border:1px solid #2cff6a; font-size:15px; }
   .ta{ width:100%; height:58px; font-family:var(--mono); font-size:14px; resize:none; }
@@ -422,23 +419,37 @@
 
 <script src="click-sound.js"></script>
 <script>
-/* =================== DADOS (genéricos — troque depois) =================== */
+/* =================== DADOS (do currículo) =================== */
 const PROFILE = {
   name: "Brenno Boechat",
-  role: "Desenvolvedor Full-Stack",
-  tagline: "Eu construo coisas pra internet. Às vezes elas até funcionam.",
-  bio: "Dev apaixonado por interfaces com personalidade e backends que não caem às 3h da manhã. Transformo café em software desde 20XX. Curto design retrô, sistemas bem pensados e aquele detalhe que faz a pessoa sorrir.",
-  location: "Niterói, BR",
+  role: "Desenvolvedor Full Stack",
+  bio: "Desenvolvedor full stack formado em Análise e Desenvolvimento de Sistemas pela UNINTER. Gosto de entender como as coisas funcionam e de transformar ideias em aplicações usadas no dia a dia. Construo sistemas web corporativos de ponta a ponta, do backend e da arquitetura ao frontend e ao deploy, com Java, Spring Boot, PostgreSQL, Next.js, React e TypeScript, além de Docker, RabbitMQ e autenticação JWT. Uso IA como ferramenta estratégica para ganhar produtividade e qualidade, sem abrir mão da análise técnica e das decisões de engenharia.",
+  location: "Niterói/RJ",
+  job: "Prefeitura de Niterói",
+  education: [
+    "Tecnólogo em Análise e Desenvolvimento de Sistemas — UNINTER (2025)",
+    "Formação Web Full Stack (Bootcamp) — Labenu (2022)",
+  ],
+  languages: "Português nativo · Inglês intermediário",
 };
+const CONTACT = {
+  email: "brennoboechat81@hotmail.com",
+  github: "github.com/BrennoBoechat",
+  linkedin: "linkedin.com/in/brenno-boechat",
+};
+const CV_FILE = "cv/BrennoBoechat_CV.pdf";
 /* Página que o "navegador" (Projetos.exe) abre. Caminho relativo a este index.html. */
 const PROJECTS_PAGE = "projetos/index.html";
 /* Endereço "de mentira" mostrado na barra do navegador, só pela ambientação. */
 const FAKE_HOST = "http://www.brenno.os/projetos/";
 const SKILLS = {
-  "Front": ["React","TypeScript","CSS/Sass","Next.js","Vite"],
-  "Back": ["Node.js","Go","Python","PostgreSQL","Redis"],
-  "DevOps": ["Docker","CI/CD","AWS","Linux"],
-  "Ferramentas": ["Git","Figma","VS Code","Vim (às vezes)"],
+  "Backend": ["Java","Spring Boot","Spring Security","JPA/Hibernate","APIs REST"],
+  "Frontend": ["Next.js","React","TypeScript","JavaScript","Tailwind CSS"],
+  "Banco de dados": ["PostgreSQL","MySQL","SQLite"],
+  "Infraestrutura": ["Docker","Microsoft Azure","RabbitMQ"],
+  "Segurança": ["JWT","SSO","Azure Entra ID"],
+  "Ferramentas": ["Git","GitHub","Maven","Conventional Commits"],
+  "IA aplicada": ["Claude (Anthropic)"],
 };
 
 /* =================== HELPERS DOM =================== */
@@ -464,13 +475,15 @@ function aboutBody(){
       el("div",{style:"flex:1 1 180px;min-width:180px"},
         el("div",{class:"h-neon"}, PROFILE.name),
         el("div",{style:"font-size:16px;color:#5b2a9e;font-weight:bold"}, PROFILE.role),
-        el("div",{style:"margin-top:6px;font-style:italic"}, "“"+PROFILE.tagline+"”"),
-        el("div",{style:"margin-top:6px"}, "📍 "+PROFILE.location),
+        el("div",{style:"margin-top:8px"}, "📍 "+PROFILE.location),
+        el("div",{style:"margin-top:4px"}, "💼 "+PROFILE.job),
       )
     ),
     el("div",{class:"inset",style:"margin-top:12px"}, PROFILE.bio),
-    el("div",{class:"marq",style:"margin-top:12px"},
-      el("span",null,"★ BEM-VINDO AO MEU CANTINHO DA INTERNET ★ OBRIGADO POR VISITAR ★ ASSINE O GUESTBOOK ★ BEST VIEWED IN NETSCAPE 4.0 ★"))
+    el("div",{style:"margin-top:10px;font-size:14px"},
+      el("div",{style:"font-family:var(--pixel);font-weight:bold;font-size:13px;color:#5b2a9e"}, "Formação"),
+      ...PROFILE.education.map(t=> el("div",null,"🎓 "+t)),
+      el("div",{style:"margin-top:6px"}, "🌎 "+PROFILE.languages))
   );
   return root;
 }
@@ -538,9 +551,9 @@ function contactBody(){
   return el("div",null,
     el("div",{class:"h-neon",style:"font-size:20px"}, "Fale comigo ☎"),
     el("div",{class:"inset",style:"margin-top:8px"},
-      el("div",null,"📧 ", el("a",{href:"#",onclick:e=>e.preventDefault()},"voce@email.com")),
-      el("div",null,"🐙 github.com/seu-usuario"),
-      el("div",null,"💼 linkedin.com/in/seu-perfil")),
+      el("div",null,"📧 ", el("a",{href:"mailto:"+CONTACT.email}, CONTACT.email)),
+      el("div",null,"🐙 ", el("a",{href:"https://"+CONTACT.github, target:"_blank", rel:"noopener"}, CONTACT.github)),
+      el("div",null,"💼 ", el("a",{href:"https://www."+CONTACT.linkedin, target:"_blank", rel:"noopener"}, CONTACT.linkedin))),
     el("div",{style:"margin-top:12px"},
       el("div",{style:"font-size:13px;margin-bottom:4px"}, "📖 Guestbook (assine aí):"),
       el("textarea",{class:"inset ta",placeholder:"deixe um recado..."}),
@@ -551,8 +564,11 @@ function contactBody(){
 function cvBody(){
   return el("div",{style:"text-align:center"},
     el("div",{style:"font-size:40px"},"📄"),
-    el("p",null,"Aqui vai o seu PDF de currículo."),
-    el("a",{class:"btn95",href:"#",onclick:e=>e.preventDefault()},"⬇ Baixar CV"));
+    el("div",{style:"font-weight:bold;margin-top:6px"}, "BrennoBoechat_CV.pdf"),
+    el("p",{style:"margin:6px 0 12px"}, "Desenvolvedor Full Stack · Java/Spring Boot e React/Next.js"),
+    el("div",{style:"display:flex;gap:8px;justify-content:center;flex-wrap:wrap"},
+      el("a",{class:"btn95",href:CV_FILE,target:"_blank",rel:"noopener"},"👁 Abrir"),
+      el("a",{class:"btn95",href:CV_FILE,download:"BrennoBoechat_CV.pdf"},"⬇ Baixar CV")));
 }
 function welcomeBody(){
   const btns = el("div",{style:"margin-top:12px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap"});
