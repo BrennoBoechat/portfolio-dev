@@ -86,25 +86,18 @@
     transition:opacity .8s .25s, transform 1.4s .25s cubic-bezier(.2,.8,.2,1); }
   #boot.on .logo{ opacity:1; transform:translate(-50%,-50%) scale(1); }
 
-  /* ícone de monitor com pôr do sol vaporwave */
-  #boot .mon{ flex:0 0 auto; width:clamp(74px,11vw,112px); }
-  #boot .mon .bezel{ background:var(--win); padding:9%; border:3px solid; border-color:#fff #555 #555 #fff;
-    box-shadow:4px 6px 0 rgba(0,0,0,.25); }
-  #boot .mon .scr{ position:relative; aspect-ratio:4/3; overflow:hidden; border:2px solid; border-color:#555 #fff #fff #555;
-    background:linear-gradient(180deg,#2d1b4e 0%,#9d4edd 45%,#ff6ad5 75%,#ff9e7d 100%); }
-  #boot .mon .sun{ position:absolute; left:50%; bottom:-28%; width:70%; aspect-ratio:1; transform:translateX(-50%); border-radius:50%;
-    background:repeating-linear-gradient(180deg,#ffe66d 0 9%,#ff9e7d 9% 11%), #ffe66d; }
-  #boot .mon .neck{ width:34%; height:8px; margin:0 auto; background:#868a8e; }
-  #boot .mon .foot{ width:70%; height:9px; margin:0 auto; background:var(--win); border:2px solid; border-color:#fff #555 #555 #fff; }
+  /* computador anos 90 (SVG inline) ao lado do logo */
+  #boot .pc{ flex:0 0 auto; display:block; width:clamp(130px,19vw,230px); height:auto; overflow:visible;
+    filter:drop-shadow(4px 6px 0 rgba(0,0,0,.22)); }
+  /* LEDs do HD e do disquete piscando enquanto "carrega" */
+  #boot .pc-hdd{ animation:pcled 1.4s steps(1) infinite; }
+  #boot .pc-fdd{ animation:pcled 2.3s steps(1) infinite .5s; }
+  @keyframes pcled{ 0%{opacity:1;} 18%{opacity:.2;} 30%{opacity:1;} 52%{opacity:.2;} 60%{opacity:1;} 85%{opacity:.2;} }
 
   #boot .word{ text-shadow:3px 3px 0 rgba(0,0,0,.28); line-height:1; }
   #boot .word .maker{ font-size:clamp(12px,1.6vw,17px); letter-spacing:.12em; opacity:.92; margin:0 0 6px 4px; }
   #boot .word .name{ font-family:'Arial Black',Arial,sans-serif; font-weight:900; font-size:clamp(34px,6.4vw,74px); letter-spacing:-.01em; white-space:nowrap; }
-  #boot .word .name i{ font-style:italic; font-weight:700; color:#dfeaff; }
-  #boot .word .name sup{ font-size:.5em; font-style:italic; vertical-align:.72em; margin-left:.08em; padding-right:.15em;
-    background:linear-gradient(180deg,#ffe66d,#ff9e7d 55%,#ff6ad5); -webkit-background-clip:text; background-clip:text; color:transparent;
-    text-shadow:none; filter:drop-shadow(2px 2px 0 rgba(0,0,0,.28)); }
-  #boot .word .ed{ font-size:clamp(12px,1.5vw,16px); margin:8px 0 0 4px; opacity:.9; }
+  #boot .word .name i{ font-style:italic; font-weight:700; color:#dfeaff; padding-right:.1em; }
 
   #boot .foot-l, #boot .foot-r{ position:absolute; bottom:24px; font-size:13px; opacity:.85; text-shadow:1px 1px 0 rgba(0,0,0,.35); }
   #boot .foot-l{ left:18px; } #boot .foot-r{ right:18px; }
@@ -119,13 +112,13 @@
 
   @media (max-width:600px){
     #boot .logo{ flex-direction:column; text-align:center; gap:16px; }
-    #boot .word .maker, #boot .word .ed{ margin-left:0; }
+    #boot .word .maker{ margin-left:0; }
     #boot .word .name{ font-size:clamp(28px,10vw,44px); }
     #boot .foot-l, #boot .foot-r{ left:0; right:0; text-align:center; font-size:12px; }
     #boot .foot-l{ bottom:20px; } #boot .foot-r{ bottom:40px; }
   }
   @media (prefers-reduced-motion: reduce){
-    #boot .bcloud, #boot .band, #boot .foot-r::after{ animation:none; }
+    #boot .bcloud, #boot .band, #boot .foot-r::after, #boot .pc-hdd, #boot .pc-fdd{ animation:none; }
     #boot.power .flash{ animation:none; }
   }
 
@@ -292,19 +285,136 @@
       <div class="bcloud" style="left:30%; top:76%; width:50vw; height:16vh; animation-duration:46s;"></div>
 
       <div class="logo">
-        <div class="mon">
-          <div class="bezel"><div class="scr"><div class="sun"></div></div></div>
-          <div class="neck"></div><div class="foot"></div>
-        </div>
+        <!-- computador anos 90: monitor CRT com pôr do sol vaporwave, gabinete, teclado e mouse -->
+        <svg class="pc" viewBox="0 0 220 220" aria-hidden="true">
+          <defs>
+            <linearGradient id="pc-beige" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#f4eedf"/><stop offset=".55" stop-color="#e0d7c0"/><stop offset="1" stop-color="#c8bea4"/>
+            </linearGradient>
+            <linearGradient id="pc-recess" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#9e957d"/><stop offset=".15" stop-color="#bdb39a"/><stop offset="1" stop-color="#d3cab2"/>
+            </linearGradient>
+            <linearGradient id="pc-sky" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#140630"/><stop offset=".45" stop-color="#5a2199"/><stop offset=".8" stop-color="#e8459e"/><stop offset="1" stop-color="#ffa06b"/>
+            </linearGradient>
+            <linearGradient id="pc-sun" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#fff3a0"/><stop offset=".5" stop-color="#ffb36b"/><stop offset="1" stop-color="#ff4fa3"/>
+            </linearGradient>
+            <radialGradient id="pc-glow" cx=".5" cy=".5" r=".5">
+              <stop offset="0" stop-color="#ff8fd0" stop-opacity=".75"/><stop offset="1" stop-color="#ff8fd0" stop-opacity="0"/>
+            </radialGradient>
+            <linearGradient id="pc-floor" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#2e0b52"/><stop offset="1" stop-color="#0d0319"/>
+            </linearGradient>
+            <radialGradient id="pc-vig" cx=".5" cy=".5" r=".72">
+              <stop offset=".6" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".55"/>
+            </radialGradient>
+            <linearGradient id="pc-glare" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#fff" stop-opacity=".22"/><stop offset=".45" stop-color="#fff" stop-opacity="0"/>
+            </linearGradient>
+            <pattern id="pc-scan" width="2" height="2" patternUnits="userSpaceOnUse">
+              <rect width="2" height="1" fill="#000" opacity=".22"/>
+            </pattern>
+            <pattern id="pc-keys" x="36" y="194" width="7" height="4.6" patternUnits="userSpaceOnUse">
+              <rect x=".5" y=".4" width="6" height="3.6" rx=".7" fill="#f2ecdc" stroke="#9f967e" stroke-width=".4"/>
+            </pattern>
+            <mask id="pc-sunmask">
+              <rect x="80" y="40" width="60" height="40" fill="#fff"/>
+              <rect x="80" y="59" width="60" height="1.1" fill="#000"/>
+              <rect x="80" y="63" width="60" height="1.7" fill="#000"/>
+              <rect x="80" y="67" width="60" height="2.4" fill="#000"/>
+            </mask>
+            <clipPath id="pc-screen"><rect x="54" y="20" width="112" height="85" rx="9"/></clipPath>
+          </defs>
+
+          <!-- gabinete (desktop) -->
+          <path d="M20 139 H200 L206 144 H14 Z" fill="#f7f2e6" stroke="#7d745e" stroke-width="1.2" stroke-linejoin="round"/>
+          <rect x="14" y="144" width="192" height="40" rx="3" fill="url(#pc-beige)" stroke="#7d745e" stroke-width="1.4"/>
+          <path d="M16 147 H204" stroke="#fff" stroke-opacity=".7"/>
+          <rect x="22" y="184" width="14" height="3" rx="1" fill="#6e6652"/><rect x="184" y="184" width="14" height="3" rx="1" fill="#6e6652"/>
+          <!-- botão de força + LEDs -->
+          <rect x="22" y="157" width="16" height="16" rx="2.5" fill="#cfc5ab" stroke="#7d745e"/>
+          <rect x="25.5" y="160.5" width="9" height="9" rx="1.5" fill="url(#pc-beige)" stroke="#9f967e" stroke-width=".8"/>
+          <circle cx="46" cy="160" r="1.8" fill="#3dff7a"/><circle cx="46" cy="160" r="3.6" fill="#3dff7a" opacity=".25"/>
+          <circle class="pc-hdd" cx="46" cy="168" r="1.8" fill="#ffb02e"/>
+          <!-- display "turbo" -->
+          <rect x="54" y="156" width="20" height="11" rx="1" fill="#1a0808" stroke="#7d745e" stroke-width=".8"/>
+          <text x="64" y="164.6" text-anchor="middle" font-family="'Courier New',monospace" font-weight="700" font-size="8" fill="#ff3b3b">66</text>
+          <text x="64" y="175" text-anchor="middle" font-family="Arial,sans-serif" font-size="4" fill="#6e6652" letter-spacing=".4">TURBO</text>
+          <!-- grade de ventilação -->
+          <g fill="#9f967e"><rect x="82" y="155" width="22" height="1.6" rx=".8"/><rect x="82" y="159.5" width="22" height="1.6" rx=".8"/>
+            <rect x="82" y="164" width="22" height="1.6" rx=".8"/><rect x="82" y="168.5" width="22" height="1.6" rx=".8"/>
+            <rect x="82" y="173" width="22" height="1.6" rx=".8"/><rect x="82" y="177.5" width="22" height="1.6" rx=".8"/></g>
+          <!-- drive de disquete -->
+          <rect x="112" y="152" width="86" height="13" rx="1.5" fill="#d8cfb6" stroke="#8f8670"/>
+          <rect x="126" y="157" width="52" height="2.6" rx="1" fill="#2a2418"/>
+          <rect x="184" y="159.5" width="8" height="3" rx="1" fill="#c3b99f" stroke="#8f8670" stroke-width=".6"/>
+          <circle class="pc-fdd" cx="118" cy="161" r="1.3" fill="#3dff7a"/>
+          <!-- CD-ROM -->
+          <rect x="112" y="168" width="86" height="12" rx="1.5" fill="#d8cfb6" stroke="#8f8670"/>
+          <path d="M115 172.5 H195" stroke="#8f8670" stroke-width=".7"/>
+          <circle cx="160" cy="176.5" r="1.6" fill="none" stroke="#8f8670" stroke-width=".6"/>
+          <rect x="184" y="175" width="8" height="3" rx="1" fill="#c3b99f" stroke="#8f8670" stroke-width=".6"/>
+
+          <!-- pé do monitor -->
+          <ellipse cx="110" cy="141" rx="42" ry="4.5" fill="#cfc5ab" stroke="#7d745e" stroke-width="1.2"/>
+          <path d="M90 130 H130 L137 140 H83 Z" fill="url(#pc-beige)" stroke="#7d745e" stroke-width="1.2" stroke-linejoin="round"/>
+
+          <!-- monitor CRT -->
+          <rect x="34" y="4" width="152" height="128" rx="10" fill="url(#pc-beige)" stroke="#7d745e" stroke-width="1.6"/>
+          <rect x="36.5" y="6.5" width="147" height="123" rx="8.5" fill="none" stroke="#fff" stroke-opacity=".75"/>
+          <rect x="45" y="12" width="130" height="101" rx="8" fill="url(#pc-recess)" stroke="#8f8670"/>
+          <rect x="50" y="16" width="120" height="93" rx="11" fill="#0b0414"/>
+
+          <!-- tela: pôr do sol vaporwave -->
+          <g clip-path="url(#pc-screen)">
+            <rect x="54" y="20" width="112" height="53" fill="url(#pc-sky)"/>
+            <g fill="#fff"><circle cx="63" cy="27" r=".7"/><circle cx="79" cy="34" r=".55"/><circle cx="93" cy="24" r=".8"/>
+              <circle cx="128" cy="29" r=".6"/><circle cx="144" cy="24" r=".8"/><circle cx="157" cy="36" r=".55"/><circle cx="71" cy="44" r=".45"/></g>
+            <circle cx="110" cy="62" r="32" fill="url(#pc-glow)"/>
+            <circle cx="110" cy="72" r="22" fill="url(#pc-sun)" mask="url(#pc-sunmask)"/>
+            <path d="M54 72 L63 63 L69 67 L80 57 L92 72 Z" fill="#3a1365" stroke="#ff6ad5" stroke-width=".6" stroke-linejoin="round"/>
+            <path d="M126 72 L137 61 L145 66 L155 56 L166 64 V72 Z" fill="#3a1365" stroke="#ff6ad5" stroke-width=".6" stroke-linejoin="round"/>
+            <rect x="54" y="72" width="112" height="34" fill="url(#pc-floor)"/>
+            <g stroke="#ff4fd8" stroke-width=".7" fill="none">
+              <path d="M54 72.6 H166" stroke-opacity=".9"/><path d="M54 74.6 H166" stroke-opacity=".55"/><path d="M54 77.6 H166" stroke-opacity=".6"/>
+              <path d="M54 81.8 H166" stroke-opacity=".7"/><path d="M54 87.6 H166" stroke-opacity=".8"/><path d="M54 95.4 H166"/><path d="M54 104.6 H166"/>
+              <path d="M110 72 L-30 106 M110 72 L10 106 M110 72 L44 106 M110 72 L72 106 M110 72 L92 106 M110 72 V106 M110 72 L128 106 M110 72 L148 106 M110 72 L176 106 M110 72 L210 106 M110 72 L250 106"/>
+            </g>
+            <rect x="54" y="20" width="112" height="85" fill="url(#pc-scan)"/>
+            <rect x="54" y="20" width="112" height="85" fill="url(#pc-vig)"/>
+            <path d="M58 24 Q60 21 70 21 H118 Q86 30 62 52 Q57 40 58 24 Z" fill="url(#pc-glare)"/>
+          </g>
+
+          <!-- queixo do monitor: logo, botões e LED -->
+          <rect x="54" y="117" width="34" height="8" rx="1.5" fill="#cfc5ab" stroke="#9f967e" stroke-width=".7"/>
+          <g transform="translate(57 118.6)"><rect width="1.6" height="4.8" fill="#ff6ad5"/><rect x="1.6" width="1.6" height="4.8" fill="#9d4edd"/><rect x="3.2" width="1.6" height="4.8" fill="#00c8ff"/></g>
+          <text x="63.5" y="122.8" font-family="'Arial Black',Arial,sans-serif" font-weight="900" font-size="4.6" fill="#5b5340" letter-spacing=".3">BRENNO</text>
+          <g fill="#d6cdb4" stroke="#8f8670" stroke-width=".7">
+            <rect x="128" y="118" width="7" height="5" rx="1"/><rect x="138" y="118" width="7" height="5" rx="1"/><rect x="148" y="118" width="7" height="5" rx="1"/>
+            <rect x="160" y="117" width="10" height="7" rx="1.5"/>
+          </g>
+          <circle cx="176" cy="120.5" r="1.7" fill="#3dff7a"/><circle cx="176" cy="120.5" r="3.4" fill="#3dff7a" opacity=".25"/>
+
+          <!-- teclado -->
+          <path d="M30 191 H190 L198 214 H22 Z" fill="url(#pc-beige)" stroke="#7d745e" stroke-width="1.3" stroke-linejoin="round"/>
+          <path d="M24 214 H196 V217 H24 Z" fill="#b8ae95" stroke="#7d745e" stroke-width="1"/>
+          <rect x="36" y="194" width="147" height="13.8" fill="url(#pc-keys)"/>
+          <rect x="36" y="207.8" width="42" height="4.6" fill="url(#pc-keys)"/><rect x="141" y="207.8" width="42" height="4.6" fill="url(#pc-keys)"/>
+          <rect x="78.5" y="208.2" width="62" height="3.6" rx=".7" fill="#f2ecdc" stroke="#9f967e" stroke-width=".4"/>
+          <!-- mouse + fio -->
+          <path d="M207 196 C207 186 203 184 198 185" fill="none" stroke="#7d745e" stroke-width="1"/>
+          <ellipse cx="208" cy="205" rx="7" ry="9.5" fill="url(#pc-beige)" stroke="#7d745e" stroke-width="1.2"/>
+          <path d="M201.5 202 H214.5 M208 195.5 V202" stroke="#9f967e" stroke-width=".8"/>
+        </svg>
         <div class="word">
-          <div class="maker">Vaporwave Systems</div>
-          <div class="name">BRENNO<i>//OS</i><sup>98</sup></div>
-          <div class="ed">Edição Portfólio</div>
+          <div class="maker">Portfolio</div>
+          <div class="name">BRENNO<i>//DEV</i></div>
         </div>
       </div>
 
       <div class="foot-l">Copyright © 199X Vaporwave Systems Inc.</div>
-      <div class="foot-r">Iniciando o BRENNO//OS</div>
+      <div class="foot-r">Iniciando o BRENNO//DEV</div>
       <div class="band"></div>
     </div>
     <div class="flash"></div>
