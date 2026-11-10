@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SINAN Digital — Projetos</title>
+<!--
+  Página do projeto SINAN Digital, aberta pelo Projetos.exe (navegador do BRENNO//OS).
+  Mesmo formato da Mensageria: explicação em etapas com "prints" e, embaixo, o sistema emulado.
+  TUDO é simulado: fichas, pessoas, unidades e logs são inventados, vivem só na memória
+  desta página e nada sai do navegador (o CSV exportado é gerado aqui mesmo, com dados fictícios).
+  O código do sistema real é privado.
+    ../mensageria/style.css  base visual compartilhada (hero, etapas, prints, mini-app)
+    style.css                peças novas desta página
+    app.js                   dados fictícios, mini-app e animações
+-->
+<link rel="stylesheet" href="../../cursor.css" />
+<link rel="stylesheet" href="../mensageria/style.css" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="page">
+  <a class="crumb" href="../index.html">◀ Voltar aos projetos</a>
+
+  <!-- ===== HERO ===== -->
+  <header class="hero">
+    <div class="scene" aria-hidden="true">
+      <div class="grid"></div>
+      <div class="clip"><i></i><i></i><i></i><i></i><i></i><i></i><b>+</b></div>
+      <span class="env" style="top:12%; animation-duration:13s">📋</span>
+      <span class="env" style="top:32%; animation-duration:17s; animation-delay:-7s; font-size:16px">✚</span>
+      <span class="env" style="top:5%;  animation-duration:21s; animation-delay:-13s; font-size:26px">🔒</span>
+    </div>
+    <div class="hero-in">
+      <div class="kicker">Projeto · Sistema de saúde · Setor público</div>
+      <h1 class="title">SINAN DIGITAL</h1>
+      <p class="lede">A ficha de notificação de violência do SUS, digitalizada. Funciona até <b>sem internet</b>.</p>
+      <p class="typing" aria-hidden="true">&gt; <span id="typed">troca a ficha de papel por um formulário guiado</span><i class="caret"></i></p>
+      <div class="chips">
+        <span class="chip">Java 25</span><span class="chip">Spring Boot 4</span><span class="chip">Next.js 16</span><span class="chip">React 19</span>
+        <span class="chip">PostgreSQL</span><span class="chip">Redis</span><span class="chip">Entra ID</span><span class="chip">LGPD</span>
+      </div>
+      <div class="cta">
+        <a class="btn95 hot" href="#demo" data-jump="demo">▶ Testar o sistema</a>
+        <a class="btn95" href="#etapas" data-jump="etapas">Como funciona ↓</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="tape"><span>SISTEMA EMULADO · DADOS 100% FICTÍCIOS</span></div>
+
+  <section class="stats reveal" aria-label="Números do sistema">
+    <div class="stat"><span class="counter" data-count="4"></span><div class="lbl">etapas no formulário</div></div>
+    <div class="stat"><span class="counter" data-count="256"></span><div class="lbl">bits de criptografia (AES)</div></div>
+    <div class="stat"><span class="counter" data-count="2"></span><div class="lbl">perfis de acesso</div></div>
+    <div class="stat"><span class="counter" data-count="0"></span><div class="lbl">dados reais nesta página</div></div>
+  </section>
+
+  <!-- ===== ETAPAS ===== -->
+  <section id="etapas">
+    <h2 class="sec">Como funciona</h2>
+    <p class="sub">Seis etapas, do login ao relatório. Cada print é o sistema emulado lá embaixo — clique em <b>ver ao vivo</b>.</p>
+
+    <div class="steps">
+      <article class="step reveal">
+        <div class="txt">
+          <h3><span class="num">1</span>Login com Microsoft</h3>
+          <p>Entra com a conta institucional. Só acessa quem foi liberado.</p>
+          <p>O perfil (ADMIN ou USER) vem do próprio login.</p>
+          <ul class="facts"><li>OAuth2 / OIDC</li><li>Entra ID</li><li>sessão HttpOnly</li><li>CSRF</li></ul>
+        </div>
+        <figure class="print" data-print="login" data-file="login.png"><figcaption>fig. 1 — tela de login</figcaption></figure>
+      </article>
+
+      <article class="step reveal">
+        <div class="txt">
+          <h3><span class="num">2</span>Dashboard</h3>
+          <p>Quantas fichas existem, quantas entraram hoje e quantas faltam enviar.</p>
+          <p>O gráfico mostra o status do mês.</p>
+          <ul class="facts"><li>cache no Redis</li><li>números animados</li><li>gráfico mensal</li></ul>
+        </div>
+        <figure class="print" data-print="dashboard" data-file="dashboard.png"><figcaption>fig. 2 — dashboard</figcaption></figure>
+      </article>
+
+      <article class="step reveal">
+        <div class="txt">
+          <h3><span class="num">3</span>Ficha em etapas</h3>
+          <p>O formulário vira um passo a passo curto, validado a cada etapa.</p>
+          <p>O CEP completa o endereço sozinho.</p>
+          <ul class="facts"><li>passo a passo</li><li>validação por etapa</li><li>autocomplete de CEP</li></ul>
+        </div>
+        <figure class="print" data-print="wizard" data-file="nova-ficha.png"><figcaption>fig. 3 — nova ficha</figcaption></figure>
+      </article>
+
+      <article class="step reveal">
+        <div class="txt">
+          <h3><span class="num">4</span>Modo offline</h3>
+          <p>Caiu a internet? A ficha fica salva no aparelho, cifrada.</p>
+          <p>Quando a conexão volta, ela sobe sozinha, sem duplicar.</p>
+          <ul class="facts"><li>IndexedDB</li><li>AES-256-GCM no navegador</li><li>fila por usuário</li><li>Idempotency-Key</li></ul>
+        </div>
+        <figure class="print" data-print="offline" data-file="offline.png"><figcaption>fig. 4 — fila offline</figcaption></figure>
+      </article>
+
+      <article class="step reveal">
+        <div class="txt">
+          <h3><span class="num">5</span>Fichas, PDF e envio</h3>
+          <p>Cada ficha ganha um número único, que nunca se repete.</p>
+          <p>Gera o PDF da ficha e marca quando ela foi enviada.</p>
+          <ul class="facts"><li>AAAAMM_NNNN</li><li>PDFBox</li><li>cache de PDF</li><li>exclusão lógica</li></ul>
+        </div>
+        <figure class="print" data-print="fichas" data-file="fichas.png"><figcaption>fig. 5 — lista de fichas</figcaption></figure>
+      </article>
+
+      <article class="step reveal">
+        <div class="txt">
+          <h3><span class="num">6</span>Relatório anonimizado</h3>
+          <p>Exporta um CSV para análise, sem nenhum dado pessoal.</p>
+          <p>No banco, os dados pessoais ficam cifrados.</p>
+          <ul class="facts"><li>LGPD</li><li>sem dado pessoal</li><li>filtros por período e status</li></ul>
+        </div>
+        <figure class="print" data-print="exportar" data-file="exportar.png"><figcaption>fig. 6 — exportar CSV</figcaption></figure>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===== ARQUITETURA ===== -->
+  <section id="arquitetura" class="reveal">
+    <h2 class="sec">Por baixo do capô</h2>
+    <p class="sub">O caminho de uma ficha, do formulário ao PDF.</p>
+    <div class="arch">
+      <div class="pipe">
+        <span class="pkt"></span><span class="pkt p2"></span><span class="pkt p3"></span>
+        <div class="layer">
+          <div class="ln">🖥 Frontend</div>
+          <div class="tech">Next.js 16 · React 19 · TypeScript · Tailwind · React Query</div>
+          <div class="note">Formulário em etapas, dashboard e fila offline.</div>
+        </div>
+        <div class="layer">
+          <div class="ln">🔒 Offline</div>
+          <div class="tech">IndexedDB · Web Crypto (AES-256-GCM)</div>
+          <div class="note">Ficha cifrada no aparelho até a conexão voltar.</div>
+        </div>
+        <div class="layer">
+          <div class="ln">🔐 Autenticação</div>
+          <div class="tech">Spring Security · OAuth2/OIDC · Microsoft Entra ID</div>
+          <div class="note">Login institucional; perfil ADMIN ou USER.</div>
+        </div>
+        <div class="layer">
+          <div class="ln">☕ API REST</div>
+          <div class="tech">Java 25 · Spring Boot 4 · Spring Data JPA</div>
+          <div class="note">Regras da ficha, numeração, auditoria e exportação.</div>
+        </div>
+        <div class="layer">
+          <div class="ln">🐘 Banco</div>
+          <div class="tech">PostgreSQL 16 · campos cifrados</div>
+          <div class="note">Dados pessoais gravados cifrados (LGPD).</div>
+        </div>
+      </div>
+      <div class="side">
+        <div class="st">Apoio</div>
+        <div class="layer">
+          <div class="ln">⚡ Cache</div>
+          <div class="tech">Redis 7</div>
+          <div class="note">PDF e dashboard mais rápidos.</div>
+        </div>
+        <div class="layer">
+          <div class="ln">📄 PDF</div>
+          <div class="tech">Apache PDFBox</div>
+          <div class="note">Gera o PDF da ficha, em memória.</div>
+        </div>
+        <div class="layer">
+          <div class="ln">🐳 Infra</div>
+          <div class="tech">Docker · Traefik · Prometheus · Grafana</div>
+          <div class="note">Deploy, métricas e alertas.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SISTEMA EMULADO ===== -->
+  <section id="demo">
+    <h2 class="sec">Teste você mesmo</h2>
+    <p class="sub">O sistema emulado: entre, preencha uma ficha, derrube a internet e veja ela sincronizar. Nada sai do seu navegador.</p>
+    <div class="win" id="demoWin">
+      <div class="wtitle"><span>✚ SINAN-DIGITAL.exe</span><span class="wbtns" aria-hidden="true"><b>_</b><b>□</b><b>×</b></span></div>
+      <div id="app"></div>
+    </div>
+    <div class="demo-foot">
+      <span>💡 Entre como ADMIN ou USER · use o botão <b>📶 Online</b> pra simular a queda da internet</span>
+      <button class="btn95 sm" id="resetDemo" type="button">↺ Reiniciar</button>
+    </div>
+  </section>
+
+  <footer>
+    <hr>
+    <p>Código-fonte privado, de uso institucional. Esta página é uma emulação:<br>nenhuma ficha, pessoa ou unidade real aparece aqui.</p>
+    <p><a href="../index.html">◀ Voltar aos projetos</a> · Melhor visualizado em 800x600</p>
+  </footer>
+</div>
+
+<script src="../../click-sound.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,115 @@
+/* SINAN Digital — só o que é novo nesta página.
+   A base (paleta, hero, etapas, prints, arquitetura e o mini-app .mx) vem de ../mensageria/style.css. */
+
+/* ===== HERO: prancheta + cruz flutuando ===== */
+.scene .clip{ position:absolute; right:9%; top:46%; translate:0 -50%; width:132px; height:168px; padding:30px 14px 12px; rotate:6deg;
+  background:#fff; border:3px solid #000; box-shadow:8px 8px 0 rgba(0,0,0,.3), 0 0 50px 8px rgba(255,120,190,.35); animation:boia 4s ease-in-out infinite; }
+.scene .clip::before{ content:""; position:absolute; left:50%; top:-12px; translate:-50% 0; width:58px; height:22px; background:var(--win); border:3px solid #000; }
+.scene .clip i{ display:block; height:8px; margin:9px 0; background:repeating-linear-gradient(90deg,#bdb3d6 0 70%,transparent 70% 100%); }
+.scene .clip i:nth-child(2n){ width:72%; }
+.scene .clip b{ position:absolute; right:-18px; bottom:-16px; display:grid; place-items:center; width:46px; height:46px; font:bold 30px/1 var(--display); color:#fff;
+  background:var(--hot); border:3px solid #000; border-radius:50%; }
+@keyframes boia{ 50%{ transform:translateY(-8px); } }
+.scene .env{ color:#fff; }
+
+/* =====================================================================
+   MINI-APP — peças novas (o resto é o .mx da Mensageria)
+   ===================================================================== */
+.mx .mx-logo .ico{ background:linear-gradient(135deg,var(--hot),var(--purple)); }
+.mx .pf{ display:inline-block; padding:0 5px; font:bold 10px var(--mono); color:#fff; border:1px solid #000; white-space:nowrap; }
+.mx .pf.ADMIN{ background:#d61f69; } .mx .pf.USER{ background:#0a8f9e; }
+.mx .net{ font-weight:bold; }
+.mx .net.off{ color:#000; background:var(--amber); border-color:#000; }
+.mx .pend{ display:inline-grid; place-items:center; min-width:16px; height:16px; margin-left:3px; padding:0 3px; font:bold 10px var(--mono); color:#fff; background:var(--hot); border:1px solid #000; }
+
+/* login */
+.mx .perfis{ display:grid; gap:4px; margin:10px 0 2px; }
+.mx .perfis label{ display:flex; align-items:center; gap:6px; padding:4px 6px; font-size:12px; border:1px solid var(--line); }
+.mx .perfis label.on{ border-color:var(--purple); background:rgba(157,78,221,.08); }
+.mx .perfis small{ margin-left:auto; font:10px var(--mono); color:var(--muted); }
+
+/* faixa de offline */
+.mx .offbar{ display:flex; align-items:center; justify-content:center; gap:6px; padding:4px 8px; font-size:11px; font-weight:bold; text-align:center;
+  color:#5a3800; background:#ffe7a3; border-bottom:2px solid #d39a00; }
+.mx.dark .offbar{ color:#ffe7a3; background:#3a2a05; }
+
+/* dashboard */
+.mx .stats4{ display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-top:10px; }
+.mx .sc{ position:relative; overflow:hidden; padding:8px 10px; background:var(--panel); border:2px solid #000; box-shadow:3px 3px 0 var(--line); }
+.mx .sc .k{ font:bold 9px var(--ui); color:var(--muted); text-transform:uppercase; letter-spacing:.4px; }
+.mx .sc .v{ margin:2px 0 4px; font:bold 30px/1 var(--display); color:var(--accent); }
+.mx .sc .bg{ position:absolute; right:4px; top:2px; font-size:34px; opacity:.13; }
+.mx .sc .bdg{ display:inline-block; padding:0 5px; font:bold 10px var(--mono); color:var(--muted); border:1px solid var(--line); }
+.mx .sc .bdg.warn{ color:#b85a00; border-color:#e08a00; background:#fff3e0; }
+.mx .sc .bdg.ok{ color:#0c7a42; border-color:#22a35a; background:#e6fbef; }
+.mx.dark .sc .bdg.warn, .mx.dark .sc .bdg.ok{ background:transparent; }
+.mx .sc.v-sent .v{ color:#16a34a; } .mx .sc.v-pend .v{ color:var(--text); }
+.mx .dash2{ display:grid; grid-template-columns:1.7fr 1fr; gap:10px; margin-top:10px; }
+.mx .cta{ display:flex; flex-direction:column; justify-content:center; align-items:flex-start; gap:6px; padding:14px; color:#fff;
+  background:linear-gradient(135deg,var(--title1),var(--hot)); border:2px solid #000; box-shadow:4px 4px 0 #000; }
+.mx .cta b{ font:italic 18px var(--display); }
+.mx .cta span{ font-size:12px; opacity:.92; }
+.mx .cta .b{ margin-top:4px; }
+.mx .donut-card{ padding:10px; background:var(--panel); border:2px solid #000; }
+.mx .donut-card .bt{ font:bold 12px var(--ui); }
+.mx .donut{ position:relative; width:104px; aspect-ratio:1; margin:8px auto; border-radius:50%; border:2px solid #000; }
+.mx .donut::after{ content:""; position:absolute; inset:22%; border-radius:50%; background:var(--panel); border:2px solid #000; }
+.mx .donut span{ position:absolute; inset:0; z-index:1; display:grid; place-items:center; font:bold 16px var(--display); }
+.mx .lgd div{ display:flex; align-items:center; gap:5px; font-size:11px; }
+.mx .lgd i{ width:9px; height:9px; border:1px solid #000; background:var(--c); }
+.mx .lgd b{ margin-left:auto; }
+
+/* wizard */
+.mx .wz-top{ display:flex; align-items:baseline; justify-content:space-between; gap:8px; }
+.mx .wz-steps{ display:grid; grid-template-columns:repeat(8,1fr); gap:3px; margin:8px 0 10px; }
+.mx .wz-step{ padding:3px 2px 2px; text-align:center; font:bold 9px/1.15 var(--ui); color:var(--muted); background:var(--panel); border:2px solid var(--line); }
+.mx .wz-step b{ display:block; font:bold 12px var(--mono); }
+.mx .wz-step.feito{ color:#000; background:var(--green); border-color:#000; }
+.mx .wz-step.agora{ color:#fff; background:var(--accent); border-color:#000; }
+.mx .wz-card{ padding:10px 12px; background:var(--panel); border:2px solid #000; }
+.mx .wz-card h5{ margin:0 0 2px; font:italic 15px var(--display); }
+.mx .grid2{ display:grid; grid-template-columns:1fr 1fr; gap:0 10px; }
+.mx .grid2 .full{ grid-column:1 / -1; }
+.mx label.l .req{ color:#e0245e; }
+.mx .lock{ font:10px var(--mono); color:#0c7a42; }
+.mx .opts{ display:flex; flex-wrap:wrap; }
+.mx .wz-nav{ display:flex; align-items:center; gap:6px; margin-top:10px; }
+.mx .cont{ font:10px var(--mono); color:var(--muted); text-align:right; }
+
+/* fichas */
+.mx .pending{ margin:8px 0 10px; padding:8px 10px; background:#fff7dc; border:2px dashed #d39a00; color:#5a3800; }
+.mx.dark .pending{ background:#2b2005; color:#ffe7a3; }
+.mx .pending .ph{ display:flex; align-items:center; gap:6px; font-weight:bold; font-size:12px; }
+.mx .pitem{ display:flex; align-items:center; gap:8px; margin-top:5px; padding:4px 6px; font-size:11px; background:var(--panel); color:var(--text); border:1px solid var(--line); }
+.mx .pitem code{ overflow:hidden; white-space:nowrap; text-overflow:ellipsis; max-width:190px; font:10px var(--mono); color:var(--muted); }
+.mx .pitem .st{ margin-left:auto; white-space:nowrap; }
+.mx .fgrid{ display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
+.mx .fc{ padding:8px 10px; background:var(--panel); border:2px solid #000; box-shadow:3px 3px 0 var(--line); }
+.mx .fc.hl{ box-shadow:3px 3px 0 var(--hot); animation:hl 1.2s 2; }
+@keyframes hl{ 50%{ background:#ffe3f4; } }
+.mx.static .fc.hl{ animation:none; }
+.mx .fc .n{ font:bold 14px var(--mono); }
+.mx .fc .d{ font-size:11px; color:var(--muted); }
+.mx .fc select.in{ margin:6px 0; }
+.mx .fc .acts{ display:flex; gap:4px; }
+.mx .fc .acts .b{ flex:1; padding:4px 4px; }
+
+/* PDF */
+.mx .sheet{ padding:12px 14px; font:11px/1.4 var(--serif); color:#000; background:#fff; border:1px solid #999; box-shadow:3px 3px 0 rgba(0,0,0,.2); }
+.mx .sheet .sh{ display:flex; justify-content:space-between; gap:8px; padding-bottom:4px; border-bottom:2px solid #000; font:bold 11px var(--ui); }
+.mx .sheet .sg{ display:grid; grid-template-columns:1fr 1fr; gap:0 12px; margin-top:6px; }
+.mx .sheet .sf{ padding:3px 0; border-bottom:1px dotted #999; }
+.mx .sheet .sf small{ display:block; font:bold 8px var(--ui); color:#555; text-transform:uppercase; }
+.mx .sheet .full{ grid-column:1 / -1; }
+.mx .pdfmeta{ margin-top:6px; font:10px var(--mono); color:var(--muted); }
+
+/* CSV */
+.mx .csvprev{ max-height:110px; overflow:auto; margin-top:8px; padding:6px; white-space:pre; font:10px/1.4 var(--mono); color:var(--green); background:#000; border:2px solid #000; }
+
+@media (max-width:660px){
+  .scene .clip{ opacity:.35; }
+  .mx .stats4{ grid-template-columns:repeat(2,1fr); }
+  .mx .dash2, .mx .grid2{ grid-template-columns:1fr; }
+  .mx .fgrid{ grid-template-columns:1fr 1fr; }
+  .mx .wz-steps{ grid-template-columns:repeat(4,1fr); }
+}
