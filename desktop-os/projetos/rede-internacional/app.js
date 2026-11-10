@@ -987,7 +987,7 @@ document.querySelectorAll("[data-print]").forEach(fig => {
     h("div", { class: "bar" }, h("span", null, fig.dataset.file || nome + ".png"), h("span", { "aria-hidden": "true" }, "_ □ ×")),
     h("div", { class: "view" }, h("div", { class: "stage", inert: true, "aria-hidden": "true" }, tela))));
   criarApp(tela, nome);
-  fig.append(h("button", { class: "btn95 sm", type: "button", onclick: () => {
+  fig.append(h("button", { class: "btn95 sm", type: "button", "data-en": "▶ see it live", onclick: () => {
     demo.abrir(nome);
     pular("demo");
     janelaDemo.classList.remove("flash"); void janelaDemo.offsetWidth; janelaDemo.classList.add("flash");
@@ -997,11 +997,17 @@ document.querySelectorAll("[data-print]").forEach(fig => {
 /* terminal do hero digitando frases */
 (function digitar(){
   const alvo = document.getElementById("typed");
-  const frases = ["organiza os eventos de uma rede de cidades", "ficha do evento em 4 etapas", "regra diferente para a cidade-sede",
+  const frasesPT = ["organiza os eventos de uma rede de cidades", "ficha do evento em 4 etapas", "regra diferente para a cidade-sede",
                   "custos por participante, somados na hora", "calendário mensal dos eventos", "cada perfil vê só o que pode"];
+  const frasesEN = ["organizes events for a network of cities","event form in 4 steps","a different rule for the host city","costs per participant, added up instantly","monthly calendar of events","each profile sees only what it may"];
+  const escolher = () => window.I18N && I18N.lang === "en" ? frasesEN : frasesPT;
+  let frases = frasesPT;
+  /* sem animação (reduzir movimento), a frase fixa acompanha o idioma */
+  addEventListener("langchange", () => { if(reduzMovimento) alvo.textContent = escolher()[0]; });
   if(reduzMovimento) return;
   let f = 0, i = frases[0].length, apagando = true;
   setTimeout(function passo(){
+    frases = escolher();
     const frase = frases[f];
     if(apagando){
       i--;

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Rede Internacional — Projetos</title>
+<title data-en="International Network — Projects">Rede Internacional — Projetos</title>
 <!--
   Página do projeto Rede Internacional, aberta pelo Projetos.exe (navegador do BRENNO//OS).
   Mesmo formato da Mensageria: explicação em etapas com "prints" e, embaixo, o sistema emulado.
@@ -20,7 +20,7 @@
 </head>
 <body>
 <div class="page">
-  <a class="crumb" href="../index.html">◀ Voltar aos projetos</a>
+  <a class="crumb" href="../index.html" data-en="◀ Back to projects">◀ Voltar aos projetos</a>
 
   <!-- ===== HERO ===== -->
   <header class="hero">
@@ -32,147 +32,147 @@
       <span class="env" style="top:5%;  animation-duration:22s; animation-delay:-13s; font-size:26px">🌎</span>
     </div>
     <div class="hero-in">
-      <div class="kicker">Projeto · Gestão de eventos · Setor público</div>
-      <h1 class="title">REDE<br>INTERNACIONAL</h1>
-      <p class="lede">Fichas, calendário e custos dos eventos de uma <b>rede internacional de cidades</b>.</p>
+      <div class="kicker" data-en="Project · Event management · Public sector">Projeto · Gestão de eventos · Setor público</div>
+      <h1 class="title" data-en="INTERNATIONAL<br>NETWORK">REDE<br>INTERNACIONAL</h1>
+      <p class="lede" data-en="Event forms, calendar and costs for an <b>international network of cities</b>.">Fichas, calendário e custos dos eventos de uma <b>rede internacional de cidades</b>.</p>
       <p class="typing" aria-hidden="true">&gt; <span id="typed">organiza os eventos de uma rede de cidades</span><i class="caret"></i></p>
       <div class="chips">
         <span class="chip">Java 25</span><span class="chip">Spring Boot 4</span><span class="chip">Next.js 16</span><span class="chip">React 19</span>
         <span class="chip">MySQL 8</span><span class="chip">JWT</span><span class="chip">FullCalendar</span><span class="chip">Docker</span>
       </div>
       <div class="cta">
-        <a class="btn95 hot" href="#demo" data-jump="demo">▶ Testar o sistema</a>
-        <a class="btn95" href="#etapas" data-jump="etapas">Como funciona ↓</a>
+        <a class="btn95 hot" href="#demo" data-jump="demo" data-en="▶ Try the system">▶ Testar o sistema</a>
+        <a class="btn95" href="#etapas" data-jump="etapas" data-en="How it works ↓">Como funciona ↓</a>
       </div>
     </div>
   </header>
 
-  <div class="tape"><span>SISTEMA EMULADO · DADOS 100% FICTÍCIOS</span></div>
+  <div class="tape"><span data-en="EMULATED SYSTEM · 100% FICTIONAL DATA">SISTEMA EMULADO · DADOS 100% FICTÍCIOS</span></div>
 
   <section class="stats reveal" aria-label="Números do sistema">
-    <div class="stat"><span class="counter" data-count="4"></span><div class="lbl">etapas na ficha</div></div>
-    <div class="stat"><span class="counter" data-count="4"></span><div class="lbl">perfis de acesso</div></div>
-    <div class="stat"><span class="counter" data-count="6"></span><div class="lbl">módulos no painel</div></div>
-    <div class="stat"><span class="counter" data-count="0"></span><div class="lbl">dados reais nesta página</div></div>
+    <div class="stat"><span class="counter" data-count="4"></span><div class="lbl" data-en="steps in the form">etapas na ficha</div></div>
+    <div class="stat"><span class="counter" data-count="4"></span><div class="lbl" data-en="access profiles">perfis de acesso</div></div>
+    <div class="stat"><span class="counter" data-count="6"></span><div class="lbl" data-en="dashboard modules">módulos no painel</div></div>
+    <div class="stat"><span class="counter" data-count="0"></span><div class="lbl" data-en="real data on this page">dados reais nesta página</div></div>
   </section>
 
   <!-- ===== ETAPAS ===== -->
   <section id="etapas">
-    <h2 class="sec">Como funciona</h2>
-    <p class="sub">Seis etapas, do login ao resumo impresso. Cada print é o sistema emulado lá embaixo — clique em <b>ver ao vivo</b>.</p>
+    <h2 class="sec" data-en="How it works">Como funciona</h2>
+    <p class="sub" data-en="Six steps, from login to the printed summary. Each screenshot is the emulated system below. Click <b>see it live</b>.">Seis etapas, do login ao resumo impresso. Cada print é o sistema emulado lá embaixo — clique em <b>ver ao vivo</b>.</p>
 
     <div class="steps">
       <article class="step reveal">
         <div class="txt">
-          <h3><span class="num">1</span>Login e primeiro acesso</h3>
-          <p>Entra com e-mail e senha.</p>
-          <p>Quem recebeu senha temporária precisa trocá-la antes de usar o sistema.</p>
-          <ul class="facts"><li>JWT</li><li>BCrypt</li><li>troca obrigatória</li><li>log de acesso</li></ul>
+          <h3 data-en="<span class=&quot;num&quot;>1</span>Login and first access"><span class="num">1</span>Login e primeiro acesso</h3>
+          <p data-en="Sign in with e-mail and password.">Entra com e-mail e senha.</p>
+          <p data-en="Anyone given a temporary password must change it before using the system.">Quem recebeu senha temporária precisa trocá-la antes de usar o sistema.</p>
+          <ul class="facts"><li>JWT</li><li>BCrypt</li><li data-en="mandatory change">troca obrigatória</li><li data-en="access log">log de acesso</li></ul>
         </div>
-        <figure class="print" data-print="login" data-file="login.png"><figcaption>fig. 1 — tela de login</figcaption></figure>
+        <figure class="print" data-print="login" data-file="login.png"><figcaption data-en="fig. 1 — login screen">fig. 1 — tela de login</figcaption></figure>
       </article>
 
       <article class="step reveal">
         <div class="txt">
-          <h3><span class="num">2</span>Painel por perfil</h3>
-          <p>Cada perfil vê um painel diferente.</p>
-          <p>Quem só consulta não vê o botão de criar ficha nem a administração.</p>
-          <ul class="facts"><li>ADMIN · EDITOR</li><li>SUPERUSER · USER</li><li>rotas protegidas</li></ul>
+          <h3 data-en="<span class=&quot;num&quot;>2</span>Dashboard per profile"><span class="num">2</span>Painel por perfil</h3>
+          <p data-en="Each profile sees a different dashboard.">Cada perfil vê um painel diferente.</p>
+          <p data-en="Read-only users don't see the create-form button or the admin area.">Quem só consulta não vê o botão de criar ficha nem a administração.</p>
+          <ul class="facts"><li>ADMIN · EDITOR</li><li>SUPERUSER · USER</li><li data-en="protected routes">rotas protegidas</li></ul>
         </div>
-        <figure class="print" data-print="painel" data-file="painel.png"><figcaption>fig. 2 — painel</figcaption></figure>
+        <figure class="print" data-print="painel" data-file="painel.png"><figcaption data-en="fig. 2 — dashboard">fig. 2 — painel</figcaption></figure>
       </article>
 
       <article class="step reveal">
         <div class="txt">
-          <h3><span class="num">3</span>Ficha do evento</h3>
-          <p>Quatro etapas: dados, organização, custos e programação.</p>
-          <p>Na cidade-sede, a etapa de custos vira contrato e patrocínio.</p>
-          <ul class="facts"><li>validação por etapa</li><li>regra por cidade</li><li>total somado na hora</li></ul>
+          <h3 data-en="<span class=&quot;num&quot;>3</span>Event form"><span class="num">3</span>Ficha do evento</h3>
+          <p data-en="Four steps: details, organization, costs and schedule.">Quatro etapas: dados, organização, custos e programação.</p>
+          <p data-en="In the host city, the costs step becomes contract and sponsorship.">Na cidade-sede, a etapa de custos vira contrato e patrocínio.</p>
+          <ul class="facts"><li data-en="per-step validation">validação por etapa</li><li data-en="per-city rule">regra por cidade</li><li data-en="totals add up instantly">total somado na hora</li></ul>
         </div>
-        <figure class="print" data-print="ficha" data-file="nova-ficha.png"><figcaption>fig. 3 — custos por participante</figcaption></figure>
+        <figure class="print" data-print="ficha" data-file="nova-ficha.png"><figcaption data-en="fig. 3 — costs per participant">fig. 3 — custos por participante</figcaption></figure>
       </article>
 
       <article class="step reveal">
         <div class="txt">
-          <h3><span class="num">4</span>Eventos e calendário</h3>
-          <p>Toda ficha salva vira um evento.</p>
-          <p>Dá pra buscar na lista ou ver o mês inteiro no calendário.</p>
-          <ul class="facts"><li>FullCalendar</li><li>busca</li><li>próximos · concluídos</li></ul>
+          <h3 data-en="<span class=&quot;num&quot;>4</span>Events and calendar"><span class="num">4</span>Eventos e calendário</h3>
+          <p data-en="Every saved form becomes an event.">Toda ficha salva vira um evento.</p>
+          <p data-en="Search the list or see the whole month on the calendar.">Dá pra buscar na lista ou ver o mês inteiro no calendário.</p>
+          <ul class="facts"><li>FullCalendar</li><li data-en="search">busca</li><li data-en="upcoming · finished">próximos · concluídos</li></ul>
         </div>
-        <figure class="print" data-print="calendario" data-file="calendario.png"><figcaption>fig. 4 — calendário</figcaption></figure>
+        <figure class="print" data-print="calendario" data-file="calendario.png"><figcaption data-en="fig. 4 — calendar">fig. 4 — calendário</figcaption></figure>
       </article>
 
       <article class="step reveal">
         <div class="txt">
-          <h3><span class="num">5</span>Resumo para imprimir</h3>
-          <p>Cada evento tem um resumo completo, pronto para imprimir.</p>
-          <p>O perfil USER recebe a versão sem valores, contrato e contatos.</p>
-          <ul class="facts"><li>CSS de impressão</li><li>resposta por perfil</li><li>quem criou · quem editou</li></ul>
+          <h3 data-en="<span class=&quot;num&quot;>5</span>Printable summary"><span class="num">5</span>Resumo para imprimir</h3>
+          <p data-en="Each event has a full summary, ready to print.">Cada evento tem um resumo completo, pronto para imprimir.</p>
+          <p data-en="The USER profile gets a version without amounts, contract or contacts.">O perfil USER recebe a versão sem valores, contrato e contatos.</p>
+          <ul class="facts"><li data-en="print CSS">CSS de impressão</li><li data-en="response per profile">resposta por perfil</li><li data-en="created by · edited by">quem criou · quem editou</li></ul>
         </div>
-        <figure class="print" data-print="resumo" data-file="resumo.png"><figcaption>fig. 5 — resumo do evento</figcaption></figure>
+        <figure class="print" data-print="resumo" data-file="resumo.png"><figcaption data-en="fig. 5 — event summary">fig. 5 — resumo do evento</figcaption></figure>
       </article>
 
       <article class="step reveal">
         <div class="txt">
-          <h3><span class="num">6</span>Usuários e acessos</h3>
-          <p>O ADMIN cria contas, escolhe o perfil e entrega uma senha temporária.</p>
-          <p>Todo login, certo ou errado, fica registrado.</p>
-          <ul class="facts"><li>e-mail único</li><li>nome e sobrenome</li><li>IP e navegador</li></ul>
+          <h3 data-en="<span class=&quot;num&quot;>6</span>Users and access"><span class="num">6</span>Usuários e acessos</h3>
+          <p data-en="The ADMIN creates accounts, picks the profile and hands out a temporary password.">O ADMIN cria contas, escolhe o perfil e entrega uma senha temporária.</p>
+          <p data-en="Every login, successful or not, is logged.">Todo login, certo ou errado, fica registrado.</p>
+          <ul class="facts"><li data-en="unique e-mail">e-mail único</li><li data-en="first and last name">nome e sobrenome</li><li data-en="IP and browser">IP e navegador</li></ul>
         </div>
-        <figure class="print" data-print="admin" data-file="admin.png"><figcaption>fig. 6 — administração</figcaption></figure>
+        <figure class="print" data-print="admin" data-file="admin.png"><figcaption data-en="fig. 6 — administration">fig. 6 — administração</figcaption></figure>
       </article>
     </div>
   </section>
 
   <!-- ===== ARQUITETURA ===== -->
   <section id="arquitetura" class="reveal">
-    <h2 class="sec">Por baixo do capô</h2>
-    <p class="sub">O caminho de uma ficha, do formulário ao calendário.</p>
+    <h2 class="sec" data-en="Under the hood">Por baixo do capô</h2>
+    <p class="sub" data-en="The path of a form, from input to calendar.">O caminho de uma ficha, do formulário ao calendário.</p>
     <div class="arch">
       <div class="pipe">
         <span class="pkt"></span><span class="pkt p2"></span><span class="pkt p3"></span>
         <div class="layer">
           <div class="ln">🖥 Frontend</div>
           <div class="tech">Next.js 16 · React 19 · TypeScript · Tailwind 4 · Radix UI</div>
-          <div class="note">Painel, ficha em etapas, lista e calendário.</div>
+          <div class="note" data-en="Dashboard, step-by-step form, list and calendar.">Painel, ficha em etapas, lista e calendário.</div>
         </div>
         <div class="layer">
-          <div class="ln">🔐 Autenticação</div>
+          <div class="ln" data-en="🔐 Authentication">🔐 Autenticação</div>
           <div class="tech">Spring Security · JWT · BCrypt</div>
-          <div class="note">Login sem estado; o perfil vai dentro do token.</div>
+          <div class="note" data-en="Stateless login; the profile travels inside the token.">Login sem estado; o perfil vai dentro do token.</div>
         </div>
         <div class="layer">
-          <div class="ln">☕ API REST</div>
+          <div class="ln" data-en="☕ REST API">☕ API REST</div>
           <div class="tech">Java 25 · Spring Boot 4 · Spring Data JPA</div>
-          <div class="note">Regras da ficha, validações e o que cada perfil pode ver.</div>
+          <div class="note" data-en="Form rules, validations and what each profile can see.">Regras da ficha, validações e o que cada perfil pode ver.</div>
         </div>
         <div class="layer">
-          <div class="ln">🐬 Banco</div>
+          <div class="ln" data-en="🐬 Database">🐬 Banco</div>
           <div class="tech">MySQL 8.4 · JPA Auditing</div>
-          <div class="note">Fichas, eventos, usuários e log de acesso.</div>
+          <div class="note" data-en="Forms, events, users and access log.">Fichas, eventos, usuários e log de acesso.</div>
         </div>
       </div>
       <div class="side">
-        <div class="st">Apoio</div>
+        <div class="st" data-en="Support">Apoio</div>
         <div class="layer">
-          <div class="ln">📅 Calendário</div>
+          <div class="ln" data-en="📅 Calendar">📅 Calendário</div>
           <div class="tech">FullCalendar</div>
-          <div class="note">Visão mensal dos eventos.</div>
+          <div class="note" data-en="Monthly view of events.">Visão mensal dos eventos.</div>
         </div>
         <div class="layer">
-          <div class="ln">📖 Docs da API</div>
+          <div class="ln" data-en="📖 API docs">📖 Docs da API</div>
           <div class="tech">Swagger · OpenAPI</div>
-          <div class="note">Só o ADMIN acessa.</div>
+          <div class="note" data-en="ADMIN only.">Só o ADMIN acessa.</div>
         </div>
         <div class="layer">
-          <div class="ln">🧪 Testes</div>
+          <div class="ln" data-en="🧪 Tests">🧪 Testes</div>
           <div class="tech">Playwright</div>
-          <div class="note">Login e eventos testados de ponta a ponta.</div>
+          <div class="note" data-en="Login and events tested end to end.">Login e eventos testados de ponta a ponta.</div>
         </div>
         <div class="layer">
           <div class="ln">🐳 Infra</div>
           <div class="tech">Docker Compose · HTTPS · Prometheus</div>
-          <div class="note">Deploy, certificado e métricas.</div>
+          <div class="note" data-en="Deploy, certificate and metrics.">Deploy, certificado e métricas.</div>
         </div>
       </div>
     </div>
@@ -180,26 +180,27 @@
 
   <!-- ===== SISTEMA EMULADO ===== -->
   <section id="demo">
-    <h2 class="sec">Teste você mesmo</h2>
-    <p class="sub">O sistema emulado: entre com um perfil, crie uma ficha e veja o evento no calendário. Nada sai do seu navegador.</p>
+    <h2 class="sec" data-en="Try it yourself">Teste você mesmo</h2>
+    <p class="sub" data-en="The emulated system: sign in with a profile, create a form and see the event on the calendar. Nothing leaves your browser. <b>The demo is in Portuguese</b>, like the original system.">O sistema emulado: entre com um perfil, crie uma ficha e veja o evento no calendário. Nada sai do seu navegador.</p>
     <div class="win" id="demoWin">
       <div class="wtitle"><span>🌎 REDE-INTERNACIONAL.exe</span><span class="wbtns" aria-hidden="true"><b>_</b><b>□</b><b>×</b></span></div>
       <div id="app"></div>
     </div>
     <div class="demo-foot">
-      <span>💡 Senha: <code>demo123</code> · a conta USER cai na troca de senha</span>
-      <button class="btn95 sm" id="resetDemo" type="button">↺ Reiniciar</button>
+      <span data-en="💡 Password: <code>demo123</code> · the USER account lands on the password change">💡 Senha: <code>demo123</code> · a conta USER cai na troca de senha</span>
+      <button class="btn95 sm" id="resetDemo" type="button" data-en="↺ Restart">↺ Reiniciar</button>
     </div>
   </section>
 
   <footer>
     <hr>
-    <p>Código-fonte privado, de uso institucional. Esta página é uma emulação:<br>nenhum evento, cidade, instituição ou pessoa real aparece aqui.</p>
-    <p><a href="../index.html">◀ Voltar aos projetos</a> · Melhor visualizado em 800x600</p>
+    <p data-en="Private source code, for institutional use. This page is an emulation:<br>no real event, city, institution or person appears here.">Código-fonte privado, de uso institucional. Esta página é uma emulação:<br>nenhum evento, cidade, instituição ou pessoa real aparece aqui.</p>
+    <p data-en="<a href=&quot;../index.html&quot;>◀ Back to projects</a> · Best viewed at 800x600"><a href="../index.html">◀ Voltar aos projetos</a> · Melhor visualizado em 800x600</p>
   </footer>
 </div>
 
 <script src="../../click-sound.js"></script>
 <script src="app.js"></script>
+<script src="../../i18n.js"></script>
 </body>
 </html>

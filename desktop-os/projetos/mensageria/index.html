@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Mensageria — Projetos</title>
+<title data-en="Mensageria — Projects">Mensageria — Projetos</title>
 <!--
   Página do projeto Mensageria, aberta pelo Projetos.exe (navegador do BRENNO//OS).
   Em cima: explicação em etapas, com "prints". Embaixo: o sistema emulado.
@@ -17,7 +17,7 @@
 </head>
 <body>
 <div class="page">
-  <a class="crumb" href="../index.html">◀ Voltar aos projetos</a>
+  <a class="crumb" href="../index.html" data-en="◀ Back to projects">◀ Voltar aos projetos</a>
 
   <!-- ===== HERO ===== -->
   <header class="hero">
@@ -29,145 +29,145 @@
       <span class="env" style="top:6%;  animation-duration:19s; animation-delay:-12s; font-size:28px">✉</span>
     </div>
     <div class="hero-in">
-      <div class="kicker">Projeto · Sistema corporativo · Setor público</div>
+      <div class="kicker" data-en="Project · Corporate system · Public sector">Projeto · Sistema corporativo · Setor público</div>
       <h1 class="title">MENSAGERIA</h1>
-      <p class="lede">Contatos institucionais e e-mail em massa para a rede <b>Mercocidades</b>.</p>
+      <p class="lede" data-en="Institutional contacts and bulk e-mail for the <b>Mercocidades</b> network.">Contatos institucionais e e-mail em massa para a rede <b>Mercocidades</b>.</p>
       <p class="typing" aria-hidden="true">&gt; <span id="typed">conecta cidades da América Latina</span><i class="caret"></i></p>
       <div class="chips">
         <span class="chip">Java 21</span><span class="chip">Spring Boot 3</span><span class="chip">Next.js 15</span><span class="chip">React 19</span>
         <span class="chip">PostgreSQL</span><span class="chip">RabbitMQ</span><span class="chip">Entra ID</span><span class="chip">Microsoft Graph</span>
       </div>
       <div class="cta">
-        <a class="btn95 hot" href="#demo" data-jump="demo">▶ Testar o sistema</a>
-        <a class="btn95" href="#etapas" data-jump="etapas">Como funciona ↓</a>
+        <a class="btn95 hot" href="#demo" data-jump="demo" data-en="▶ Try the system">▶ Testar o sistema</a>
+        <a class="btn95" href="#etapas" data-jump="etapas" data-en="How it works ↓">Como funciona ↓</a>
       </div>
     </div>
   </header>
 
-  <div class="tape"><span>SISTEMA EMULADO · DADOS 100% FICTÍCIOS</span></div>
+  <div class="tape"><span data-en="EMULATED SYSTEM · 100% FICTIONAL DATA">SISTEMA EMULADO · DADOS 100% FICTÍCIOS</span></div>
 
   <section class="stats reveal" aria-label="Números do sistema">
-    <div class="stat"><span class="counter" data-count="5"></span><div class="lbl">telas</div></div>
-    <div class="stat"><span class="counter" data-count="6"></span><div class="lbl">envios em paralelo</div></div>
-    <div class="stat"><span class="counter" data-count="2"></span><div class="lbl">formas de login</div></div>
-    <div class="stat"><span class="counter" data-count="0"></span><div class="lbl">dados reais nesta página</div></div>
+    <div class="stat"><span class="counter" data-count="5"></span><div class="lbl" data-en="screens">telas</div></div>
+    <div class="stat"><span class="counter" data-count="6"></span><div class="lbl" data-en="parallel sends">envios em paralelo</div></div>
+    <div class="stat"><span class="counter" data-count="2"></span><div class="lbl" data-en="ways to sign in">formas de login</div></div>
+    <div class="stat"><span class="counter" data-count="0"></span><div class="lbl" data-en="real data on this page">dados reais nesta página</div></div>
   </section>
 
   <!-- ===== ETAPAS ===== -->
   <section id="etapas">
-    <h2 class="sec">Como funciona</h2>
-    <p class="sub">Seis etapas, do login ao registro de auditoria. Cada print é o sistema emulado lá embaixo — clique em <b>ver ao vivo</b>.</p>
+    <h2 class="sec" data-en="How it works">Como funciona</h2>
+    <p class="sub" data-en="Six steps, from login to the audit log. Each screenshot is the emulated system below. Click <b>see it live</b>.">Seis etapas, do login ao registro de auditoria. Cada print é o sistema emulado lá embaixo — clique em <b>ver ao vivo</b>.</p>
 
     <div class="steps">
       <article class="step reveal">
         <div class="txt">
-          <h3><span class="num">1</span>Login seguro</h3>
-          <p>Entra com e-mail e senha ou com a conta Microsoft.</p>
-          <p>Errou a senha várias vezes? A conta trava por um tempo.</p>
-          <ul class="facts"><li>BCrypt</li><li>JWT + refresh token</li><li>SSO Entra ID</li><li>bloqueio por tentativas</li></ul>
+          <h3 data-en="<span class=&quot;num&quot;>1</span>Secure login"><span class="num">1</span>Login seguro</h3>
+          <p data-en="Sign in with e-mail and password or with a Microsoft account.">Entra com e-mail e senha ou com a conta Microsoft.</p>
+          <p data-en="Wrong password too many times? The account locks for a while.">Errou a senha várias vezes? A conta trava por um tempo.</p>
+          <ul class="facts"><li>BCrypt</li><li>JWT + refresh token</li><li>SSO Entra ID</li><li data-en="lockout after failed attempts">bloqueio por tentativas</li></ul>
         </div>
-        <figure class="print" data-print="login" data-file="login.png"><figcaption>fig. 1 — tela de login</figcaption></figure>
+        <figure class="print" data-print="login" data-file="login.png"><figcaption data-en="fig. 1 — login screen">fig. 1 — tela de login</figcaption></figure>
       </article>
 
       <article class="step reveal">
         <div class="txt">
-          <h3><span class="num">2</span>Hub central</h3>
-          <p>Depois do login, dois caminhos: enviar mensagens ou cuidar dos contatos.</p>
-          <ul class="facts"><li>Next.js App Router</li><li>tema claro/escuro</li></ul>
+          <h3 data-en="<span class=&quot;num&quot;>2</span>Central hub"><span class="num">2</span>Hub central</h3>
+          <p data-en="After login, two paths: send messages or manage contacts.">Depois do login, dois caminhos: enviar mensagens ou cuidar dos contatos.</p>
+          <ul class="facts"><li>Next.js App Router</li><li data-en="light/dark theme">tema claro/escuro</li></ul>
         </div>
         <figure class="print" data-print="hub" data-file="hub.png"><figcaption>fig. 2 — hub</figcaption></figure>
       </article>
 
       <article class="step reveal">
         <div class="txt">
-          <h3><span class="num">3</span>Base de contatos</h3>
-          <p>Cada cidade da rede, com autoridade, e-mail e instância.</p>
-          <p>Busca e filtra por país, instância e unidade temática.</p>
-          <ul class="facts"><li>criar · editar · excluir</li><li>adimplência</li><li>paginação</li></ul>
+          <h3 data-en="<span class=&quot;num&quot;>3</span>Contact base"><span class="num">3</span>Base de contatos</h3>
+          <p data-en="Every city in the network, with its official, e-mail and governing body.">Cada cidade da rede, com autoridade, e-mail e instância.</p>
+          <p data-en="Search and filter by country, governing body and thematic unit.">Busca e filtra por país, instância e unidade temática.</p>
+          <ul class="facts"><li data-en="create · edit · delete">criar · editar · excluir</li><li data-en="dues status">adimplência</li><li data-en="pagination">paginação</li></ul>
         </div>
-        <figure class="print" data-print="contatos" data-file="contatos.png"><figcaption>fig. 3 — base de contatos</figcaption></figure>
+        <figure class="print" data-print="contatos" data-file="contatos.png"><figcaption data-en="fig. 3 — contact base">fig. 3 — base de contatos</figcaption></figure>
       </article>
 
       <article class="step reveal">
         <div class="txt">
-          <h3><span class="num">4</span>Compor e-mail</h3>
-          <p>Escolhe os destinatários e escreve uma vez só.</p>
-          <p>Variáveis personalizam cada cópia com o nome e a cidade.</p>
-          <ul class="facts"><li>{{nome}} {{cidade}} {{email}}</li><li>anexos até 10 MB</li><li>rascunho</li><li>pré-visualização</li></ul>
+          <h3 data-en="<span class=&quot;num&quot;>4</span>Compose e-mail"><span class="num">4</span>Compor e-mail</h3>
+          <p data-en="Pick the recipients and write it once.">Escolhe os destinatários e escreve uma vez só.</p>
+          <p data-en="Variables personalize each copy with the name and city.">Variáveis personalizam cada cópia com o nome e a cidade.</p>
+          <ul class="facts"><li>{{nome}} {{cidade}} {{email}}</li><li data-en="attachments up to 10 MB">anexos até 10 MB</li><li data-en="draft">rascunho</li><li data-en="preview">pré-visualização</li></ul>
         </div>
-        <figure class="print" data-print="enviar" data-file="compor.png"><figcaption>fig. 4 — compor e-mail</figcaption></figure>
+        <figure class="print" data-print="enviar" data-file="compor.png"><figcaption data-en="fig. 4 — compose e-mail">fig. 4 — compor e-mail</figcaption></figure>
       </article>
 
       <article class="step reveal">
         <div class="txt">
-          <h3><span class="num">5</span>Disparo em massa</h3>
-          <p>Um envio por destinatário, seis de cada vez.</p>
-          <p>Se o Office 365 limita a taxa, espera e tenta de novo. O que falha vai para a DLQ.</p>
-          <ul class="facts"><li>RabbitMQ</li><li>retry em 429</li><li>Dead Letter Queue</li><li>Microsoft Graph</li></ul>
+          <h3 data-en="<span class=&quot;num&quot;>5</span>Bulk sending"><span class="num">5</span>Disparo em massa</h3>
+          <p data-en="One send per recipient, six at a time.">Um envio por destinatário, seis de cada vez.</p>
+          <p data-en="If Office 365 throttles, it waits and retries. Whatever fails goes to the DLQ.">Se o Office 365 limita a taxa, espera e tenta de novo. O que falha vai para a DLQ.</p>
+          <ul class="facts"><li>RabbitMQ</li><li data-en="retry on 429">retry em 429</li><li>Dead Letter Queue</li><li>Microsoft Graph</li></ul>
         </div>
-        <figure class="print" data-print="envio" data-file="disparo.png"><figcaption>fig. 5 — fila de envio</figcaption></figure>
+        <figure class="print" data-print="envio" data-file="disparo.png"><figcaption data-en="fig. 5 — send queue">fig. 5 — fila de envio</figcaption></figure>
       </article>
 
       <article class="step reveal">
         <div class="txt">
-          <h3><span class="num">6</span>Auditoria</h3>
-          <p>Login, edição, envio: toda ação fica registrada com hora e autor.</p>
-          <ul class="facts"><li>registros imutáveis</li><li>retenção configurável</li></ul>
+          <h3 data-en="<span class=&quot;num&quot;>6</span>Audit"><span class="num">6</span>Auditoria</h3>
+          <p data-en="Login, edit, send: every action is logged with time and author.">Login, edição, envio: toda ação fica registrada com hora e autor.</p>
+          <ul class="facts"><li data-en="immutable records">registros imutáveis</li><li data-en="configurable retention">retenção configurável</li></ul>
         </div>
-        <figure class="print" data-print="auditoria" data-file="auditoria.png"><figcaption>fig. 6 — log de auditoria</figcaption></figure>
+        <figure class="print" data-print="auditoria" data-file="auditoria.png"><figcaption data-en="fig. 6 — audit log">fig. 6 — log de auditoria</figcaption></figure>
       </article>
     </div>
   </section>
 
   <!-- ===== ARQUITETURA ===== -->
   <section id="arquitetura" class="reveal">
-    <h2 class="sec">Por baixo do capô</h2>
-    <p class="sub">O caminho de um e-mail, do clique até a caixa de entrada.</p>
+    <h2 class="sec" data-en="Under the hood">Por baixo do capô</h2>
+    <p class="sub" data-en="The path of an e-mail, from click to inbox.">O caminho de um e-mail, do clique até a caixa de entrada.</p>
     <div class="arch">
       <div class="pipe">
         <span class="pkt"></span><span class="pkt p2"></span><span class="pkt p3"></span>
         <div class="layer">
           <div class="ln">🖥 Frontend</div>
           <div class="tech">Next.js 15 · React 19 · TypeScript · Tailwind v4</div>
-          <div class="note">Telas, filtros e disparo dos envios em pool.</div>
+          <div class="note" data-en="Screens, filters and pooled sending.">Telas, filtros e disparo dos envios em pool.</div>
         </div>
         <div class="layer">
-          <div class="ln">🔐 Autenticação</div>
+          <div class="ln" data-en="🔐 Authentication">🔐 Autenticação</div>
           <div class="tech">NextAuth · Microsoft Entra ID · JWT</div>
-          <div class="note">Login por senha ou SSO, sessão sem estado.</div>
+          <div class="note" data-en="Password or SSO login, stateless session.">Login por senha ou SSO, sessão sem estado.</div>
         </div>
         <div class="layer">
-          <div class="ln">☕ API REST</div>
+          <div class="ln" data-en="☕ REST API">☕ API REST</div>
           <div class="tech">Java 21 · Spring Boot 3.4 · Spring Security</div>
-          <div class="note">Regras de negócio, contatos, rascunhos e cota de envio.</div>
+          <div class="note" data-en="Business rules, contacts, drafts and send quota.">Regras de negócio, contatos, rascunhos e cota de envio.</div>
         </div>
         <div class="layer">
-          <div class="ln">🐇 Fila</div>
+          <div class="ln" data-en="🐇 Queue">🐇 Fila</div>
           <div class="tech">RabbitMQ · Dead Letter Queue</div>
-          <div class="note">Entrega assíncrona: nada se perde se algo cair.</div>
+          <div class="note" data-en="Asynchronous delivery: nothing is lost if something goes down.">Entrega assíncrona: nada se perde se algo cair.</div>
         </div>
         <div class="layer">
-          <div class="ln">✉ Entrega</div>
+          <div class="ln" data-en="✉ Delivery">✉ Entrega</div>
           <div class="tech">Microsoft Graph API · Office 365</div>
-          <div class="note">O e-mail sai pela conta institucional.</div>
+          <div class="note" data-en="The e-mail goes out from the institutional account.">O e-mail sai pela conta institucional.</div>
         </div>
       </div>
       <div class="side">
-        <div class="st">Apoio</div>
+        <div class="st" data-en="Support">Apoio</div>
         <div class="layer">
-          <div class="ln">🐘 Banco</div>
+          <div class="ln" data-en="🐘 Database">🐘 Banco</div>
           <div class="tech">PostgreSQL 16 · Liquibase</div>
-          <div class="note">Contatos, usuários e auditoria.</div>
+          <div class="note" data-en="Contacts, users and audit.">Contatos, usuários e auditoria.</div>
         </div>
         <div class="layer">
-          <div class="ln">📈 Observabilidade</div>
+          <div class="ln" data-en="📈 Observability">📈 Observabilidade</div>
           <div class="tech">Actuator · Prometheus</div>
-          <div class="note">Saúde e métricas.</div>
+          <div class="note" data-en="Health and metrics.">Saúde e métricas.</div>
         </div>
         <div class="layer">
           <div class="ln">🐳 Infra</div>
           <div class="tech">Docker Compose · Traefik</div>
-          <div class="note">Sobe tudo com um comando.</div>
+          <div class="note" data-en="Starts everything with one command.">Sobe tudo com um comando.</div>
         </div>
       </div>
     </div>
@@ -175,26 +175,27 @@
 
   <!-- ===== SISTEMA EMULADO ===== -->
   <section id="demo">
-    <h2 class="sec">Teste você mesmo</h2>
-    <p class="sub">O sistema emulado: entre, filtre contatos, escreva um e-mail e dispare. Nada é enviado de verdade.</p>
+    <h2 class="sec" data-en="Try it yourself">Teste você mesmo</h2>
+    <p class="sub" data-en="The emulated system: sign in, filter contacts, write an e-mail and send it. Nothing is actually sent. <b>The demo is in Portuguese</b>, like the original system.">O sistema emulado: entre, filtre contatos, escreva um e-mail e dispare. Nada é enviado de verdade.</p>
     <div class="win" id="demoWin">
       <div class="wtitle"><span>✉ MENSAGERIA.exe</span><span class="wbtns" aria-hidden="true"><b>_</b><b>□</b><b>×</b></span></div>
       <div id="app"></div>
     </div>
     <div class="demo-foot">
-      <span>💡 Senha: <code>demo123</code> · erre 3 vezes pra ver o bloqueio</span>
-      <button class="btn95 sm" id="resetDemo" type="button">↺ Reiniciar</button>
+      <span data-en="💡 Password: <code>demo123</code> · get it wrong 3 times to see the lockout">💡 Senha: <code>demo123</code> · erre 3 vezes pra ver o bloqueio</span>
+      <button class="btn95 sm" id="resetDemo" type="button" data-en="↺ Restart">↺ Reiniciar</button>
     </div>
   </section>
 
   <footer>
     <hr>
-    <p>Código-fonte privado, de uso institucional. Esta página é uma emulação:<br>nenhum contato, e-mail ou credencial real aparece aqui.</p>
-    <p><a href="../index.html">◀ Voltar aos projetos</a> · Melhor visualizado em 800x600</p>
+    <p data-en="Private source code, for institutional use. This page is an emulation:<br>no real contact, e-mail or credential appears here.">Código-fonte privado, de uso institucional. Esta página é uma emulação:<br>nenhum contato, e-mail ou credencial real aparece aqui.</p>
+    <p data-en="<a href=&quot;../index.html&quot;>◀ Back to projects</a> · Best viewed at 800x600"><a href="../index.html">◀ Voltar aos projetos</a> · Melhor visualizado em 800x600</p>
   </footer>
 </div>
 
 <script src="../../click-sound.js"></script>
 <script src="app.js"></script>
+<script src="../../i18n.js"></script>
 </body>
 </html>

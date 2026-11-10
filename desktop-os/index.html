@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>BRENNO//OS — Portfólio (spike)</title>
+<title data-en="BRENNO//OS — Portfolio (spike)">BRENNO//OS — Portfólio (spike)</title>
 <!-- cursor pixelado, compartilhado com as páginas do Projetos.exe -->
 <link rel="stylesheet" href="cursor.css" />
 <style>
@@ -243,7 +243,14 @@
     box-shadow: inset 1px 1px 0 var(--win-light), inset -1px -1px 0 var(--win-dark); }
   .taskitem.active{ box-shadow: inset -1px -1px 0 var(--win-light), inset 1px 1px 0 var(--win-dark); background:#d9dcdf; }
   .taskitem .tl{ overflow:hidden; text-overflow:ellipsis; }
-  #clock{ margin-left:auto; border:2px solid var(--win-dark); box-shadow: inset 1px 1px 0 #6a6e72, inset -1px -1px 0 #fff; padding:5px 12px; font-size:14px; color:#000; }
+  /* botão de idioma (PT | EN), na bandeja ao lado do relógio: o idioma ativo fica "aceso" */
+  #lang{ margin-left:auto; flex:none; display:flex; align-items:center; gap:2px; height:28px; padding:0 3px; font:bold 12px var(--pixel); color:#000;
+    background:var(--win); border:2px solid #000; box-shadow: inset 1px 1px 0 var(--win-light), inset -1px -1px 0 var(--win-dark); cursor:inherit; }
+  #lang:active{ box-shadow: inset -1px -1px 0 var(--win-light), inset 1px 1px 0 var(--win-dark); }
+  #lang span{ padding:1px 5px; color:#555; }
+  #lang span.on{ color:#fff; background:#0a1fa0; }
+  #lang i{ font-style:normal; color:var(--win-dark); }
+  #clock{ flex:none; border:2px solid var(--win-dark); box-shadow: inset 1px 1px 0 #6a6e72, inset -1px -1px 0 #fff; padding:5px 12px; font-size:14px; color:#000; }
 
   #startmenu{ position:fixed; left:4px; bottom:40px; width:226px; z-index:6000; background:var(--win); border:2px solid #000;
     box-shadow: inset 1px 1px 0 var(--win-light), inset -1px -1px 0 var(--win-dark), 5px 5px 0 rgba(0,0,0,.4); display:none; }
@@ -273,7 +280,7 @@
 
   <div id="crt"></div>
 
-  <div id="boot" title="Clique para pular">
+  <div id="boot" title="Clique para pular" data-en-title="Click to skip">
     <div class="splash">
       <div class="bcloud" style="left:-8%; top:6%;  width:46vw; height:20vh;"></div>
       <div class="bcloud" style="left:48%; top:2%;  width:52vw; height:24vh; animation-duration:38s; animation-direction:reverse;"></div>
@@ -411,26 +418,33 @@
       </div>
 
       <div class="foot-l">Copyright © 199X Vaporwave Systems Inc.</div>
-      <div class="foot-r">Iniciando o BRENNO//DEV</div>
+      <div class="foot-r" data-en="Starting BRENNO//DEV">Iniciando o BRENNO//DEV</div>
       <div class="band"></div>
     </div>
     <div class="flash"></div>
   </div>
 
 <script src="click-sound.js"></script>
+<script src="i18n.js"></script>
 <script>
+/* =================== IDIOMA =================== */
+/* t("texto em PT", "text in EN"): devolve o do idioma ativo. O idioma mora no i18n.js (salvo no navegador). */
+const t = (pt, en) => I18N.t(pt, en);
+const tr = par => t(par[0], par[1]);   // para dados guardados como [pt, en]
+
 /* =================== DADOS (do currículo) =================== */
 const PROFILE = {
   name: "Brenno Boechat",
-  role: "Desenvolvedor Full Stack",
-  bio: "Desenvolvedor full stack formado em Análise e Desenvolvimento de Sistemas pela UNINTER. Gosto de entender como as coisas funcionam e de transformar ideias em aplicações usadas no dia a dia. Construo sistemas web corporativos de ponta a ponta, do backend e da arquitetura ao frontend e ao deploy, com Java, Spring Boot, PostgreSQL, Next.js, React e TypeScript, além de Docker, RabbitMQ e autenticação JWT. Uso IA como ferramenta estratégica para ganhar produtividade e qualidade, sem abrir mão da análise técnica e das decisões de engenharia.",
-  location: "Niterói/RJ",
-  job: "Prefeitura de Niterói",
+  role: ["Desenvolvedor Full Stack", "Full Stack Developer"],
+  bio: ["Desenvolvedor full stack formado em Análise e Desenvolvimento de Sistemas pela UNINTER. Gosto de entender como as coisas funcionam e de transformar ideias em aplicações usadas no dia a dia. Construo sistemas web corporativos de ponta a ponta, do backend e da arquitetura ao frontend e ao deploy, com Java, Spring Boot, PostgreSQL, Next.js, React e TypeScript, além de Docker, RabbitMQ e autenticação JWT. Uso IA como ferramenta estratégica para ganhar produtividade e qualidade, sem abrir mão da análise técnica e das decisões de engenharia.",
+        "Full stack developer with a degree in Systems Analysis and Development from UNINTER. I like understanding how things work and turning ideas into applications people use every day. I build corporate web systems end to end, from backend and architecture to frontend and deployment, with Java, Spring Boot, PostgreSQL, Next.js, React and TypeScript, plus Docker, RabbitMQ and JWT authentication. I use AI as a strategic tool to gain productivity and quality, without giving up technical analysis and engineering decisions."],
+  location: ["Niterói/RJ", "Niterói/RJ, Brazil"],
+  job: ["Prefeitura de Niterói", "Niterói City Hall (Prefeitura de Niterói)"],
   education: [
-    "Tecnólogo em Análise e Desenvolvimento de Sistemas — UNINTER (2025)",
-    "Formação Web Full Stack (Bootcamp) — Labenu (2022)",
+    ["Tecnólogo em Análise e Desenvolvimento de Sistemas — UNINTER (2025)", "Associate degree in Systems Analysis and Development — UNINTER (2025)"],
+    ["Formação Web Full Stack (Bootcamp) — Labenu (2022)", "Full Stack Web Development Bootcamp — Labenu (2022)"],
   ],
-  languages: "Português nativo · Inglês intermediário",
+  languages: ["Português nativo · Inglês intermediário", "Portuguese (native) · English (intermediate)"],
 };
 const CONTACT = {
   email: "brennoboechat81@hotmail.com",
@@ -442,15 +456,16 @@ const CV_FILE = "cv/BrennoBoechat_CV.pdf";
 const PROJECTS_PAGE = "projetos/index.html";
 /* Endereço "de mentira" mostrado na barra do navegador, só pela ambientação. */
 const FAKE_HOST = "http://www.brenno.os/projetos/";
-const SKILLS = {
-  "Backend": ["Java","Spring Boot","Spring Security","JPA/Hibernate","APIs REST"],
-  "Frontend": ["Next.js","React","TypeScript","JavaScript","Tailwind CSS"],
-  "Banco de dados": ["PostgreSQL","MySQL","SQLite"],
-  "Infraestrutura": ["Docker","Microsoft Azure","RabbitMQ"],
-  "Segurança": ["JWT","SSO","Azure Entra ID"],
-  "Ferramentas": ["Git","GitHub","Maven","Conventional Commits"],
-  "IA aplicada": ["Claude (Anthropic)"],
-};
+/* [categoria em PT, em EN, itens] */
+const SKILLS = [
+  ["Backend", "Backend", ["Java","Spring Boot","Spring Security","JPA/Hibernate","APIs REST"]],
+  ["Frontend", "Frontend", ["Next.js","React","TypeScript","JavaScript","Tailwind CSS"]],
+  ["Banco de dados", "Databases", ["PostgreSQL","MySQL","SQLite"]],
+  ["Infraestrutura", "Infrastructure", ["Docker","Microsoft Azure","RabbitMQ"]],
+  ["Segurança", "Security", ["JWT","SSO","Azure Entra ID"]],
+  ["Ferramentas", "Tools", ["Git","GitHub","Maven","Conventional Commits"]],
+  ["IA aplicada", "Applied AI", ["Claude (Anthropic)"]],
+];
 
 /* =================== HELPERS DOM =================== */
 function el(tag, props, ...kids){
@@ -471,19 +486,19 @@ function aboutBody(){
   const root = el("div");
   root.append(
     el("div",{style:"display:flex;gap:16px;flex-wrap:wrap"},
-      el("img",{class:"avatar",src:"img/avatar.jpg",alt:"Foto de perfil",draggable:"false"}),
+      el("img",{class:"avatar",src:"img/avatar.jpg",alt:t("Foto de perfil","Profile photo"),draggable:"false"}),
       el("div",{style:"flex:1 1 180px;min-width:180px"},
         el("div",{class:"h-neon"}, PROFILE.name),
-        el("div",{style:"font-size:16px;color:#5b2a9e;font-weight:bold"}, PROFILE.role),
-        el("div",{style:"margin-top:8px"}, "📍 "+PROFILE.location),
-        el("div",{style:"margin-top:4px"}, "💼 "+PROFILE.job),
+        el("div",{style:"font-size:16px;color:#5b2a9e;font-weight:bold"}, tr(PROFILE.role)),
+        el("div",{style:"margin-top:8px"}, "📍 "+tr(PROFILE.location)),
+        el("div",{style:"margin-top:4px"}, "💼 "+tr(PROFILE.job)),
       )
     ),
-    el("div",{class:"inset",style:"margin-top:12px"}, PROFILE.bio),
+    el("div",{class:"inset",style:"margin-top:12px"}, tr(PROFILE.bio)),
     el("div",{style:"margin-top:10px;font-size:14px"},
-      el("div",{style:"font-family:var(--pixel);font-weight:bold;font-size:13px;color:#5b2a9e"}, "Formação"),
-      ...PROFILE.education.map(t=> el("div",null,"🎓 "+t)),
-      el("div",{style:"margin-top:6px"}, "🌎 "+PROFILE.languages))
+      el("div",{style:"font-family:var(--pixel);font-weight:bold;font-size:13px;color:#5b2a9e"}, t("Formação","Education")),
+      ...PROFILE.education.map(e=> el("div",null,"🎓 "+tr(e))),
+      el("div",{style:"margin-top:6px"}, "🌎 "+tr(PROFILE.languages)))
   );
   return root;
 }
@@ -494,31 +509,47 @@ function browserBody(){
   const BASE = new URL(".", HOME).href;
   const hist = [HOME]; let idx = 0, navigating = false;
 
-  const frame = el("iframe",{title:"Projetos", src:HOME});
+  const frame = el("iframe",{title:t("Projetos","Projects"), src:HOME});
   // as barras do navegador são compactas (classe .compact), então sobra mais altura pro conteúdo
   frame.style.height = Math.max(240, Math.min(560, innerHeight - 232)) + "px";
   const addr = el("span",null, FAKE_HOST);
-  const msg = el("span",{class:"msg"}, "Abrindo página...");
-  const btn = (icon, label, fn)=> el("button",{class:"bbtn", onclick:fn}, el("span",{class:"bi"}, icon), label);
-  const bBack = btn("◀","Voltar", ()=>go(idx-1));
-  const bFwd  = btn("▶","Avançar",()=>go(idx+1));
-  const bStop = btn("✖","Parar",  ()=>{ try{ frame.contentWindow.stop(); }catch(e){} setDone("Interrompido."); });
-  const bReload = btn("↻","Atualizar",()=>{ setLoading(); try{ frame.contentWindow.location.reload(); }catch(e){ frame.src = hist[idx]; } });
-  const bHome = btn("⌂","Início", ()=>{ hist.splice(idx+1); if(hist[idx]!==HOME){ hist.push(HOME); idx++; } go(idx); });
+  const msg = el("span",{class:"msg"}, t("Abrindo página...","Opening page..."));
+  const rotulos = [];   // [nó de texto, pt, en] dos botões, pra trocar o idioma sem recarregar a página aberta
+  const btn = (icon, pt, en, fn)=>{
+    const txt = document.createTextNode(t(pt, en));
+    rotulos.push([txt, pt, en]);
+    return el("button",{class:"bbtn", onclick:fn}, el("span",{class:"bi"}, icon), txt);
+  };
+  const bBack = btn("◀","Voltar","Back", ()=>go(idx-1));
+  const bFwd  = btn("▶","Avançar","Forward", ()=>go(idx+1));
+  const bStop = btn("✖","Parar","Stop", ()=>{ try{ frame.contentWindow.stop(); }catch(e){} setDone(t("Interrompido.","Stopped.")); });
+  const bReload = btn("↻","Atualizar","Refresh", ()=>{ setLoading(); try{ frame.contentWindow.location.reload(); }catch(e){ frame.src = hist[idx]; } });
+  const bHome = btn("⌂","Início","Home", ()=>{ hist.splice(idx+1); if(hist[idx]!==HOME){ hist.push(HOME); idx++; } go(idx); });
+  const addrLabel = document.createTextNode(t("Endereço","Address"));
+  rotulos.push([addrLabel, "Endereço", "Address"]);
 
   const root = el("div",{class:"browser loading"},
     el("div",{class:"btools"}, bBack, bFwd, bStop, bReload, el("div",{class:"bsep"}), bHome, el("div",{class:"throbber",title:"VaporWeb"})),
-    el("div",{class:"baddr"}, "Endereço", el("div",{class:"field"}, el("span",null,"🌐"), addr)),
+    el("div",{class:"baddr"}, addrLabel, el("div",{class:"field"}, el("span",null,"🌐"), addr)),
     el("div",{class:"bview"}, frame),
     el("div",{class:"bstatus"}, msg, el("span",{class:"prog"}, el("i")), el("span",null,"🌐 Internet")));
+  let doneMsg = null;   // [pt, en] da última mensagem de status, pra traduzir também
+  root.relabel = ()=>{
+    rotulos.forEach(([n, pt, en])=> n.textContent = t(pt, en));
+    frame.title = t("Projetos","Projects");
+    if(doneMsg) msg.textContent = tr(doneMsg);
+    // a página aberta no iframe troca de idioma sem recarregar (funciona até em file://)
+    try{ frame.contentWindow.postMessage({ type:"brennoos-lang", lang:I18N.lang }, "*"); }catch(e){}
+  };
 
   function fake(url){
     const clean = url.split("#")[0].split("?")[0];
     return clean.startsWith(BASE) ? FAKE_HOST + clean.slice(BASE.length).replace(/index\.html$/,"") : url;
   }
   function syncButtons(){ bBack.disabled = idx<=0; bFwd.disabled = idx>=hist.length-1; }
-  function setLoading(){ root.classList.remove("done"); root.classList.add("loading"); msg.textContent = "Abrindo página "+fake(hist[idx])+"..."; }
-  function setDone(text){ root.classList.remove("loading"); root.classList.add("done"); msg.textContent = text; }
+  function setLoading(){ doneMsg = null; root.classList.remove("done"); root.classList.add("loading"); msg.textContent = t("Abrindo página ","Opening page ")+fake(hist[idx])+"..."; }
+  function setDone(text){ root.classList.remove("loading"); root.classList.add("done"); msg.textContent = text;
+    doneMsg = text===t("Concluído","Done") ? ["Concluído","Done"] : text===t("Interrompido.","Stopped.") ? ["Interrompido.","Stopped."] : null; }
   function go(i){
     if(i<0 || i>=hist.length) return;
     idx = i; navigating = true; setLoading(); syncButtons();
@@ -531,65 +562,72 @@ function browserBody(){
     if(url && url!=="about:blank" && !navigating && url!==hist[idx]){ hist.splice(idx+1); hist.push(url); idx = hist.length-1; }
     navigating = false;
     addr.textContent = fake(url || hist[idx]);
-    syncButtons(); setDone("Concluído");
+    syncButtons(); setDone(t("Concluído","Done"));
+    // garante que a página nova abre no idioma do desktop, mesmo se o navegador não compartilhar o localStorage
+    try{ frame.contentWindow.postMessage({ type:"brennoos-lang", lang:I18N.lang }, "*"); }catch(e){}
   });
   syncButtons();
   return root;
 }
 function skillsBody(){
   const root = el("div");
-  for(const cat in SKILLS){
+  for(const [pt, en, itens] of SKILLS){
     const row = el("div",{style:"margin-top:4px"});
-    SKILLS[cat].forEach(s=>row.append(el("span",{class:"chip"},s)));
+    itens.forEach(s=>row.append(el("span",{class:"chip"},s)));
     root.append(el("div",{style:"margin-bottom:10px"},
-      el("div",{style:"font-family:var(--pixel);font-weight:bold;font-size:13px;color:#5b2a9e"}, cat), row));
+      el("div",{style:"font-family:var(--pixel);font-weight:bold;font-size:13px;color:#5b2a9e"}, t(pt, en)), row));
   }
   return root;
 }
 function contactBody(){
   const digits = "000420".split("").map(d=>el("b",null,d));
   return el("div",null,
-    el("div",{class:"h-neon",style:"font-size:20px"}, "Fale comigo ☎"),
+    el("div",{class:"h-neon",style:"font-size:20px"}, t("Fale comigo ☎","Get in touch ☎")),
     el("div",{class:"inset",style:"margin-top:8px"},
       el("div",null,"📧 ", el("a",{href:"mailto:"+CONTACT.email}, CONTACT.email)),
       el("div",null,"🐙 ", el("a",{href:"https://"+CONTACT.github, target:"_blank", rel:"noopener"}, CONTACT.github)),
       el("div",null,"💼 ", el("a",{href:"https://www."+CONTACT.linkedin, target:"_blank", rel:"noopener"}, CONTACT.linkedin))),
     el("div",{style:"margin-top:12px"},
-      el("div",{style:"font-size:13px;margin-bottom:4px"}, "📖 Guestbook (assine aí):"),
-      el("textarea",{class:"inset ta",placeholder:"deixe um recado..."}),
-      el("div",{style:"margin-top:6px"}, el("a",{class:"btn95",href:"#",onclick:e=>e.preventDefault()},"Enviar ✉"))),
+      el("div",{style:"font-size:13px;margin-bottom:4px"}, t("📖 Guestbook (assine aí):","📖 Guestbook (sign it):")),
+      el("textarea",{class:"inset ta",placeholder:t("deixe um recado...","leave a message...")}),
+      el("div",{style:"margin-top:6px"}, el("a",{class:"btn95",href:"#",onclick:e=>e.preventDefault()},t("Enviar ✉","Send ✉")))),
     el("div",{style:"margin-top:14px;display:flex;align-items:center;gap:8px"},
-      el("span",{style:"font-size:13px"},"Visitantes:"), el("span",{class:"counter"}, ...digits)));
+      el("span",{style:"font-size:13px"},t("Visitantes:","Visitors:")), el("span",{class:"counter"}, ...digits)));
 }
 function cvBody(){
   return el("div",{style:"text-align:center"},
     el("div",{style:"font-size:40px"},"📄"),
     el("div",{style:"font-weight:bold;margin-top:6px"}, "BrennoBoechat_CV.pdf"),
-    el("p",{style:"margin:6px 0 12px"}, "Desenvolvedor Full Stack · Java/Spring Boot e React/Next.js"),
+    el("p",{style:"margin:6px 0 12px"}, t("Desenvolvedor Full Stack · Java/Spring Boot e React/Next.js","Full Stack Developer · Java/Spring Boot and React/Next.js")),
+    I18N.lang==="en" ? el("p",{style:"margin:-6px 0 12px;font-size:13px"}, "📝 The resume file is in Portuguese.") : null,
     el("div",{style:"display:flex;gap:8px;justify-content:center;flex-wrap:wrap"},
-      el("a",{class:"btn95",href:CV_FILE,target:"_blank",rel:"noopener"},"👁 Abrir"),
-      el("a",{class:"btn95",href:CV_FILE,download:"BrennoBoechat_CV.pdf"},"⬇ Baixar CV")));
+      el("a",{class:"btn95",href:CV_FILE,target:"_blank",rel:"noopener"},t("👁 Abrir","👁 Open")),
+      el("a",{class:"btn95",href:CV_FILE,download:"BrennoBoechat_CV.pdf"},t("⬇ Baixar CV","⬇ Download CV"))));
 }
 function welcomeBody(){
   const btns = el("div",{style:"margin-top:12px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap"});
-  ICONS.forEach(ic=> btns.append(el("a",{class:"btn95",href:"#",onclick:e=>{e.preventDefault(); openWindow(ic.spec());}}, ic.glyph+" "+ic.label.replace("_"," "))));
+  ICONS.forEach(ic=> btns.append(el("a",{class:"btn95",href:"#",onclick:e=>{e.preventDefault(); openWindow(ic.spec());}}, ic.glyph+" "+ic.label().replace("_"," "))));
   return el("div",{style:"text-align:center"},
     el("div",{class:"h-neon",style:"font-size:28px"}, "BRENNO//OS"),
-    el("div",{style:"margin-top:4px"}, "Sistema iniciado com sucesso ✓"),
-    el("div",{class:"inset",style:"margin-top:12px;text-align:left",html:
-      "Olá! Isto é um <b>spike</b> — um protótipo pra sentir a ideia.<br>Dê <b>dois cliques</b> nos ícones da esquerda (ou use o <b>Iniciar</b>) pra abrir as janelas. Arraste pelas barras de título. Minimize na barra de tarefas."}),
+    el("div",{style:"margin-top:4px"}, t("Sistema iniciado com sucesso ✓","System started successfully ✓")),
+    el("div",{class:"inset",style:"margin-top:12px;text-align:left",html: t(
+      "Olá! Isto é um <b>spike</b> — um protótipo pra sentir a ideia.<br>Dê <b>dois cliques</b> nos ícones da esquerda (ou use o <b>Iniciar</b>) pra abrir as janelas. Arraste pelas barras de título. Minimize na barra de tarefas.",
+      "Hi! This is a <b>spike</b>, a prototype to get a feel for the idea.<br><b>Double-click</b> the icons on the left (or use <b>Start</b>) to open the windows. Drag them by the title bars. Minimize them to the taskbar.")}),
     btns);
 }
 
 /* =================== ESPECIFICAÇÕES DE JANELA =================== */
+/* rótulos e títulos são funções: assim leem o idioma ativo toda vez */
 const ICONS = [
-  { key:"about",   glyph:"👤", label:"Sobre_mim", spec:()=>({ key:"about",  icon:"👤", title:"Sobre mim",    width:430, render:aboutBody }) },
-  { key:"proj",    glyph:"🌐", label:"Projetos.exe", spec:()=>({ key:"proj", icon:"🌐", title:"Projetos - VaporWeb Navegador", width:820, maximizable:true,
-      flush:true, cls:"compact", menu:["Arquivo","Editar","Ver","Favoritos","Ajuda"], render:browserBody }) },
-  { key:"skills",  glyph:"💾", label:"Skills",    spec:()=>({ key:"skills", icon:"💾", title:"Skills.exe",   width:360, render:skillsBody }) },
-  { key:"contact", glyph:"✉",  label:"Contato",   spec:()=>({ key:"contact",icon:"✉",  title:"Contato",      width:370, render:contactBody }) },
-  { key:"cv",      glyph:"📄", label:"Curriculo", spec:()=>({ key:"cv",     icon:"📄", title:"curriculo.pdf",width:340, render:cvBody }) },
+  { key:"about",   glyph:"👤", label:()=>t("Sobre_mim","About_me"), spec:()=>({ key:"about", icon:"👤", title:t("Sobre mim","About me"), width:430, render:aboutBody }) },
+  { key:"proj",    glyph:"🌐", label:()=>t("Projetos.exe","Projects.exe"), spec:()=>({ key:"proj", icon:"🌐", title:t("Projetos - VaporWeb Navegador","Projects - VaporWeb Browser"), width:820, maximizable:true,
+      flush:true, cls:"compact", menu:t(["Arquivo","Editar","Ver","Favoritos","Ajuda"],["File","Edit","View","Favorites","Help"]), render:browserBody }) },
+  { key:"skills",  glyph:"💾", label:()=>"Skills", spec:()=>({ key:"skills", icon:"💾", title:"Skills.exe", width:360, render:skillsBody }) },
+  { key:"contact", glyph:"✉",  label:()=>t("Contato","Contact"), spec:()=>({ key:"contact", icon:"✉", title:t("Contato","Contact"), width:370, render:contactBody }) },
+  { key:"cv",      glyph:"📄", label:()=>t("Curriculo","Resume"), spec:()=>({ key:"cv", icon:"📄", title:t("curriculo.pdf","resume.pdf"), width:340, render:cvBody }) },
 ];
+const WELCOME = ()=>({ key:"welcome", icon:"🖥", title:t("Bem-vindo.txt","Welcome.txt"), width:440, render:welcomeBody });
+const specFor = key => key==="welcome" ? WELCOME() : ICONS.find(ic=> ic.key===key).spec();
 
 /* =================== WINDOW MANAGER =================== */
 const desktop = document.getElementById("desktop");
@@ -609,19 +647,22 @@ function openWindow(spec){
   const id = "win"+Math.random().toString(36).slice(2,7);
   const w = { id, key:spec.key, icon:spec.icon, title:spec.title, min:false, max:false };
 
+  w.tt = el("span",{class:"tt"}, spec.title);
+  w.minBtn = el("button",{class:"tbtn", title:t("Minimizar","Minimize"), onclick:(e)=>{e.stopPropagation(); minimize(w);} }, "_");
+  w.closeBtn = el("button",{class:"tbtn", title:t("Fechar","Close"), onclick:(e)=>{e.stopPropagation(); closeWin(w);} }, "✕");
   const titlebar = el("div",{class:"titlebar"},
     el("span",{class:"tico"}, spec.icon),
-    el("span",{class:"tt"}, spec.title),
-    el("button",{class:"tbtn", title:"Minimizar", onclick:(e)=>{e.stopPropagation(); minimize(w);} }, "_"),
-    spec.maximizable ? (w.maxBtn = el("button",{class:"tbtn", title:"Maximizar", onclick:(e)=>{e.stopPropagation(); toggleMax(w);} }, "□")) : null,
-    el("button",{class:"tbtn", title:"Fechar", onclick:(e)=>{e.stopPropagation(); closeWin(w);} }, "✕"));
+    w.tt, w.minBtn,
+    spec.maximizable ? (w.maxBtn = el("button",{class:"tbtn", title:t("Maximizar","Maximize"), onclick:(e)=>{e.stopPropagation(); toggleMax(w);} }, "□")) : null,
+    w.closeBtn);
   // janelas grandes (ex.: navegador) encolhem pra caber na tela
   const width = Math.min(spec.width||320, innerWidth-16);
   const body = el("div",{class:"wbody"+(spec.flush?" flush":""),style:"width:"+width+"px"});
   body.append(spec.render());
   // menu com a primeira letra sublinhada (Arquivo, Editar...)
   const menu = el("div",{class:"menubar"});
-  (spec.menu || ["Arquivo","Editar","Ver","Ajuda"]).forEach(m=> menu.append(el("span",null, el("u",null,m[0]), m.slice(1))));
+  w.body = body; w.menu = menu;
+  fillMenu(menu, spec);
   const node = el("div",{class:"window"+(spec.cls?" "+spec.cls:""), style:"width:"+width+"px"},
     titlebar, menu, body);
   node.addEventListener("mousedown", ()=>focusWin(w));
@@ -638,6 +679,21 @@ function openWindow(spec){
   renderTaskbar();
   return w;
 }
+function fillMenu(menu, spec){
+  menu.replaceChildren();
+  (spec.menu || t(["Arquivo","Editar","Ver","Ajuda"],["File","Edit","View","Help"])).forEach(m=> menu.append(el("span",null, el("u",null,m[0]), m.slice(1))));
+}
+/* troca o idioma de uma janela aberta, no lugar: mesma posição, mesmo tamanho.
+   O navegador (Projetos.exe) não é redesenhado, senão a página aberta recarregaria. */
+function relabelWin(w){
+  const spec = specFor(w.key);
+  w.title = spec.title; w.tt.textContent = spec.title;
+  w.minBtn.title = t("Minimizar","Minimize"); w.closeBtn.title = t("Fechar","Close");
+  if(w.maxBtn) w.maxBtn.title = w.max ? t("Restaurar","Restore") : t("Maximizar","Maximize");
+  fillMenu(w.menu, spec);
+  if(w.key==="proj") w.body.firstChild.relabel();
+  else { const scroll = w.body.scrollTop; w.body.replaceChildren(spec.render()); w.body.scrollTop = scroll; }
+}
 function closeWin(w){ w.el.remove(); state.wins = state.wins.filter(x=>x!==w); if(state.active===w.id) state.active=null; renderTaskbar(); }
 function minimize(w){ w.min=true; w.el.style.display="none"; if(state.active===w.id) state.active=null;
   state.wins.forEach(x=>x.el.classList.add("inactive")); renderTaskbar(); }
@@ -647,7 +703,7 @@ function toggleMax(w){
   w.max = !w.max;
   w.el.classList.toggle("max", w.max);
   w.maxBtn.textContent = w.max ? "❐" : "□";
-  w.maxBtn.title = w.max ? "Restaurar" : "Maximizar";
+  w.maxBtn.title = w.max ? t("Restaurar","Restore") : t("Maximizar","Maximize");
   focusWin(w);
 }
 
@@ -673,24 +729,51 @@ addEventListener("blur", ()=> setTimeout(()=>{
 }));
 
 /* =================== TASKBAR / START =================== */
+function fillStartMenu(){
+  const items = el("div",{class:"items"});
+  ICONS.forEach(ic=> items.append(el("div",{class:"mi", onclick:()=>{ openWindow(ic.spec()); toggleStart(false); }}, el("span",null,ic.glyph), ic.label().replace("_"," "))));
+  items.append(el("div",{class:"sep"}));
+  items.append(el("div",{class:"mi", onclick:()=>location.reload()}, el("span",null,"🔌"), t("Reiniciar","Restart")));
+  startMenuEl.replaceChildren(el("div",{class:"side"},"BRENNO//OS"), items);
+}
+let startLabel, langBtn, clockEl;
+function tickClock(){
+  // 24h nos dois idiomas, como no resto do sistema; só o formato regional muda
+  clockEl.textContent = "🕐 "+new Date().toLocaleTimeString(I18N.lang==="en" ? "en-GB" : "pt-BR",{hour:"2-digit",minute:"2-digit"});
+}
+function paintLangBtn(){
+  const en = I18N.lang==="en";
+  langBtn.replaceChildren(el("span",en?null:{class:"on"},"PT"), el("i",null,"|"), el("span",en?{class:"on"}:null,"EN"));
+  langBtn.title = en ? "Mudar para português" : "Switch to English";
+  langBtn.setAttribute("aria-label", langBtn.title);
+}
+/* troca o idioma do desktop inteiro sem recarregar: ícones, menu, barra, janelas abertas e a página do navegador */
+function setLang(lang){
+  I18N.set(lang);
+  fillStartMenu();
+  startLabel.textContent = t("Iniciar","Start");
+  paintLangBtn(); tickClock();
+  icons.forEach(ic=> ic.labelEl.textContent = ICONS.find(d=> d.key===ic.key).label());
+  hintEl.textContent = hintText();
+  state.wins.forEach(relabelWin);
+  renderTaskbar();
+}
 function buildChrome(){
-  startMenuEl = el("div",{id:"startmenu"},
-    el("div",{class:"side"},"BRENNO//OS"),
-    (function(){ const items = el("div",{class:"items"});
-      ICONS.forEach(ic=> items.append(el("div",{class:"mi", onclick:()=>{ openWindow(ic.spec()); toggleStart(false); }}, el("span",null,ic.glyph), ic.label.replace("_"," "))));
-      items.append(el("div",{class:"sep"}));
-      items.append(el("div",{class:"mi", onclick:()=>location.reload()}, el("span",null,"🔌"), "Reiniciar"));
-      return items; })());
+  startMenuEl = el("div",{id:"startmenu"});
+  fillStartMenu();
   document.body.append(startMenuEl);
 
-  const startBtn = el("button",{id:"start", onclick:(e)=>{ e.stopPropagation(); toggleStart(); }}, el("span",{style:"font-size:15px"},"🪟"), "Iniciar");
+  startLabel = document.createTextNode(t("Iniciar","Start"));
+  const startBtn = el("button",{id:"start", onclick:(e)=>{ e.stopPropagation(); toggleStart(); }}, el("span",{style:"font-size:15px"},"🪟"), startLabel);
   const tasks = el("div",{id:"tasks",style:"display:flex;gap:6px;overflow:hidden"});
-  const clock = el("div",{id:"clock"},"🕐 --:--");
-  taskbarEl = el("div",{id:"taskbar", onmousedown:e=>e.stopPropagation()}, startBtn, tasks, clock);
+  langBtn = el("button",{id:"lang", type:"button", onclick:()=> setLang(I18N.lang==="en" ? "pt" : "en")});
+  paintLangBtn();
+  clockEl = el("div",{id:"clock"},"🕐 --:--");
+  taskbarEl = el("div",{id:"taskbar", onmousedown:e=>e.stopPropagation()}, startBtn, tasks, langBtn, clockEl);
   document.body.append(taskbarEl);
 
-  setInterval(()=>{ clock.textContent = "🕐 "+new Date().toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"}); }, 1000);
-  clock.textContent = "🕐 "+new Date().toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"});
+  setInterval(tickClock, 1000);
+  tickClock();
 }
 function renderTaskbar(){
   const tasks = document.getElementById("tasks"); if(!tasks) return;
@@ -716,7 +799,8 @@ const OLD_ICON_POS_KEY = "brennoos.iconPos";          // versão antiga: posiç�
 const ICON_W = 108, ICON_H = 84, TASKBAR_H = 38;
 const GRID = { x0:4, y0:10, w:112, h:90 };            // origem e tamanho de cada célula
 const icons = [];                                      // { key, node, cell:[coluna, linha] }
-let iconSlot;
+let iconSlot, hintEl;
+const hintText = ()=> t("spike • arraste as janelas e os ícones • dois cliques nos ícones", "spike • drag the windows and icons • double-click the icons");
 
 const cellKey = c => c[0] + "," + c[1];
 function gridSize(){
@@ -781,9 +865,9 @@ function buildIcons(){
   iconSlot = el("div",{class:"icon-slot"});
   wrap.append(iconSlot);
   ICONS.forEach(def=>{
-    const node = el("div",{class:"icon"},
-      el("div",{class:"glyph"}, def.glyph), el("div",{class:"label"}, def.label));
-    const ic = { key:def.key, node, cell:null };
+    const labelEl = el("div",{class:"label"}, def.label());
+    const node = el("div",{class:"icon"}, el("div",{class:"glyph"}, def.glyph), labelEl);
+    const ic = { key:def.key, node, labelEl, cell:null };
     icons.push(ic);
     node.addEventListener("dblclick", ()=> openWindow(def.spec()));
     makeIconDraggable(ic);
@@ -792,7 +876,8 @@ function buildIcons(){
   let preferidas = loadIconCells();
   layoutIcons(preferidas);
   desktop.append(wrap);
-  desktop.append(el("div",{class:"hint"},"spike • arraste as janelas e os ícones • dois cliques nos ícones"));
+  hintEl = el("div",{class:"hint"}, hintText());
+  desktop.append(hintEl);
 
   // ao redimensionar, reacomoda a partir das células salvas (se a tela voltar a crescer, os ícones voltam pro lugar)
   addEventListener("resize", ()=> layoutIcons(preferidas));
@@ -844,7 +929,7 @@ document.addEventListener("mousedown", ()=>{ toggleStart(false); document.queryS
 /* =================== BOOT =================== */
 function startOS(){
   buildIcons(); buildChrome();
-  openWindow({ key:"welcome", icon:"🖥", title:"Bem-vindo.txt", width:440, render:welcomeBody });
+  openWindow(WELCOME());
 }
 /* sequência: monitor liga (flash) → splash com céu e logo → some e mostra o desktop.
    Clique ou qualquer tecla pula a animação. */

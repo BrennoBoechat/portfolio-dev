@@ -837,7 +837,7 @@ document.querySelectorAll("[data-print]").forEach(fig => {
     h("div", { class: "bar" }, h("span", null, fig.dataset.file || nome + ".png"), h("span", { "aria-hidden": "true" }, "_ □ ×")),
     h("div", { class: "view" }, h("div", { class: "stage", inert: true, "aria-hidden": "true" }, tela))));
   criarApp(tela, nome);
-  fig.append(h("button", { class: "btn95 sm", type: "button", onclick: () => {
+  fig.append(h("button", { class: "btn95 sm", type: "button", "data-en": "▶ see it live", onclick: () => {
     demo.abrir(nome);
     pular("demo");
     janelaDemo.classList.remove("flash"); void janelaDemo.offsetWidth; janelaDemo.classList.add("flash");
@@ -847,11 +847,17 @@ document.querySelectorAll("[data-print]").forEach(fig => {
 /* terminal do hero digitando frases */
 (function digitar(){
   const alvo = document.getElementById("typed");
-  const frases = ["troca a ficha de papel por um formulário guiado", "funciona sem internet e sincroniza depois",
+  const frasesPT = ["troca a ficha de papel por um formulário guiado", "funciona sem internet e sincroniza depois",
                   "cifra os dados pessoais (LGPD)", "gera o PDF da ficha", "exporta relatório sem dado pessoal"];
+  const frasesEN = ["swaps the paper form for a guided one","works offline and syncs later","encrypts personal data (LGPD)","generates the form PDF","exports a report with no personal data"];
+  const escolher = () => window.I18N && I18N.lang === "en" ? frasesEN : frasesPT;
+  let frases = frasesPT;
+  /* sem animação (reduzir movimento), a frase fixa acompanha o idioma */
+  addEventListener("langchange", () => { if(reduzMovimento) alvo.textContent = escolher()[0]; });
   if(reduzMovimento) return;
   let f = 0, i = frases[0].length, apagando = true;
   setTimeout(function passo(){
+    frases = escolher();
     const frase = frases[f];
     if(apagando){
       i--;
