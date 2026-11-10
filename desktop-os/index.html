@@ -584,7 +584,7 @@ function welcomeBody(){
 /* =================== ESPECIFICAÇÕES DE JANELA =================== */
 const ICONS = [
   { key:"about",   glyph:"👤", label:"Sobre_mim", spec:()=>({ key:"about",  icon:"👤", title:"Sobre mim",    width:430, render:aboutBody }) },
-  { key:"proj",    glyph:"🌐", label:"Projetos.exe", spec:()=>({ key:"proj", icon:"🌐", title:"Projetos - VaporWeb Navegador", width:820, center:true, maximizable:true,
+  { key:"proj",    glyph:"🌐", label:"Projetos.exe", spec:()=>({ key:"proj", icon:"🌐", title:"Projetos - VaporWeb Navegador", width:820, maximizable:true,
       flush:true, cls:"compact", menu:["Arquivo","Editar","Ver","Favoritos","Ajuda"], render:browserBody }) },
   { key:"skills",  glyph:"💾", label:"Skills",    spec:()=>({ key:"skills", icon:"💾", title:"Skills.exe",   width:360, render:skillsBody }) },
   { key:"contact", glyph:"✉",  label:"Contato",   spec:()=>({ key:"contact",icon:"✉",  title:"Contato",      width:370, render:contactBody }) },
@@ -607,7 +607,6 @@ function openWindow(spec){
   const existing = state.wins.find(x=> x.key===spec.key);
   if(existing){ focusWin(existing); return existing; }
   const id = "win"+Math.random().toString(36).slice(2,7);
-  const offset = state.wins.length*26;
   const w = { id, key:spec.key, icon:spec.icon, title:spec.title, min:false, max:false };
 
   const titlebar = el("div",{class:"titlebar"},
@@ -618,14 +617,12 @@ function openWindow(spec){
     el("button",{class:"tbtn", title:"Fechar", onclick:(e)=>{e.stopPropagation(); closeWin(w);} }, "✕"));
   // janelas grandes (ex.: navegador) encolhem pra caber na tela
   const width = Math.min(spec.width||320, innerWidth-16);
-  const left = Math.max(0, Math.min(130+offset, innerWidth-width-8));
-  const top = (spec.top ?? 64) + offset;
   const body = el("div",{class:"wbody"+(spec.flush?" flush":""),style:"width:"+width+"px"});
   body.append(spec.render());
   // menu com a primeira letra sublinhada (Arquivo, Editar...)
   const menu = el("div",{class:"menubar"});
   (spec.menu || ["Arquivo","Editar","Ver","Ajuda"]).forEach(m=> menu.append(el("span",null, el("u",null,m[0]), m.slice(1))));
-  const node = el("div",{class:"window"+(spec.cls?" "+spec.cls:""), style:"left:"+left+"px;top:"+top+"px;width:"+width+"px"},
+  const node = el("div",{class:"window"+(spec.cls?" "+spec.cls:""), style:"width:"+width+"px"},
     titlebar, menu, body);
   node.addEventListener("mousedown", ()=>focusWin(w));
   makeDraggable(node, titlebar, w);
@@ -633,10 +630,9 @@ function openWindow(spec){
   titlebar.addEventListener("dblclick", (e)=>{ if(e.target.closest(".tbtn")) return; spec.maximizable ? toggleMax(w) : minimize(w); });
   w.el = node;
   desktop.append(node);
-  if(spec.center){  // centraliza na área livre (acima da barra de tarefas), já com a altura real da janela
-    node.style.left = Math.max(0, Math.round((innerWidth - node.offsetWidth)/2)) + "px";
-    node.style.top  = Math.max(0, Math.round((innerHeight - 38 - node.offsetHeight)/2)) + "px";
-  }
+  // toda janela abre centralizada na área livre (acima da barra de tarefas), já com a altura real dela
+  node.style.left = Math.max(0, Math.round((innerWidth - node.offsetWidth)/2)) + "px";
+  node.style.top  = Math.max(0, Math.round((innerHeight - 38 - node.offsetHeight)/2)) + "px";
   state.wins.push(w);
   focusWin(w);
   renderTaskbar();
